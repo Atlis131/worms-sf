@@ -34,7 +34,7 @@
                     <div class="col-lg-6">
                         <div class="range">
                             <span>
-                                { 'min = 1 / max = 10' }}
+                                {{ 'min = 1 / max = 10' }}
                             </span>
                             <label class="form-label">
                                 Current:
@@ -81,29 +81,23 @@
         </div>
     </div>
     <div class="row text-center">
-        <div class="card col-lg-5">
+        <div class="card col-lg-6 offset-lg-3">
             <div class="card-header">
                 <h2 style="font-weight: 600">
-                    {{ 'Regular weapons / tools count' }}
+                    {{ 'Regular weapons / tools' }}
                 </h2>
             </div>
-            <div class="card-body row">
-                <div class="col-lg-12">
-                    <p id="normalWeapons" style="color: brown">
-                    </p>
-                </div>
-            </div>
+            <div class="card-body row" id="normalWeapons"></div>
         </div>
-        <div class="card col-lg-5 offset-lg-2">
+    </div>
+    <div class="row text-center">
+        <div class="card col-lg-6 offset-lg-3">
             <div class="card-header">
                 <h2 style="font-weight: 600">
-                    {{ 'Crafted weapons / tools count' }}
+                    {{ 'Crafted weapons / tools' }}
                 </h2>
             </div>
-            <div class="card-body row">
-                <p id="craftedWeapons" style="color: lightsalmon">
-                </p>
-            </div>
+            <div class="card-body row" id="craftedWeapons"></div>
         </div>
     </div>
 
@@ -155,11 +149,23 @@
                     let normalWeapons = response.normalWeapons;
 
                     $.each(craftedWeapons, function (i, l) {
-                        craftedWeaponsEl.append("<p>" + l + "<p>");
+                        let html = "";
+                        html += "<div class='col-lg-4 offset-5 mb-1' style='text-align: left'>";
+                        html += "<img width='35px' src='" + l.image + "'>";
+                        html += "<span style='margin-left:5px; font-size:15px'>" + l.name + "</span>";
+                        html += "</div>";
+
+                        craftedWeaponsEl.append(html);
                     });
 
                     $.each(normalWeapons, function (i, l) {
-                        normalWeaponsEl.append("<p>" + l + "<p>");
+                        let html = "";
+                        html += "<div class='col-lg-4 offset-5 mb-1' style='text-align: left'>";
+                        html += "<img width='35px' src='" + l.image + "'>";
+                        html += "<span style='margin-left:5px; font-size:15px'>" + l.name + "</span>";
+                        html += "</div>";
+
+                        normalWeaponsEl.append(html);
                     });
                 });
         });

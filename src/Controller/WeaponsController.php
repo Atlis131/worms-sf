@@ -78,6 +78,45 @@ class WeaponsController extends AbstractController
     }
 
     /**
+     * @Route("/weapons/settings", name="weapons_toggle_settings")
+     */
+    public function settings(Request $request): Response
+    {
+        $weaponId = $request->get('weaponId');
+        $settingName = $request->get('settingName');
+
+        $weapon = $this->em->getRepository(Weapons::class)->findOneBy([
+            'id' => $weaponId
+        ]);
+
+        switch ($settingName) {
+            case 'tool':
+                $weapon->setIsTool(!$weapon->getIsTool());
+                $message = 'Changed weapon Tool setting';
+                break;
+            case 'openMapWeapon':
+                $weapon->setIsOpenMapWeapon(!$weapon->getIsOpenMapWeapon());
+                $message = 'Changed weapon openMapWeapon setting';
+                break;
+            case 'type':
+                $weapon->setType(!$weapon->getType());
+                $message = 'Changed weapon type setting';
+                break;
+        }
+
+        $this->em->persist($weapon);
+        $this->em->flush();
+
+        $request
+            ->getSession()
+            ->getFlashBag()
+            ->add('success', $message);
+
+
+        return new JsonResponse('');
+    }
+
+    /**
      * @Route("/weapons/random", name="weapons_random_get", options={"expose"=true})
      */
     public function getRandomWeapons(Request $request): JsonResponse

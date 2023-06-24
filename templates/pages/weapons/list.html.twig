@@ -13,11 +13,10 @@
                         <h1 class="h3 mb-3">{{ 'All weapons / tools list' }}</h1>
                     </div>
                     <div class="card-body row">
-                        <table id="example" class="display responsive nowrap" style="width:100%">
+                        <table id="weaponsList" class="display responsive nowrap" style="width:100%">
                             <thead>
                             <tr>
                                 <th>{{ 'Id' }}</th>
-                                <th>{{ 'Icon' }}</th>
                                 <th>{{ 'Name' }}</th>
                                 <th>{{ 'Type' }}</th>
                                 <th>{{ 'Tool?' }}</th>
@@ -30,35 +29,41 @@
                             <tbody>
                             {% for weapon in weapons %}
                                 <tr>
-                                    <td>{{ weapon.id }}</td>
+                                    <td>
+                                        {{ weapon.id }}
+                                    </td>
                                     <td>
                                         {% if weapon.imageName != '' %}
                                             <img src="{{ asset('images/weapons/' ~ weapon.imageName ~ '.png') }}" height='40px'>
                                         {% endif %}
-                                    </td>
-                                    <td>
                                         {{ weapon.name }}
                                     </td>
                                     <td>
-                                        {% if weapon.type == 0 %}
-                                            <span class="btn-primary btn" style="cursor: default"> {{ 'Regular' }} </span>
-                                        {% elseif weapon.type == 1 %}
-                                            <span class="btn-secondary btn" style="cursor: default"> {{ 'Crafted' }} </span>
-                                        {% endif %}
+                                        <div class="toggleSettings" data-weaponId="{{ weapon.id }}" data-settingName="type">
+                                            {% if weapon.type == 0 %}
+                                                <span class="btn-primary btn" style="cursor: hand"> {{ 'Regular' }} </span>
+                                            {% elseif weapon.type == 1 %}
+                                                <span class="btn-secondary btn" style="cursor: hand"> {{ 'Crafted' }} </span>
+                                            {% endif %}
+                                        </div>
                                     </td>
                                     <td>
-                                        {% if weapon.isTool == 0 %}
-                                            <span class="btn-danger btn" style="cursor: default">{{ 'No' }} </span>
-                                        {% else %}
-                                            <span class="btn-success btn" style="cursor: default"> {{ 'Yes' }} </span>
-                                        {% endif %}
+                                        <div class="toggleSettings" data-weaponId="{{ weapon.id }}" data-settingName="tool">
+                                            {% if weapon.isTool == 0 %}
+                                                <span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>
+                                            {% else %}
+                                                <span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>
+                                            {% endif %}
+                                        </div>
                                     </td>
                                     <td>
-                                        {% if weapon.isOpenMapWeapon == 0 %}
-                                            <span class="btn-danger btn" style="cursor: default">{{ 'No' }} </span>
-                                        {% else %}
-                                            <span class="btn-success btn" style="cursor: default"> {{ 'Yes' }} </span>
-                                        {% endif %}
+                                        <div class="toggleSettings" data-weaponId="{{ weapon.id }}" data-settingName="openMapWeapon">
+                                            {% if weapon.isOpenMapWeapon == 0 %}
+                                                <span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>
+                                            {% else %}
+                                                <span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>
+                                            {% endif %}
+                                        </div>
                                     </td>
                                     {% if is_granted('ROLE_ADMIN') %}
                                         <td>
@@ -81,8 +86,33 @@
 {% block javascripts_bottom %}
     {{ parent() }}
     <script>
-        $('#example').DataTable({
-            responsive: true
+        $(document).ready(function () {
+            // @TODO: Change Datatable to ServerSideRendering.
+            var table = $('#weaponsList').DataTable({
+                responsive: true,
+                stateSave: true,
+            });
+
+            {% if is_granted("ROLE_ADMIN") %}
+            $('.toggleSettings').on('click', function () {
+                let weaponId = $(this).data('weaponid');
+                let settingName = $(this).data('settingname');
+
+                let settings = {
+                    'url': "{{ path('weapons_toggle_settings') }}",
+                    'type': "POST",
+                    'data': {
+                        'weaponId': weaponId,
+                        'settingName': settingName,
+                    }
+                }
+                $.ajax(settings)
+                    .done(function () {
+                        window.location.reload();
+                    });
+            });
+            {% endif %}
+
         });
     </script>
 {% endblock %}

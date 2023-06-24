@@ -4,16 +4,20 @@ namespace App\Service;
 
 use App\Entity\Weapons;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class RandomWeaponsService
 {
     private EntityManagerInterface $em;
+    private Container $container;
 
     public function __construct(
         EntityManagerInterface $em,
+        Container $container
     )
     {
         $this->em = $em;
+        $this->container = $container;
     }
 
     public function getRandomWeapons($request): array
@@ -31,7 +35,11 @@ class RandomWeaponsService
         for ($i = 0; $i < $craftedCount; $i++) {
             $index = rand(0, count($weapons['craftedWeapons']) - 1);
 
-            $craftedWeapons[] = $weapons['craftedWeapons'][$index];
+            $craftedWeapons[] = [
+                'name' => $weapons['craftedWeapons'][$index]->getName(),
+                'image' => $this->container->getParameter('base_url') . '/images/weapons/' . $weapons['craftedWeapons'][$index]->getImageName() . '.png'
+            ];
+
             unset($weapons['craftedWeapons'][$index]);
             $weapons['craftedWeapons'] = array_values($weapons['craftedWeapons']);
         }
@@ -39,7 +47,10 @@ class RandomWeaponsService
         for ($i = 0; $i < $normalCount; $i++) {
             $index = rand(0, count($weapons['normalWeapons']) - 1);
 
-            $normalWeapons[] = $weapons['normalWeapons'][$index];
+            $normalWeapons[] = [
+                'name' => $weapons['normalWeapons'][$index]->getName(),
+                'image' => $this->container->getParameter('base_url') . '/images/weapons/' . $weapons['normalWeapons'][$index]->getImageName() . '.png'
+            ];
             unset($weapons['normalWeapons'][$index]);
             $weapons['normalWeapons'] = array_values($weapons['normalWeapons']);
         }
@@ -59,9 +70,9 @@ class RandomWeaponsService
 
         foreach ($allWeapons as $weapon) {
             if ($weapon->getType() == 1) {
-                $craftedWeapons[] = $weapon->getName();
+                $craftedWeapons[] = $weapon;
             } else {
-                $normalWeapons[] = $weapon->getName();
+                $normalWeapons[] = $weapon;
             }
         }
 

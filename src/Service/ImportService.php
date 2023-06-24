@@ -22,7 +22,7 @@ class ImportService
 
     public function import(): void
     {
-        $fileName = $this->kernel->getProjectDir() . '\public\files\weapons.txt';
+        $fileName = $this->kernel->getProjectDir() . '/public/files/weapons.txt';
         $allWeapons = fopen($fileName, 'r+');
 
         while (!feof($allWeapons)) {
