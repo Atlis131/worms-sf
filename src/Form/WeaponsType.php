@@ -21,54 +21,54 @@ class WeaponsType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label'    => 'Nazwa',
+                'label'    => '* Name',
                 'required' => true,
                 'attr'     => [
-                    'class' => 'form-control'
+                    'class' => 'form-control mt-1 mb-2'
                 ]
             ])
             ->add('imageName', TextType::class, [
-                'label'    => 'Nazwa obrazka',
-                'required' => true,
+                'label'    => 'Image name',
+                'required' => false,
                 'attr'     => [
-                    'class' => 'form-control'
+                    'class' => 'form-control mt-1 mb-2'
                 ]
             ])
             ->add('type', ChoiceType::class, [
-                'label'    => 'Typ',
+                'label'    => '* Type',
                 'required' => true,
                 'choices'  => [
-                    'Normalna'   => 0,
-                    'Wytworzona' => 1
+                    'Regular' => 0,
+                    'Crafted' => 1
                 ],
                 'attr'     => [
-                    'class' => 'form-control'
+                    'class' => 'form-control mt-1 mb-2'
                 ]
             ])
             ->add('isTool', ChoiceType::class, [
-                'label'    => 'Narzędzie?',
+                'label'    => '* Tool?',
                 'required' => true,
                 'attr'     => [
-                    'class' => 'form-control'
+                    'class' => 'form-control mt-1 mb-2'
                 ],
                 'choices'  => [
-                    'Nie' => 0,
-                    'Tak' => 1
+                    'No'  => 0,
+                    'Yes' => 1
                 ],
             ])
             ->add('isOpenMapWeapon', ChoiceType::class, [
-                'label'    => 'Na otwartą mape?',
+                'label'    => '* Open map?',
                 'required' => true,
                 'attr'     => [
-                    'class' => 'form-control'
+                    'class' => 'form-control mt-1 mb-2'
                 ],
                 'choices'  => [
-                    'Nie' => 0,
-                    'Tak' => 1
+                    'No'  => 0,
+                    'Yes' => 1
                 ],
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Zapisz',
+                'label' => 'Save',
                 'attr'  => [
                     'class' => 'btn btn-primary pull-right mt-2'
                 ]

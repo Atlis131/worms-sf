@@ -5,53 +5,77 @@
 {% endblock %}
 
 {% block content %}
-
-
     <div class="card row col-lg-4 offset-lg-4">
         <div class="card-header text-center">
-            <h3>{{ 'Rando Weapons Drawing' }}</h3>
+            <h3>{{ 'Random Weapons Drawing' }}</h3>
         </div>
         <div class="card-body row">
             <div>
                 <div class="row text-center">
                     <div class="col-lg-6">
                         <div class="range">
-                            <span>{{ 'min = 1 / max = 10' }}</span>
-                            <label class="form-label">Current: <span id="normalWeaponsCountCurrent">1</span></label>
+                            <span>
+                                {{ 'min = 1 / max = 10' }}
+                            </span>
+                            <label class="form-label">
+                                Current:
+                                <span id="normalWeaponsCountCurrent">
+                                    1
+                                </span>
+                            </label>
                             <input type="range" id="normalWeaponsCount" class="form-range" min="1" max="10"
                                    value="1">
                         </div>
-                        <label for="normalWeaponsCount">{{ "Regular weapons / tools count" }}</label>
+                        <label for="normalWeaponsCount">
+                            {{ "Regular weapons / tools count" }}
+                        </label>
                     </div>
 
                     <div class="col-lg-6">
                         <div class="range">
-                            <span>{{ 'min = 1 / max = 10' }}</span>
-                            <label class="form-label">Current: <span id="craftedWeaponsCountCurrent">1</span></label>
+                            <span>
+                                { 'min = 1 / max = 10' }}
+                            </span>
+                            <label class="form-label">
+                                Current:
+                                <span id="craftedWeaponsCountCurrent">
+                                    1
+                                </span>
+                            </label>
                             <input type="range" id="craftedWeaponsCount" class="form-range" min="1" max="10"
                                    value="1">
                         </div>
-                        <label for="craftedWeaponsCount">{{ "Crafted weapons / tools count" }}</label>
+                        <label for="craftedWeaponsCount">
+                            {{ "Crafted weapons / tools count" }}
+                        </label>
                     </div>
                 </div>
 
                 <div class="row mt-4 text-center">
-                    <p>{{ 'Additional options' }}</p>
+                    <p>
+                        {{ 'Additional options' }}
+                    </p>
                     <div class="col-lg-6">
                         <p>
                             <input type="checkbox" id="includeTools">
-                            <label for="includeTools">{{ "Include tools in drawing" }}</label>
+                            <label for="includeTools">
+                                {{ "Include tools in drawing" }}
+                            </label>
                         </p>
                     </div>
                     <div class="col-lg-6">
                         <p>
                             <input type="checkbox" id="includeOpenMapWeapons">
-                            <label for="includeOpenMapWeapons">{{ "Include open map weapons in drawing" }}</label>
+                            <label for="includeOpenMapWeapons">
+                                {{ "Include open map weapons in drawing" }}
+                            </label>
                         </p>
                     </div>
                 </div>
                 <div class="mt-2 text-center">
-                    <button type="button" id="rollButton" class="btn btn-success">{{ 'Draw' }}</button>
+                    <button type="button" id="rollButton" class="btn btn-success">
+                        {{ 'Draw' }}
+                    </button>
                 </div>
             </div>
         </div>
@@ -59,7 +83,9 @@
     <div class="row text-center">
         <div class="card col-lg-5">
             <div class="card-header">
-                <h2 style="font-weight: 600">{{ 'Regular weapons / tools count' }}</h2>
+                <h2 style="font-weight: 600">
+                    {{ 'Regular weapons / tools count' }}
+                </h2>
             </div>
             <div class="card-body row">
                 <div class="col-lg-12">
@@ -70,7 +96,9 @@
         </div>
         <div class="card col-lg-5 offset-lg-2">
             <div class="card-header">
-                <h2 style="font-weight: 600">{{ 'Crafted weapons / tools count' }}</h2>
+                <h2 style="font-weight: 600">
+                    {{ 'Crafted weapons / tools count' }}
+                </h2>
             </div>
             <div class="card-body row">
                 <p id="craftedWeapons" style="color: lightsalmon">
@@ -87,14 +115,14 @@
 
         const events = ['change']
 
-        $.each(events, function(k,v) {
-            $('#craftedWeaponsCount').on(v, function() {
+        $.each(events, function (k, v) {
+            $('#craftedWeaponsCount').on(v, function () {
                 $('#craftedWeaponsCountCurrent').text($('#craftedWeaponsCount').val());
             });
         })
 
-        $.each(events, function(k,v) {
-            $('#normalWeaponsCount').on(v, function() {
+        $.each(events, function (k, v) {
+            $('#normalWeaponsCount').on(v, function () {
                 $('#normalWeaponsCountCurrent').text($('#normalWeaponsCount').val());
             });
         })

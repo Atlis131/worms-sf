@@ -3,25 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Weapons;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityRepository;
 
-/**
- * @extends ServiceEntityRepository<Weapons>
- *
- * @method Weapons|null find($id, $lockMode = null, $lockVersion = null)
- * @method Weapons|null findOneBy(array $criteria, array $orderBy = null)
- * @method Weapons[]    findAll()
- * @method Weapons[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
-class WeaponsRepository extends ServiceEntityRepository
+class WeaponsRepository extends EntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Weapons::class);
-    }
-
-    public function findAllWeapons(bool $includeTools, $includeOpenMapWeapons)
+    public function findAllWeapons($includeTools, $includeOpenMapWeapons)
     {
         $qb = $this->createQueryBuilder('weapons')
             ->select('w')
@@ -32,7 +18,7 @@ class WeaponsRepository extends ServiceEntityRepository
                 ->andWhere('w.isTool in (0,1)');
         } else {
             $qb = $qb
-                ->andWhere('w.isTool = 0') ;
+                ->andWhere('w.isTool = 0');
         }
 
         if ($includeOpenMapWeapons) {
@@ -40,7 +26,7 @@ class WeaponsRepository extends ServiceEntityRepository
                 ->andWhere('w.isOpenMapWeapon in (0,1)');
         } else {
             $qb = $qb
-                ->andWhere('w.isOpenMapWeapon = 0') ;
+                ->andWhere('w.isOpenMapWeapon = 0');
         }
 
         $qb = $qb

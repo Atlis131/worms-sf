@@ -27,19 +27,19 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('name', TextType::class, [
-                'label' => 'Imie',
+                'label' => 'Name',
                 'attr'     => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('surname', TextType::class, [
-                'label' => 'Nazwisko',
+                'label' => 'Last name',
                 'attr'     => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('roles', ChoiceType::class, [
-                'label' => 'Uprawnienia',
+                'label' => 'Roles',
                 'choices' => [
                     'Administrator' => 'ROLE_ADMIN',
                     'User' => 'ROLE_USER'
@@ -49,7 +49,7 @@ class UserType extends AbstractType
             ]);
 
         $builder->add('save', SubmitType::class, [
-            'label' => 'Zapisz',
+            'label' => 'Save',
             'attr' => [
                 'class' => 'btn btn-primary'
             ]
