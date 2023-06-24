@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    <title>{{ 'Lista wszystkich broni' }}</title>
+    <title>{{ 'All weapons / tools list' }}</title>
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid p-0">
-        <h1 class="h3 mb-3">{{ 'Lista broni' }}</h1>
+        <h1 class="h3 mb-3">{{ 'All weapons / tools list' }}</h1>
 
         <div class="row">
             <div class="col-12">
@@ -18,13 +18,13 @@
                             <thead>
                             <tr>
                                 <th>{{ 'Id' }}</th>
-                                <th>{{ 'Ikona' }}</th>
-                                <th>{{ 'Nazwa' }}</th>
-                                <th>{{ 'Typ' }}</th>
-                                <th>{{ 'Narzędzie?' }}</th>
-                                <th>{{ 'Na otwartą mape?' }}</th>
+                                <th>{{ 'Icon' }}</th>
+                                <th>{{ 'Name' }}</th>
+                                <th>{{ 'Type' }}</th>
+                                <th>{{ 'Tool?' }}</th>
+                                <th>{{ 'Open map?' }}</th>
                                 {% if is_granted('ROLE_ADMIN') %}
-                                    <th>{{ 'Akcje' }}</th>
+                                    <th>{{ 'Actions' }}</th>
                                 {% endif %}
                             </tr>
                             </thead>
@@ -42,29 +42,29 @@
                                     </td>
                                     <td>
                                         {% if weapon.type == 0 %}
-                                            <span class="btn-primary btn" style="cursor: default"> {{ 'Normalna' }} </span>
+                                            <span class="btn-primary btn" style="cursor: default"> {{ 'Regular' }} </span>
                                         {% elseif weapon.type == 1 %}
-                                            <span class="btn-secondary btn" style="cursor: default"> {{ 'Wytworzona' }} </span>
+                                            <span class="btn-secondary btn" style="cursor: default"> {{ 'Crafted' }} </span>
                                         {% endif %}
                                     </td>
                                     <td>
                                         {% if weapon.isTool == 0 %}
-                                            <span class="btn-danger btn" style="cursor: default">{{ 'Nie' }} </span>
+                                            <span class="btn-danger btn" style="cursor: default">{{ 'No' }} </span>
                                         {% else %}
-                                            <span class="btn-success btn" style="cursor: default"> {{ 'Tak' }} </span>
+                                            <span class="btn-success btn" style="cursor: default"> {{ 'Yes' }} </span>
                                         {% endif %}
                                     </td>
                                     <td>
                                         {% if weapon.isOpenMapWeapon == 0 %}
-                                            <span class="btn-danger btn" style="cursor: default">{{ 'Nie' }} </span>
+                                            <span class="btn-danger btn" style="cursor: default">{{ 'No' }} </span>
                                         {% else %}
-                                            <span class="btn-success btn" style="cursor: default"> {{ 'Tak' }} </span>
+                                            <span class="btn-success btn" style="cursor: default"> {{ 'Yes' }} </span>
                                         {% endif %}
                                     </td>
                                     {% if is_granted('ROLE_ADMIN') %}
                                         <td>
                                             <a href="{{ path('weapons_edit', {'weaponId': weapon.id}) }}"
-                                               class="btn btn-primary">{{ 'Edytuj' }}</a>
+                                               class="btn btn-primary">{{ 'Edit' }}</a>
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -83,9 +83,6 @@
     {{ parent() }}
     <script>
         $('#example').DataTable({
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pl.json',
-            },
             responsive: true
         });
     </script>

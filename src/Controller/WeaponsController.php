@@ -66,7 +66,7 @@ class WeaponsController extends AbstractController
                 $request
                     ->getSession()
                     ->getFlashBag()
-                    ->add('success', 'Poprawnie zaktualizowano broń');
+                    ->add('success', 'Succesfully changed weapon');
 
                 return $this->redirectToRoute('weapons_list');
             }

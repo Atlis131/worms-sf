@@ -1,26 +1,26 @@
 {% extends 'base_auth.html.twig' %}
 
 {% block title %}
-    <title>{{ 'Losowanie broni do trybu' }}</title>
+    <title>{{ 'Log in to system' }}</title>
 {% endblock %}
 
 {% block security_content %}
     <div class="mb-2 text-center">
-        <a href="{{ path('homepage') }}">{{ 'Powrót do strony głównej' }}</a>
+        <a href="{{ path('homepage') }}">{{ 'Back to homepage' }}</a>
     </div>
     <form class="m-t" role="form" method="post">
         <div class="mb-3">
             <label class="form-label">{{ 'Email' }}</label>
-            <input class="form-control form-control-lg" type="email" name="_username" placeholder="Wpisz email"/>
+            <input class="form-control form-control-lg" type="email" name="_username" placeholder="Enter e-mail"/>
         </div>
         <div class="mb-3">
-            <label class="form-label">{{ 'Hasło' }}</label>
+            <label class="form-label">{{ 'Password' }}</label>
             <input class="form-control form-control-lg" type="password" name="_password"
-                   placeholder="Wpisz hasło"/>
+                   placeholder="Enter password"/>
         </div>
         <div class="mb-3">
             <input type="checkbox" id="remember_me" name="_remember_me" class="i-checks remember-me-checks"/>
-            <label for="remember_me" style="padding-left:10px;">{{ 'Zapamiętaj mnie' }}</label>
+            <label for="remember_me" style="padding-left:10px;">{{ 'Remember me!' }}</label>
         </div>
 
         <input type="hidden" name="_csrf_token"
@@ -40,7 +40,7 @@
                 {% endfor %}
             {% endfor %}
         {% endif %}
-        <button type="submit" class="btn btn-primary block full-width m-b">{{ 'Zaloguj' }}</button>
+        <button type="submit" class="btn btn-primary block full-width m-b">{{ 'Log in' }}</button>
     </form>
 {% endblock %}
 

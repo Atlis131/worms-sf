@@ -53,7 +53,7 @@ class UserController extends AbstractController
                 $request
                     ->getSession()
                     ->getFlashBag()
-                    ->add('success', 'Poprawnie zaktualizowano użytkownika');
+                    ->add('success', 'Succesfully changed user');
 
                 return $this->redirectToRoute('user_list');
             }

@@ -6,28 +6,28 @@
 
         <ul class="sidebar-nav">
             <li class="sidebar-header">
-                Narzędzia
+                Tools
             </li>
             <li class="sidebar-item {{ 'weapons_random' in app.request.get('_route') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ path('weapons_random') }}">
                     <i class="align-middle" data-feather="sliders"></i> <span
-                            class="align-middle">{{ 'Losowanie' }}</span>
+                            class="align-middle">{{ 'Weapons Drawing' }}</span>
                 </a>
             </li>
             <li class="sidebar-item {{ 'weapons_list' in app.request.get('_route') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ path('weapons_list') }}">
                     <i class="align-middle" data-feather="list"></i> <span
-                            class="align-middle">{{ 'Lista broni / narzędzi' }}</span>
+                            class="align-middle">{{ 'Weapons / Tools list' }}</span>
                 </a>
             </li>
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="sidebar-header">
-                    Administracja
+                    Administration
                 </li>
                 <li class="sidebar-item {{ 'user_list' in app.request.get('_route') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ path('user_list') }}">
                         <i class="align-middle" data-feather="list"></i> <span
-                                class="align-middle">{{ 'Użytkownicy' }}</span>
+                                class="align-middle">{{ 'Users' }}</span>
                     </a>
                 </li>
             {% endif %}

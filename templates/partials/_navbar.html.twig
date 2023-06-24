@@ -12,15 +12,15 @@
                     </a>
                     <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
                        data-bs-toggle="dropdown">
-                        <span class="text-dark">{{ 'Zalogowany jako: ' ~ app.user.name }}</span>
+                        <span class="text-dark">{{ 'Logged in as: ' ~ app.user.name }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="{{ path('logout') }}">{{ 'Wyloguj' }}</a>
+                        <a class="dropdown-item" href="{{ path('logout') }}">{{ 'Logout' }}</a>
                     </div>
                 </li>
             {% else %}
                 <a href="{{ path('login') }}"
-                   class="text-dark">{{ 'Zaloguj sie aby odblokować dostęp do pełnego systemu' }}</a>
+                   class="text-dark">{{ 'Log in' }}</a>
             {% endif %}
         </ul>
     </div>
