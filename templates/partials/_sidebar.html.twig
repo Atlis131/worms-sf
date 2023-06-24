@@ -1,0 +1,36 @@
+<nav id="sidebar" class="sidebar js-sidebar">
+    <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" href="{{ path('homepage') }}">
+            <span class="align-middle">{{ 'Worms toolkit' }}</span>
+        </a>
+
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Narzędzia
+            </li>
+            <li class="sidebar-item {{ 'weapons_random' in app.request.get('_route') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ path('weapons_random') }}">
+                    <i class="align-middle" data-feather="sliders"></i> <span
+                            class="align-middle">{{ 'Losowanie' }}</span>
+                </a>
+            </li>
+            <li class="sidebar-item {{ 'weapons_list' in app.request.get('_route') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ path('weapons_list') }}">
+                    <i class="align-middle" data-feather="list"></i> <span
+                            class="align-middle">{{ 'Lista broni / narzędzi' }}</span>
+                </a>
+            </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="sidebar-header">
+                    Administracja
+                </li>
+                <li class="sidebar-item {{ 'user_list' in app.request.get('_route') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ path('user_list') }}">
+                        <i class="align-middle" data-feather="list"></i> <span
+                                class="align-middle">{{ 'Użytkownicy' }}</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,49 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}
+    <title>{{ 'Losowanie broni do trybu' }}</title>
+{% endblock %}
+
+{% block security_content %}
+    <div class="mb-2 text-center">
+        <a href="{{ path('homepage') }}">{{ 'Powrót do strony głównej' }}</a>
+    </div>
+    <form class="m-t" role="form" method="post">
+        <div class="mb-3">
+            <label class="form-label">{{ 'Email' }}</label>
+            <input class="form-control form-control-lg" type="email" name="_username" placeholder="Wpisz email"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">{{ 'Hasło' }}</label>
+            <input class="form-control form-control-lg" type="password" name="_password"
+                   placeholder="Wpisz hasło"/>
+        </div>
+        <div class="mb-3">
+            <input type="checkbox" id="remember_me" name="_remember_me" class="i-checks remember-me-checks"/>
+            <label for="remember_me" style="padding-left:10px;">{{ 'Zapamiętaj mnie' }}</label>
+        </div>
+
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
+        {% if error %}
+            <div class="mb-3">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
+        {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert alert-info">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        <button type="submit" class="btn btn-primary block full-width m-b">{{ 'Zaloguj' }}</button>
+    </form>
+{% endblock %}
+
+{% block javascripts_bottom %}
+    {{ parent() }}
+{% endblock %}

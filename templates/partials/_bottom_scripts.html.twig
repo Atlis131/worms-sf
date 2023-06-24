@@ -1,0 +1,17 @@
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+<script src="{{ asset('assets/js/app.js') }}"></script>
+
+{% if app.session.flashbag.peekAll()|length %}
+    <script>
+        $(document).ready(function () {
+            {% for type, messages in app.session.flashbag.all() %}
+            {% for msg in messages %}
+            toastr.{{ type }}("{{ msg|trans }}", '');
+            {% endfor %}
+        });
+    </script>
+    {% endfor %}
+{% endif %}

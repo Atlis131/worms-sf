@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>{{ 'Lista wszystkich broni' }}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">{{ 'Lista broni' }}</h1>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                    </div>
+                    <div class="card-body row">
+                        <table id="example" class="display responsive nowrap" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>{{ 'Id' }}</th>
+                                <th>{{ 'Ikona' }}</th>
+                                <th>{{ 'Nazwa' }}</th>
+                                <th>{{ 'Typ' }}</th>
+                                <th>{{ 'Narzędzie?' }}</th>
+                                <th>{{ 'Na otwartą mape?' }}</th>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <th>{{ 'Akcje' }}</th>
+                                {% endif %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for weapon in weapons %}
+                                <tr>
+                                    <td>{{ weapon.id }}</td>
+                                    <td>
+                                        {% if weapon.imageName != '' %}
+                                            <img src="{{ asset('images/weapons/' ~ weapon.imageName ~ '.png') }}" height='40px'>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ weapon.name }}
+                                    </td>
+                                    <td>
+                                        {% if weapon.type == 0 %}
+                                            <span class="btn-primary btn" style="cursor: default"> {{ 'Normalna' }} </span>
+                                        {% elseif weapon.type == 1 %}
+                                            <span class="btn-secondary btn" style="cursor: default"> {{ 'Wytworzona' }} </span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if weapon.isTool == 0 %}
+                                            <span class="btn-danger btn" style="cursor: default">{{ 'Nie' }} </span>
+                                        {% else %}
+                                            <span class="btn-success btn" style="cursor: default"> {{ 'Tak' }} </span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if weapon.isOpenMapWeapon == 0 %}
+                                            <span class="btn-danger btn" style="cursor: default">{{ 'Nie' }} </span>
+                                        {% else %}
+                                            <span class="btn-success btn" style="cursor: default"> {{ 'Tak' }} </span>
+                                        {% endif %}
+                                    </td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <td>
+                                            <a href="{{ path('weapons_edit', {'weaponId': weapon.id}) }}"
+                                               class="btn btn-primary">{{ 'Edytuj' }}</a>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block javascripts_bottom %}
+    {{ parent() }}
+    <script>
+        $('#example').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pl.json',
+            },
+            responsive: true
+        });
+    </script>
+{% endblock %}

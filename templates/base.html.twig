@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+    {% block title %}
+        <title>{{ 'Worms toolkit' }}</title>
+    {% endblock %}
+
+    {% include 'partials/_header.html.twig' %}
+</head>
+<body>
+<div class="wrapper">
+    {% include 'partials/_sidebar.html.twig' %}
+
+    <div class="main">
+        {% include 'partials/_navbar.html.twig' %}
+
+        <main class="content">
+            {% block content %} {% endblock %}
+        </main>
+    </div>
+</div>
+
+{% include 'partials/_bottom_scripts.html.twig' %}
+
+{% block javascripts_bottom %}
+{% endblock %}
+</body>
+</html>
