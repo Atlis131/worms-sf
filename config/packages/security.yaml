@@ -20,11 +20,11 @@ security:
       security: false
     main:
       pattern: ^/
-      user_checker: App\Security\UserChecker
+      user_checker: App\Controller\Security\UserChecker
       lazy: true
       provider: app_user_provider
       custom_authenticator:
-        - App\Security\LoginFormAuthenticator
+        - App\Controller\Security\LoginFormAuthenticator
       logout:
         path: logout
         target: login
@@ -43,6 +43,7 @@ security:
   # Note: Only the *first* access control that matches will be used
   access_control:
     - { path: ^/weapons/edit, roles: ROLE_ADMIN }`
+    - { path: ^/weapons/settings, roles: ROLE_ADMIN }`
     - { path: ^/user/edit, roles: ROLE_ADMIN }`
     - { path: ^/user/list, roles: ROLE_ADMIN }`
 

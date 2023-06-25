@@ -14,16 +14,12 @@
                 <div class="row text-center">
                     <div class="col-lg-6">
                         <div class="range">
-                            <span>
-                                {{ 'min = 1 / max = 10' }}
-                            </span>
                             <label class="form-label">
-                                Current:
-                                <span id="normalWeaponsCountCurrent">
+                                <span id="normalWeaponsCountCurrent" class="btn btn-success">
                                     1
                                 </span>
                             </label>
-                            <input type="range" id="normalWeaponsCount" class="form-range" min="1" max="10"
+                            <input type="range" id="normalWeaponsCount" class="form-range" min="1" max="12"
                                    value="1">
                         </div>
                         <label for="normalWeaponsCount">
@@ -33,16 +29,12 @@
 
                     <div class="col-lg-6">
                         <div class="range">
-                            <span>
-                                {{ 'min = 1 / max = 10' }}
-                            </span>
                             <label class="form-label">
-                                Current:
-                                <span id="craftedWeaponsCountCurrent">
+                                <span id="craftedWeaponsCountCurrent" class="btn btn-success">
                                     1
                                 </span>
                             </label>
-                            <input type="range" id="craftedWeaponsCount" class="form-range" min="1" max="10"
+                            <input type="range" id="craftedWeaponsCount" class="form-range" min="1" max="12"
                                    value="1">
                         </div>
                         <label for="craftedWeaponsCount">
@@ -83,8 +75,8 @@
     <div class="row text-center">
         <div class="card col-lg-6 offset-lg-3">
             <div class="card-header">
-                <h2 style="font-weight: 600">
-                    {{ 'Regular weapons / tools' }}
+                <h2 style="font-weight: 600" id="regularWeaponsHeader">
+                    {{ 'Regular weapons & tools' }}
                 </h2>
             </div>
             <div class="card-body row" id="normalWeapons"></div>
@@ -93,8 +85,8 @@
     <div class="row text-center">
         <div class="card col-lg-6 offset-lg-3">
             <div class="card-header">
-                <h2 style="font-weight: 600">
-                    {{ 'Crafted weapons / tools' }}
+                <h2 style="font-weight: 600" id="craftedWeaponsHeader">
+                    {{ 'Crafted weapons & tools' }}
                 </h2>
             </div>
             <div class="card-body row" id="craftedWeapons"></div>
@@ -106,6 +98,16 @@
 {% block javascripts_bottom %}
     {{ parent() }}
     <script>
+
+        function createWeaponEntry(weapon, parent) {
+            let html = "";
+            html += "<div class='col-lg-4 mb-1' style='text-align: left'>";
+            html += "<img width='35px' src='" + weapon.image + "'>";
+            html += "<span style='margin-left:5px; font-size:15px'>" + weapon.name + "</span>";
+            html += "</div>";
+
+            parent.append(html);
+        }
 
         const events = ['change']
 
@@ -126,6 +128,14 @@
             let countCrafted = $('#craftedWeaponsCount').val();
             let includeTools = $('#includeTools').is(":checked");
             let includeOpenMapWeapons = $('#includeOpenMapWeapons').is(":checked");
+
+            if (includeTools) {
+                $('#craftedWeaponsHeader').text('Crafted weapons & tools');
+                $('#regularWeaponsHeader').text('Regular weapons & tools');
+            } else {
+                $('#craftedWeaponsHeader').text('Crafted weapons');
+                $('#regularWeaponsHeader').text('Regular weapons');
+            }
 
             let settings = {
                 'url': "{{ path('weapons_random_get') }}",
@@ -149,23 +159,11 @@
                     let normalWeapons = response.normalWeapons;
 
                     $.each(craftedWeapons, function (i, l) {
-                        let html = "";
-                        html += "<div class='col-lg-4 offset-5 mb-1' style='text-align: left'>";
-                        html += "<img width='35px' src='" + l.image + "'>";
-                        html += "<span style='margin-left:5px; font-size:15px'>" + l.name + "</span>";
-                        html += "</div>";
-
-                        craftedWeaponsEl.append(html);
+                        createWeaponEntry(l, craftedWeaponsEl);
                     });
 
                     $.each(normalWeapons, function (i, l) {
-                        let html = "";
-                        html += "<div class='col-lg-4 offset-5 mb-1' style='text-align: left'>";
-                        html += "<img width='35px' src='" + l.image + "'>";
-                        html += "<span style='margin-left:5px; font-size:15px'>" + l.name + "</span>";
-                        html += "</div>";
-
-                        normalWeaponsEl.append(html);
+                        createWeaponEntry(l, normalWeaponsEl);
                     });
                 });
         });

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\User;
 
 use App\Entity\User;
 use App\Form\UserType;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UserController extends AbstractController
+class EditController extends AbstractController
 {
     private EntityManagerInterface $em;
 
@@ -19,18 +19,6 @@ class UserController extends AbstractController
     )
     {
         $this->em = $em;
-    }
-
-    /**
-     * @Route("/user/list", name="user_list")
-     */
-    public function index(): Response
-    {
-        $users = $this->em->getRepository(User::class)->findAll();
-
-        return $this->render('pages/user/list.html.twig', [
-            'users' => $users
-        ]);
     }
 
     /**

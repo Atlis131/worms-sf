@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security;
+namespace App\Controller\Security;
 
 use App\Entity\User;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;

@@ -13,7 +13,7 @@ class RandomWeaponsService
 
     public function __construct(
         EntityManagerInterface $em,
-        Container $container
+        Container              $container
     )
     {
         $this->em = $em;
@@ -27,8 +27,7 @@ class RandomWeaponsService
         $includeTools = $request->get('includeTools');
         $includeOpenMapWeapons = $request->get('includeOpenMapWeapons');
 
-        $craftedWeapons = [];
-        $normalWeapons = [];
+        $craftedWeapons = $normalWeapons = [];
 
         $weapons = $this->getWeaponNames($includeTools, $includeOpenMapWeapons);
 
@@ -36,7 +35,7 @@ class RandomWeaponsService
             $index = rand(0, count($weapons['craftedWeapons']) - 1);
 
             $craftedWeapons[] = [
-                'name' => $weapons['craftedWeapons'][$index]->getName(),
+                'name'  => $weapons['craftedWeapons'][$index]->getName(),
                 'image' => $this->container->getParameter('base_url') . '/images/weapons/' . $weapons['craftedWeapons'][$index]->getImageName() . '.png'
             ];
 
@@ -48,16 +47,17 @@ class RandomWeaponsService
             $index = rand(0, count($weapons['normalWeapons']) - 1);
 
             $normalWeapons[] = [
-                'name' => $weapons['normalWeapons'][$index]->getName(),
+                'name'  => $weapons['normalWeapons'][$index]->getName(),
                 'image' => $this->container->getParameter('base_url') . '/images/weapons/' . $weapons['normalWeapons'][$index]->getImageName() . '.png'
             ];
+
             unset($weapons['normalWeapons'][$index]);
             $weapons['normalWeapons'] = array_values($weapons['normalWeapons']);
         }
 
         return [
             'craftedWeapons' => $craftedWeapons,
-            'normalWeapons' => $normalWeapons
+            'normalWeapons'  => $normalWeapons
         ];
     }
 
@@ -78,7 +78,7 @@ class RandomWeaponsService
 
         return [
             'craftedWeapons' => $craftedWeapons,
-            'normalWeapons' => $normalWeapons
+            'normalWeapons'  => $normalWeapons
         ];
     }
 

@@ -21,59 +21,9 @@
                                 <th>{{ 'Type' }}</th>
                                 <th>{{ 'Tool?' }}</th>
                                 <th>{{ 'Open map?' }}</th>
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <th>{{ 'Actions' }}</th>
-                                {% endif %}
                             </tr>
                             </thead>
-                            <tbody>
-                            {% for weapon in weapons %}
-                                <tr>
-                                    <td>
-                                        {{ weapon.id }}
-                                    </td>
-                                    <td>
-                                        {% if weapon.imageName != '' %}
-                                            <img src="{{ asset('images/weapons/' ~ weapon.imageName ~ '.png') }}" height='40px'>
-                                        {% endif %}
-                                        {{ weapon.name }}
-                                    </td>
-                                    <td>
-                                        <div class="toggleSettings" data-weaponId="{{ weapon.id }}" data-settingName="type">
-                                            {% if weapon.type == 0 %}
-                                                <span class="btn-primary btn" style="cursor: hand"> {{ 'Regular' }} </span>
-                                            {% elseif weapon.type == 1 %}
-                                                <span class="btn-secondary btn" style="cursor: hand"> {{ 'Crafted' }} </span>
-                                            {% endif %}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="toggleSettings" data-weaponId="{{ weapon.id }}" data-settingName="tool">
-                                            {% if weapon.isTool == 0 %}
-                                                <span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>
-                                            {% else %}
-                                                <span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>
-                                            {% endif %}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="toggleSettings" data-weaponId="{{ weapon.id }}" data-settingName="openMapWeapon">
-                                            {% if weapon.isOpenMapWeapon == 0 %}
-                                                <span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>
-                                            {% else %}
-                                                <span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>
-                                            {% endif %}
-                                        </div>
-                                    </td>
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                        <td>
-                                            <a href="{{ path('weapons_edit', {'weaponId': weapon.id}) }}"
-                                               class="btn btn-primary">{{ 'Edit' }}</a>
-                                        </td>
-                                    {% endif %}
-                                </tr>
-                            {% endfor %}
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
@@ -87,14 +37,83 @@
     {{ parent() }}
     <script>
         $(document).ready(function () {
-            // @TODO: Change Datatable to ServerSideRendering.
-            var table = $('#weaponsList').DataTable({
+            let table = $('#weaponsList').DataTable({
                 responsive: true,
                 stateSave: true,
+                serverSide: true,
+                retrieve: true,
+                paginate: true,
+                searching: false,
+                ajax: {
+                    url: "{{ path('weapons_list_data') }}",
+                    type: 'POST'
+                },
+                columns: [
+                    {
+                        "data": "id",
+                    },
+                    {
+                        "data": "name",
+                        'render': function (data) {
+                            let html = "";
+                            html += "<img src='" + data.image + "' height='40px'>"
+                            html += "<span style='margin-left:5px'>" + data.name + "</span>"
+
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "type",
+                        'render': function (data) {
+                            let html = "";
+                            html += '<div class="toggleSettings" data-weaponId="' + data.id + '" data-settingName="type">'
+                            if (data.type == 0) {
+                                html += '<span class="btn-primary btn" style="cursor: hand"> {{ 'Regular' }} </span>';
+                            } else {
+                                html += '<span class="btn-secondary btn" style="cursor: hand"> {{ 'Crafted' }} </span>';
+                            }
+                            html += "</div>";
+
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "isTool",
+                        'render': function (data) {
+                            let html = "";
+                            html += '<div class="toggleSettings" data-weaponId="' + data.id + '" data-settingName="tool">'
+                            if (data.isTool) {
+                                html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
+                            } else {
+                                html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
+                            }
+                            html += "</div>";
+
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "isOpenMapWeapon",
+                        'render': function (data) {
+                            let html = "";
+                            html += '<div class="toggleSettings" data-weaponId="' + data.id + '" data-settingName="openMapWeapon">'
+                            if (data.isOpenMapWeapon) {
+                                html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
+                            } else {
+                                html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
+                            }
+                            html += "</div>";
+
+                            return html;
+                        }
+                    }
+                ]
             });
 
             {% if is_granted("ROLE_ADMIN") %}
-            $('.toggleSettings').on('click', function () {
+
+            $(document).on('click', '.toggleSettings', function (e) {
+                console.log('a');
                 let weaponId = $(this).data('weaponid');
                 let settingName = $(this).data('settingname');
 
@@ -108,11 +127,10 @@
                 }
                 $.ajax(settings)
                     .done(function () {
-                        window.location.reload();
+                        table.ajax.reload();
                     });
             });
             {% endif %}
-
         });
     </script>
 {% endblock %}
