@@ -2,7 +2,7 @@
 
 namespace App\Datatables;
 
-use App\Entity\Weapons;
+use App\Entity\Weapon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
@@ -27,7 +27,7 @@ class WeaponsDatatable
     {
         $this->processRequest($request);
 
-        $weaponsRepository = $this->em->getRepository(Weapons::class);
+        $weaponsRepository = $this->em->getRepository(Weapon::class);
 
         $weaponsCount = $weaponsRepository->getWeaponsCount();
         $filteredWeaponsCount = $weaponsRepository->getWeaponsCount();

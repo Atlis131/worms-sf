@@ -21,9 +21,15 @@
 
                         {{ form_row(form.surname) }}
 
-                        <p>
-                            {{ form_row(form.roles) }}
-                        </p>
+                        <div class="col-lg-12 row mt-3 mb-3">
+                            {{ form_label(form.roles) }}
+                            {% for role in form.roles %}
+                                <div class="col-lg-2 mt-3">
+                                    {{ form_widget(role) }}
+                                    <span>{{ form_label(role) }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
 
                         {{ form_row(form.save) }}
 

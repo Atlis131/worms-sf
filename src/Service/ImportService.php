@@ -2,27 +2,27 @@
 
 namespace App\Service;
 
-use App\Entity\Weapons;
+use App\Entity\Weapon;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class ImportService
 {
     private EntityManagerInterface $em;
-    private KernelInterface $kernel;
+    private Container $container;
 
     public function __construct(
         EntityManagerInterface $em,
-        KernelInterface        $kernel
+        Container              $container
     )
     {
         $this->em = $em;
-        $this->kernel = $kernel;
+        $this->container = $container;
     }
 
     public function import(): void
     {
-        $fileName = $this->kernel->getProjectDir() . '/public/files/weapons.txt';
+        $fileName = $this->container->getParameter('base_url') . '/files/weapons.txt';
         $allWeapons = fopen($fileName, 'r+');
 
         while (!feof($allWeapons)) {
@@ -32,13 +32,13 @@ class ImportService
             $weaponName = trim($weaponName);
             $type = str_contains($line, '*'); // 1 - crafted, 0 - normal
 
-            $weapon = $this->em->getRepository(Weapons::class)->findOneBy([
+            $weapon = $this->em->getRepository(Weapon::class)->findOneBy([
                 'name' => $weaponName,
                 'type' => $type
             ]);
 
             if (!$weapon) {
-                $weapon = new Weapons();
+                $weapon = new Weapon();
 
                 $weapon
                     ->setType($type)

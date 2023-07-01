@@ -2,7 +2,7 @@
 
 namespace App\Controller\Weapons;
 
-use App\Entity\Weapons;
+use App\Entity\Weapon;
 use App\Form\WeaponsType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,7 +27,7 @@ class EditController extends AbstractController
      */
     public function edit($weaponId, Request $request): Response
     {
-        $weapon = $this->em->getRepository(Weapons::class)->findOneBy([
+        $weapon = $this->em->getRepository(Weapon::class)->findOneBy([
             'id' => $weaponId
         ]);
 
@@ -61,7 +61,7 @@ class EditController extends AbstractController
         $weaponId = $request->get('weaponId');
         $settingName = $request->get('settingName');
 
-        $weapon = $this->em->getRepository(Weapons::class)->findOneBy([
+        $weapon = $this->em->getRepository(Weapon::class)->findOneBy([
             'id' => $weaponId
         ]);
 

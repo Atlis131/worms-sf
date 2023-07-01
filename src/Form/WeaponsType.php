@@ -78,7 +78,7 @@ class WeaponsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\Weapons'
+            'data_class' => 'Weapon'
         ]);
     }
 

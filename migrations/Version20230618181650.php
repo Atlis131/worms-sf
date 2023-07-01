@@ -20,12 +20,12 @@ final class Version20230618181650 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE weapons ADD is_tool TINYINT(1) DEFAULT FALSE');
+        $this->addSql('ALTER TABLE weapon ADD is_tool TINYINT(1) DEFAULT FALSE');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE weapons DROP is_tool');
+        $this->addSql('ALTER TABLE weapon DROP is_tool');
     }
 }

@@ -5,10 +5,10 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\WeaponsRepository")
- * @ORM\Table(name="weapons")
+ * @ORM\Entity(repositoryClass="App\Repository\WeaponRepository")
+ * @ORM\Table(name="weapon")
  */
-class Weapons
+class Weapon
 {
     /**
      * @ORM\Id
@@ -69,9 +69,9 @@ class Weapons
 
     /**
      * @param string|null $imageName
-     * @return Weapons
+     * @return Weapon
      */
-    public function setImageName(?string $imageName): Weapons
+    public function setImageName(?string $imageName): Weapon
     {
         $this->imageName = $imageName;
         return $this;
@@ -99,9 +99,9 @@ class Weapons
 
     /**
      * @param bool|null $isTool
-     * @return Weapons
+     * @return Weapon
      */
-    public function setIsTool(?bool $isTool): Weapons
+    public function setIsTool(?bool $isTool): Weapon
     {
         $this->isTool = $isTool;
         return $this;
@@ -117,9 +117,9 @@ class Weapons
 
     /**
      * @param bool|null $isOpenMapWeapon
-     * @return Weapons
+     * @return Weapon
      */
-    public function setIsOpenMapWeapon(?bool $isOpenMapWeapon): Weapons
+    public function setIsOpenMapWeapon(?bool $isOpenMapWeapon): Weapon
     {
         $this->isOpenMapWeapon = $isOpenMapWeapon;
         return $this;

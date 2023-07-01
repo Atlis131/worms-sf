@@ -3,8 +3,6 @@
 namespace App\Controller\Weapons;
 
 use App\Datatables\WeaponsDatatable;
-use App\Entity\Weapons;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

@@ -20,12 +20,12 @@ final class Version20230623210721 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE weapons ADD is_open_map_weapon TINYINT(1) DEFAULT 0 NOT NULL, CHANGE is_tool is_tool TINYINT(1) DEFAULT 0 NOT NULL');
+        $this->addSql('ALTER TABLE weapon ADD is_open_map_weapon TINYINT(1) DEFAULT 0 NOT NULL, CHANGE is_tool is_tool TINYINT(1) DEFAULT 0 NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE weapons DROP is_open_map_weapon, CHANGE is_tool is_tool TINYINT(1) DEFAULT 0');
+        $this->addSql('ALTER TABLE weapon DROP is_open_map_weapon, CHANGE is_tool is_tool TINYINT(1) DEFAULT 0');
     }
 }

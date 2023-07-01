@@ -2,12 +2,12 @@
 
 namespace App\Repository;
 
-use App\Entity\Weapons;
+use App\Entity\Weapon;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class WeaponsRepository extends EntityRepository
+class WeaponRepository extends EntityRepository
 {
     private EntityManagerInterface $em;
 
@@ -24,7 +24,7 @@ class WeaponsRepository extends EntityRepository
 
         $qb
             ->select('w')
-            ->from(Weapons::class, 'w');
+            ->from(Weapon::class, 'w');
 
         if ($includeTools) {
             $qb = $qb
@@ -60,7 +60,7 @@ class WeaponsRepository extends EntityRepository
 
         $qb
             ->select('count(w.id)')
-            ->from(Weapons::class, 'w');
+            ->from(Weapon::class, 'w');
 
         $qb = $qb
             ->getQuery();
@@ -79,7 +79,7 @@ class WeaponsRepository extends EntityRepository
             ->addSelect('w.type as type')
             ->addSelect('w.isOpenMapWeapon as isOpenMapWeapon')
             ->addSelect('w.imageName as imageName')
-            ->from(Weapons::class, 'w');
+            ->from(Weapon::class, 'w');
 
         $qb = $qb
             ->orderBy('w.' . $order['column'], strtoupper($order['dir']))

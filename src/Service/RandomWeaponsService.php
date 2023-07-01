@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Entity\Weapons;
+use App\Entity\Weapon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
@@ -85,7 +85,7 @@ class RandomWeaponsService
 
     private function getWeaponNames($includeTools, $includeOpenMapWeapons, $includeSentryGuns): array
     {
-        $allWeapons = $this->em->getRepository(Weapons::class)->findAllWeapons(
+        $allWeapons = $this->em->getRepository(Weapon::class)->findAllWeapons(
             $includeTools,
             $includeOpenMapWeapons,
             $includeSentryGuns
