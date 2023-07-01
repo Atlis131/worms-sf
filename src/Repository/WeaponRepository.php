@@ -54,7 +54,7 @@ class WeaponRepository extends EntityRepository
         return $qb->getResult();
     }
 
-    public function getWeaponsCount()
+    public function getWeaponsCount($search)
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -62,13 +62,19 @@ class WeaponRepository extends EntityRepository
             ->select('count(w.id)')
             ->from(Weapon::class, 'w');
 
+        if (!is_null($search)) {
+            $qb = $qb
+                ->andWhere('w.name like :phrase')
+                ->setParameter('phrase', '%' . $search . '%');
+        }
+
         $qb = $qb
             ->getQuery();
 
         return $qb->getSingleScalarResult();
     }
 
-    public function getWeaponsList($firstRecord, $recordsCount, $order)
+    public function getWeaponsList($firstRecord, $recordsCount, $order, $search)
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -80,6 +86,12 @@ class WeaponRepository extends EntityRepository
             ->addSelect('w.isOpenMapWeapon as isOpenMapWeapon')
             ->addSelect('w.imageName as imageName')
             ->from(Weapon::class, 'w');
+
+        if (!is_null($search)) {
+            $qb = $qb
+                ->andWhere('w.name like :phrase')
+                ->setParameter('phrase', '%' . $search . '%');
+        }
 
         $qb = $qb
             ->orderBy('w.' . $order['column'], strtoupper($order['dir']))

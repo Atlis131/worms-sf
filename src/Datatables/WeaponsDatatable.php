@@ -8,7 +8,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class WeaponsDatatable
 {
-    private ?string $firstRecord;
+    private ?int $firstRecord;
+    private ?string $search = null;
     private ?int $recordsCount;
     private ?array $orderColumn = null;
     private EntityManagerInterface $em;
@@ -29,9 +30,9 @@ class WeaponsDatatable
 
         $weaponsRepository = $this->em->getRepository(Weapon::class);
 
-        $weaponsCount = $weaponsRepository->getWeaponsCount();
-        $filteredWeaponsCount = $weaponsRepository->getWeaponsCount();
-        $weapons = $weaponsRepository->getWeaponsList($this->firstRecord, $this->recordsCount, $this->orderColumn);
+        $weaponsCount = $weaponsRepository->getWeaponsCount($this->search);
+        $filteredWeaponsCount = $weaponsRepository->getWeaponsCount($this->search);
+        $weapons = $weaponsRepository->getWeaponsList($this->firstRecord, $this->recordsCount, $this->orderColumn, $this->search);
 
         $weaponsArray = [];
 
@@ -90,6 +91,10 @@ class WeaponsDatatable
                 'column' => $columns[$request->get('order')[0]['column']]['data'],
                 'dir'    => $request->get('order')[0]['dir']
             ];
+        }
+
+        if (!is_null($request->get('search')) && $request->get('search')['value'] !== '') {
+            $this->search = $request->get('search')['value'];
         }
     }
 }

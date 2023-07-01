@@ -28,8 +28,7 @@ class ImportService
         while (!feof($allWeapons)) {
             $line = fgets($allWeapons);
 
-            $weaponName = str_replace('*', '', $line);
-            $weaponName = trim($weaponName);
+            $weaponName = trim(str_replace('*', '', $line));
             $type = str_contains($line, '*'); // 1 - crafted, 0 - normal
 
             $weapon = $this->em->getRepository(Weapon::class)->findOneBy([
