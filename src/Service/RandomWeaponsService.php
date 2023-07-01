@@ -24,20 +24,32 @@ class RandomWeaponsService
     {
         $normalCount = $request->get('countNormal');
         $craftedCount = $request->get('countCrafted');
-        $includeTools = $request->get('includeTools');
-        $includeOpenMapWeapons = $request->get('includeOpenMapWeapons');
+        $includeTools = $request->get('includeTools') == 'true';
+        $includeOpenMapWeapons = $request->get('includeOpenMapWeapons') == 'true';
+        $includeSentryGuns = $request->get('includeSentryGuns') == 'true';
+        $randomizeCount = $request->get('randomizeCount') == 'true';
 
         $craftedWeapons = $normalWeapons = [];
 
-        $weapons = $this->getWeaponNames($includeTools, $includeOpenMapWeapons);
+        $weapons = $this->getWeaponNames($includeTools, $includeOpenMapWeapons, $includeSentryGuns);
 
         for ($i = 0; $i < $craftedCount; $i++) {
             $index = rand(0, count($weapons['craftedWeapons']) - 1);
 
-            $craftedWeapons[] = [
+            $craftedWeapon = [
                 'name'  => $weapons['craftedWeapons'][$index]->getName(),
                 'image' => $this->container->getParameter('base_url') . '/images/weapons/' . $weapons['craftedWeapons'][$index]->getImageName() . '.png'
             ];
+
+            if ($randomizeCount) {
+                if ($weapons['craftedWeapons'][$index]->getIsOpenMapWeapon()) {
+                    $craftedWeapon['count'] = rand(1, 3);
+                } else {
+                    $craftedWeapon['count'] = rand(1, 10);
+                }
+            }
+
+            $craftedWeapons[] = $craftedWeapon;
 
             unset($weapons['craftedWeapons'][$index]);
             $weapons['craftedWeapons'] = array_values($weapons['craftedWeapons']);
@@ -46,10 +58,20 @@ class RandomWeaponsService
         for ($i = 0; $i < $normalCount; $i++) {
             $index = rand(0, count($weapons['normalWeapons']) - 1);
 
-            $normalWeapons[] = [
+            $normalWeapon = [
                 'name'  => $weapons['normalWeapons'][$index]->getName(),
                 'image' => $this->container->getParameter('base_url') . '/images/weapons/' . $weapons['normalWeapons'][$index]->getImageName() . '.png'
             ];
+
+            if ($randomizeCount) {
+                if ($weapons['normalWeapons'][$index]->getIsOpenMapWeapon()) {
+                    $normalWeapon['count'] = rand(1, 3);
+                } else {
+                    $normalWeapon['count'] = rand(1, 10);
+                }
+            }
+
+            $normalWeapons[] = $normalWeapon;
 
             unset($weapons['normalWeapons'][$index]);
             $weapons['normalWeapons'] = array_values($weapons['normalWeapons']);
@@ -61,9 +83,13 @@ class RandomWeaponsService
         ];
     }
 
-    private function getWeaponNames($includeTools, $includeOpenMapWeapons): array
+    private function getWeaponNames($includeTools, $includeOpenMapWeapons, $includeSentryGuns): array
     {
-        $allWeapons = $this->em->getRepository(Weapons::class)->findAllWeapons($includeTools == 'true', $includeOpenMapWeapons == 'true');
+        $allWeapons = $this->em->getRepository(Weapons::class)->findAllWeapons(
+            $includeTools,
+            $includeOpenMapWeapons,
+            $includeSentryGuns
+        );
 
         $normalWeapons = [];
         $craftedWeapons = [];

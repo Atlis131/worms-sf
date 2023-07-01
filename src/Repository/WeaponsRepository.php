@@ -18,7 +18,7 @@ class WeaponsRepository extends EntityRepository
         parent::__construct($em, $class);
     }
 
-    public function findAllWeapons($includeTools, $includeOpenMapWeapons)
+    public function findAllWeapons($includeTools, $includeOpenMapWeapons, $includeSentryGuns)
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -40,6 +40,12 @@ class WeaponsRepository extends EntityRepository
         } else {
             $qb = $qb
                 ->andWhere('w.isOpenMapWeapon = 0');
+        }
+
+        if (!$includeSentryGuns) {
+            $qb = $qb
+                ->andWhere('w.name not like :phrase')
+                ->setParameter('phrase', '%' . 'sentry' . '%');
         }
 
         $qb = $qb
