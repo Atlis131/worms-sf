@@ -14,7 +14,7 @@ class ListController extends AbstractController
     private WeaponsDatatable $weaponsDatatable;
 
     public function __construct(
-        WeaponsDatatable       $weaponsDatatable,
+        WeaponsDatatable $weaponsDatatable,
     )
     {
         $this->weaponsDatatable = $weaponsDatatable;

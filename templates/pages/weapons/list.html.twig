@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    <title>{{ 'All weapons / tools list' }}</title>
+    <title>
+        {{ 'All weapons / tools list' }}
+    </title>
 {% endblock %}
 
 {% block content %}
@@ -10,7 +12,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h1 class="h3 mb-3">{{ 'All weapons / tools list' }}</h1>
+                        <h1 class="h3 mb-3">
+                            {{ 'All weapons / tools list' }}
+                        </h1>
                     </div>
                     <div class="card-body row">
                         <table id="weaponsList" class="display responsive nowrap" style="width:100%">
@@ -19,8 +23,8 @@
                                 <th>{{ 'Id' }}</th>
                                 <th>{{ 'Name' }}</th>
                                 <th>{{ 'Type' }}</th>
-                                <th>{{ 'Tool?' }}</th>
-                                <th>{{ 'Open map?' }}</th>
+                                <th>{{ 'Tool' }}</th>
+                                <th>{{ 'Open map' }}</th>
                             </tr>
                             </thead>
                             <tbody></tbody>
@@ -67,11 +71,13 @@
                         'render': function (data) {
                             let html = "";
                             html += '<div class="toggleSettings" data-weaponId="' + data.id + '" data-settingName="type">'
-                            if (data.type == 0) {
+
+                            if (data.type === 0) {
                                 html += '<span class="btn-primary btn" style="cursor: hand"> {{ 'Regular' }} </span>';
                             } else {
                                 html += '<span class="btn-secondary btn" style="cursor: hand"> {{ 'Crafted' }} </span>';
                             }
+
                             html += "</div>";
 
                             return html;
@@ -82,11 +88,13 @@
                         'render': function (data) {
                             let html = "";
                             html += '<div class="toggleSettings" data-weaponId="' + data.id + '" data-settingName="tool">'
+
                             if (data.isTool) {
                                 html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
                             } else {
                                 html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
                             }
+
                             html += "</div>";
 
                             return html;
@@ -97,11 +105,13 @@
                         'render': function (data) {
                             let html = "";
                             html += '<div class="toggleSettings" data-weaponId="' + data.id + '" data-settingName="openMapWeapon">'
+
                             if (data.isOpenMapWeapon) {
                                 html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
                             } else {
                                 html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
                             }
+
                             html += "</div>";
 
                             return html;
@@ -130,6 +140,7 @@
                         table.ajax.reload();
                     });
             });
+
             {% endif %}
         });
     </script>

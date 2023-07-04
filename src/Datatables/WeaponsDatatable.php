@@ -37,30 +37,27 @@ class WeaponsDatatable
         $weaponsArray = [];
 
         foreach ($weapons as $weapon) {
-            $weaponImage = $this->container->getParameter('base_url') . '/images/weapons/' . $weapon['imageName'] . '.png';
-
             $weaponData['id'] = $weapon['id'];
 
             $weaponData['name'] = [
                 'name'  => $weapon['name'],
-                'image' => $weaponImage
+                'image' => $this->container->getParameter('base_url') . '/images/weapons/' . $weapon['imageName'] . '.png'
             ];
 
             $weaponData['type'] = [
-                'type'  => $weapon['type'],
-                'id' => $weapon['id']
+                'type' => $weapon['type'],
+                'id'   => $weapon['id']
             ];
 
             $weaponData['isTool'] = [
-                'isTool'  => $weapon['isTool'],
-                'id' => $weapon['id']
+                'isTool' => $weapon['isTool'],
+                'id'     => $weapon['id']
             ];
 
             $weaponData['isOpenMapWeapon'] = [
-                'isOpenMapWeapon'  => $weapon['isOpenMapWeapon'],
-                'id' => $weapon['id']
+                'isOpenMapWeapon' => $weapon['isOpenMapWeapon'],
+                'id'              => $weapon['id']
             ];
-            
 
             $weaponsArray[] = $weaponData;
         }

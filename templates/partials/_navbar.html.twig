@@ -19,8 +19,14 @@
                     </div>
                 </li>
             {% else %}
-                <a href="{{ path('login') }}"
-                   class="text-dark">{{ 'Log in' }}</a>
+                <div style="margin-right: 10px;">
+                    <a href="{{ path('register') }}"
+                       class="btn btn-success">{{ 'Register' }}</a>
+                </div>
+                <div>
+                    <a href="{{ path('login') }}"
+                       class="btn btn-success">{{ 'Log in' }}</a>
+                </div>
             {% endif %}
         </ul>
     </div>
