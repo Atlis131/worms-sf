@@ -71,6 +71,10 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
                     throw new UserNotFoundException();
                 }
 
+                if (!$user->getEmailVerificationDate()) {
+                    throw new UserNotFoundException();
+                }
+
                 return $user;
             }),
             new PasswordCredentials($password),

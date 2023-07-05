@@ -57,6 +57,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $name;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $emailVerificationDate;
+
+    /**
      * @ORM\Column(type="array")
      */
     private $roles = [];
@@ -218,6 +223,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmailVerificationDate()
+    {
+        return $this->emailVerificationDate;
+    }
+
+    /**
+     * @param mixed $emailVerificationDate
+     * @return User
+     */
+    public function setEmailVerificationDate($emailVerificationDate)
+    {
+        $this->emailVerificationDate = $emailVerificationDate;
         return $this;
     }
 
