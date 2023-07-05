@@ -67,7 +67,7 @@ class SecurityController extends AbstractController
                     $form->get('password')->getData()
                 ))
                 ->setName($userModel->name)
-                ->setSurname($userModel->surname);
+                ->setRoles(['ROLE_USER']);
 
             $this->em->persist($user);
             $this->em->flush();

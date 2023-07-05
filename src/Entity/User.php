@@ -52,14 +52,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $email;
 
     /**
-     * @ORM\Column(name="name", type="string", nullable=true)
+     * @ORM\Column(name="name", type="string", nullable=false)
      */
     private $name;
-
-    /**
-     * @ORM\Column(name="surname", type="string", nullable=true)
-     */
-    private $surname;
 
     /**
      * @ORM\Column(type="array")
@@ -223,24 +218,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setName($name)
     {
         $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSurname()
-    {
-        return $this->surname;
-    }
-
-    /**
-     * @param mixed $surname
-     * @return User
-     */
-    public function setSurname($surname)
-    {
-        $this->surname = $surname;
         return $this;
     }
 

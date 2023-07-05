@@ -19,11 +19,5 @@ class UserRegistrationFormModel
      */
     public $name;
 
-    /**
-     * @Assert\NotBlank(message="Enter Surname")
-     */
-    public $surname;
-
-
     public $password;
 }

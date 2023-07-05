@@ -17,10 +17,10 @@
                         <table id="datatable" class="display responsive nowrap" style="width:100%">
                             <thead>
                             <tr>
+                                <th>{{ 'Id' }}</th>
                                 <th>{{ 'Username' }}</th>
                                 <th>{{ 'Email' }}</th>
                                 <th>{{ 'Name' }}</th>
-                                <th>{{ 'Last Name' }}</th>
                                 <th>{{ 'Roles' }}</th>
                                 <th>{{ 'Actions' }}</th>
                             </tr>
@@ -28,10 +28,10 @@
                             <tbody>
                             {% for user in users %}
                                 <tr>
+                                    <td>{{ user.id }}</td>
                                     <td>{{ user.username }}</td>
                                     <td>{{ user.email }}</td>
                                     <td>{{ user.name }}</td>
-                                    <td>{{ user.surname }}</td>
                                     <td>
                                         {% for role in user.roles %}
                                             <p> {{ role }} </p>
@@ -56,10 +56,13 @@
 
 {% block javascripts_bottom %}
     {{ parent() }}
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script>
         $('#datatable').DataTable({
-            responsive: true
+            responsive: true,
+            stateSave: true,
+            order: [
+                0, 'desc'
+            ]
         });
     </script>
 {% endblock %}
