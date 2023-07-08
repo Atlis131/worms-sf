@@ -3,17 +3,22 @@
 namespace App\Controller\Security;
 
 use App\Entity\User;
+use App\Form\UserChangePasswordType;
 use App\Form\UserRegistrationFormType;
 use App\Repository\UserRepository;
+use App\Service\EmailService;
 use App\Service\EmailVerifier;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
@@ -22,14 +27,17 @@ class SecurityController extends AbstractController
 {
     private EntityManagerInterface $em;
     private EmailVerifier $emailVerifier;
+    private EmailService $emailService;
 
     public function __construct(
         EntityManagerInterface $em,
-        EmailVerifier $emailVerifier
+        EmailVerifier          $emailVerifier,
+        EmailService           $emailService
     )
     {
         $this->em = $em;
         $this->emailVerifier = $emailVerifier;
+        $this->emailService = $emailService;
     }
 
     /**
@@ -54,7 +62,7 @@ class SecurityController extends AbstractController
      * @Route("/register", name="register")
      */
     public function register(
-        Request $request,
+        Request                     $request,
         UserPasswordHasherInterface $userPasswordHasherInterface
     ): Response
     {
@@ -79,6 +87,7 @@ class SecurityController extends AbstractController
                     $form->get('password')->getData()
                 ))
                 ->setName($userModel->name)
+                ->setRegistrationDate(new DateTime('now'))
                 ->setRoles(['ROLE_USER']);
 
             $this->em->persist($user);
@@ -106,19 +115,23 @@ class SecurityController extends AbstractController
      * @Route("/verify-email", name="verify_email")
      */
     public function verifyUserEmail(
-        Request $request,
-        UserRepository $userRepository,
+        Request                    $request,
+        UserRepository             $userRepository,
         UserAuthenticatorInterface $guardHandler,
-        LoginFormAuthenticator $formAuthenticator
+        LoginFormAuthenticator     $formAuthenticator
     ): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('homepage');
+        }
+
         $userId = $request->get('id');
 
         if (null === $userId) {
             return $this->redirectToRoute('register');
         }
 
-        $user = $userRepository->findOneBy(['id'=> $userId]);
+        $user = $userRepository->findOneBy(['id' => $userId]);
 
         if (null === $user) {
             return $this->redirectToRoute('register');
@@ -139,6 +152,125 @@ class SecurityController extends AbstractController
             $formAuthenticator,
             $request
         );
+    }
+
+    /**
+     * @Route ("/reset-password", name="reset_password")
+     */
+    public function resetPassword(Request $request): RedirectResponse|Response
+    {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('homepage');
+        }
+
+        if ($request->isMethod('POST')) {
+            $email = $request->get('email');
+
+            $user = $this->em->getRepository(User::class)->findOneBy([
+                'email' => $email
+            ]);
+
+            if ($user) {
+                $currDate = new DateTime('now');
+                $passwordResetToken = md5($user->getEmail() . $currDate->format('Y-m-d H:i:s') . $user->getName());
+
+                $user
+                    ->setResetPasswordToken($passwordResetToken)
+                    ->setResetPasswordTokenTime($currDate->modify('+ 30 minutes'));
+
+                $this->em->persist($user);
+                $this->em->flush();
+
+                $this->sendPasswordResetEmail($user);
+            }
+
+            $this->addFlash('success', 'Check your email for instructions how to reset your password');
+
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('security/reset_password.html.twig',);
+    }
+
+    /**
+     * @Route ("/set-password/{passwordHash}", name="set_password")
+     */
+    public function setNewPassword(
+        Request                     $request,
+        UserPasswordHasherInterface $userPasswordHasherInterface,
+        UserAuthenticatorInterface  $guardHandler,
+        LoginFormAuthenticator      $formAuthenticator,
+        string                      $passwordHash
+    ): RedirectResponse|Response
+    {
+        $user = $this->em->getRepository(User::class)->findOneBy([
+            'resetPasswordToken' => $passwordHash
+        ]);
+
+        if (!$user) {
+            $this->addFlash('error', "Something went wrong! Couldn't find user based on provided passwordHash or passwordHash expired");
+
+            return $this->redirectToRoute('homepage');
+        } else {
+            if ($user->getResetPasswordTokenTime() < new DateTime('now') || is_null($user->getResetPasswordToken())) {
+                $this->addFlash('error', "Something went wrong! Couldn't find user based on provided passwordHash or passwordHash expired");
+
+                $user
+                    ->setResetPasswordToken(null)
+                    ->setResetPasswordTokenTime(null);
+
+                $this->em->persist($user);
+                $this->em->flush();
+
+                return $this->redirectToRoute('login');
+            }
+
+            $form = $this->createForm(UserChangePasswordType::class, null, [
+                'resetPassword' => true
+            ]);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $user
+                    ->setPassword($userPasswordHasherInterface->hashPassword(
+                        $user,
+                        $form->get('password')->getData()
+                    ))
+                    ->setResetPasswordToken(null)
+                    ->setResetPasswordTokenTime(null);
+
+                $this->em->persist($user);
+                $this->em->flush();
+
+                $this->addFlash('success', "Successfully changed password! You've been automatically logged in!");
+
+                return $guardHandler->authenticateUser(
+                    $user,
+                    $formAuthenticator,
+                    $request
+                );
+            }
+
+            return $this->render('security/set_new_password.html.twig', [
+                'form' => $form->createView()
+            ]);
+
+        }
+    }
+
+    private function sendPasswordResetEmail(User $user): void
+    {
+        $url = $this->generateUrl('set_password', [
+            'passwordHash' => $user->getResetPasswordToken()
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        $body = $this->renderView('email/password_reset.html.twig', [
+            'signedUrl' => $url,
+            'user'      => $user
+        ]);
+
+        $this->emailService->sendEmail('[Worms Toolkit] Change your password', $body, trim($user->getEmail()));
     }
 
     /**
