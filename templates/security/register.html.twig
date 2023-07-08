@@ -6,8 +6,8 @@
 
 {% block security_content %}
     <div class="mb-2 text-center">
-        <a class="btn btn-primary" href="{{ path('homepage') }}">
-            {{ 'Back to homepage' }}
+        <a class="btn btn-primary" href="{{ path('login') }}">
+            {{ 'Back to login' }}
         </a>
     </div>
     {{ form_start(form, {
@@ -39,7 +39,7 @@
         }) }}
     </div>
     <div class="mb-2">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">
+        <button class="btn btn-success" type="submit">
             {{ 'Register' }}
         </button>
     </div>

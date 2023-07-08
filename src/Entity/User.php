@@ -59,7 +59,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
+    private $registrationDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
     private $emailVerificationDate;
+
+    /**
+     * @ORM\Column(type="string", length=128, nullable=true)
+     */
+    private $resetPasswordToken;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $resetPasswordTokenTime;
 
     /**
      * @ORM\Column(type="array")
@@ -243,6 +258,61 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->emailVerificationDate = $emailVerificationDate;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRegistrationDate()
+    {
+        return $this->registrationDate;
+    }
+
+    /**
+     * @param mixed $registrationDate
+     * @return User
+     */
+    public function setRegistrationDate($registrationDate)
+    {
+        $this->registrationDate = $registrationDate;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResetPasswordTokenTime()
+    {
+        return $this->resetPasswordTokenTime;
+    }
+
+    /**
+     * @param mixed $resetPasswordTokenTime
+     * @return User
+     */
+    public function setResetPasswordTokenTime($resetPasswordTokenTime)
+    {
+        $this->resetPasswordTokenTime = $resetPasswordTokenTime;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResetPasswordToken()
+    {
+        return $this->resetPasswordToken;
+    }
+
+    /**
+     * @param mixed $resetPasswordToken
+     * @return User
+     */
+    public function setResetPasswordToken($resetPasswordToken)
+    {
+        $this->resetPasswordToken = $resetPasswordToken;
+        return $this;
+    }
+
 
     /**
      * @return ?string
