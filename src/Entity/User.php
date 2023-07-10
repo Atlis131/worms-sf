@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -45,6 +46,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $password;
+
+    /**
+     * @Assert\Length(min=8)
+     * @Assert\Regex(
+     *     pattern="/[a-z]/",
+     *     message="Your password must contain at least one lowercase letter"
+     * )
+     * @Assert\Regex(
+     *     pattern="/[A-Z]/",
+     *     message="Your password must contain at least one uppercase letter"
+     * )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     message="Your password must contain at least one digit"
+     * )
+     * @Assert\Regex(
+     *     pattern="/[^a-zA-Z0-9]/",
+     *     message="Your password must contain at least one special character"
+     * )
+     * @Assert\Regex(
+     *     pattern="/ /",
+     *     match=false,
+     *     message="Your password cannot contain spaces"
+     * )
+     * @Assert\NotCompromisedPassword()
+     */
+    private ?string $plainPassword = null;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -165,6 +193,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEnabled(int $enabled): User
     {
         $this->enabled = $enabled;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string|null $plainPassword
+     * @return User
+     */
+    public function setPlainPassword(?string $plainPassword): User
+    {
+        $this->plainPassword = $plainPassword;
         return $this;
     }
 
