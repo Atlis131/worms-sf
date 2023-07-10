@@ -27,7 +27,8 @@ class UserChangePasswordType extends AbstractType
                     ],
                     'label'       => 'Current password',
                     'attr'        => [
-                        'placeholder' => 'Current password'
+                        'placeholder' => 'Current password',
+                        'class' => 'form-control mb-1'
                     ],
                 ]);
         }
