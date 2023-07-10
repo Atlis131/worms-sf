@@ -36,8 +36,9 @@
         </div>
     </div>
 </main>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<script src="{{ asset('assets/js/app.js') }}"></script>
+
+{% include 'partials/_bottom_scripts.html.twig' %}
+
 {% block javascripts_bottom %}
 {% endblock %}
 </body>

@@ -20,19 +20,23 @@
             <label class="form-label">{{ 'Email' }}</label>
             <input class="form-control form-control-lg" type="email" name="_username" placeholder="Enter e-mail"/>
         </div>
-        <div class="mb-3">
+        <div class="mb-2">
             <label class="form-label">{{ 'Password' }}</label>
             <input class="form-control form-control-lg" type="password" name="_password"
                    placeholder="Enter password"/>
         </div>
+
+        <div class="mb-3">
+            <a href="{{ path('reset_password') }}"> {{ 'Forgot your password?' }} </a>
+        </div>
+
         <div class="mb-3">
             <input type="checkbox" id="remember_me" name="_remember_me" class="i-checks remember-me-checks"/>
             <label for="remember_me" style="padding-left:10px;">{{ 'Remember me!' }}</label>
         </div>
 
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
         {% if error %}
             <div class="mb-3">
                 {{ error.messageKey|trans(error.messageData, 'security') }}
@@ -47,7 +51,7 @@
                 {% endfor %}
             {% endfor %}
         {% endif %}
-        <button type="submit" class="btn btn-primary block full-width m-b">{{ 'Log in' }}</button>
+        <button type="submit" class="btn btn-success">{{ 'Log in' }}</button>
     </form>
 {% endblock %}
 

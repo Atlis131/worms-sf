@@ -14,7 +14,7 @@ class EmailService
 
     public function __construct(
         MailerInterface $mailer,
-        Container $container,
+        Container       $container,
     )
     {
         $this->mailer = $mailer;
@@ -25,7 +25,7 @@ class EmailService
     {
         $notification = (new Email())
             ->subject($title)
-            ->from(new Address($this->container->getParameter('app.email_verifier_address'), $this->container->getParameter('app.email_verifier_name')))
+            ->from(new Address($this->container->getParameter('email')['username'], $this->container->getParameter('email')['name']))
             ->to($recipient)
             ->html($content);
 

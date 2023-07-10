@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -47,6 +48,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
+     * @Assert\Length(min=8)
+     * @Assert\Regex(
+     *     pattern="/[a-z]/",
+     *     message="Your password must contain at least one lowercase letter"
+     * )
+     * @Assert\Regex(
+     *     pattern="/[A-Z]/",
+     *     message="Your password must contain at least one uppercase letter"
+     * )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     message="Your password must contain at least one digit"
+     * )
+     * @Assert\Regex(
+     *     pattern="/[^a-zA-Z0-9]/",
+     *     message="Your password must contain at least one special character"
+     * )
+     * @Assert\Regex(
+     *     pattern="/ /",
+     *     match=false,
+     *     message="Your password cannot contain spaces"
+     * )
+     * @Assert\NotCompromisedPassword()
+     */
+    private ?string $plainPassword = null;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $email;
@@ -59,7 +87,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
+    private $registrationDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
     private $emailVerificationDate;
+
+    /**
+     * @ORM\Column(type="string", length=128, nullable=true)
+     */
+    private $resetPasswordToken;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $resetPasswordTokenTime;
 
     /**
      * @ORM\Column(type="array")
@@ -154,6 +197,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string|null $plainPassword
+     * @return User
+     */
+    public function setPlainPassword(?string $plainPassword): User
+    {
+        $this->plainPassword = $plainPassword;
+        return $this;
+    }
+
+    /**
      * @see UserInterface
      */
     public function getPassword(): ?string
@@ -243,6 +304,61 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->emailVerificationDate = $emailVerificationDate;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRegistrationDate()
+    {
+        return $this->registrationDate;
+    }
+
+    /**
+     * @param mixed $registrationDate
+     * @return User
+     */
+    public function setRegistrationDate($registrationDate)
+    {
+        $this->registrationDate = $registrationDate;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResetPasswordTokenTime()
+    {
+        return $this->resetPasswordTokenTime;
+    }
+
+    /**
+     * @param mixed $resetPasswordTokenTime
+     * @return User
+     */
+    public function setResetPasswordTokenTime($resetPasswordTokenTime)
+    {
+        $this->resetPasswordTokenTime = $resetPasswordTokenTime;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResetPasswordToken()
+    {
+        return $this->resetPasswordToken;
+    }
+
+    /**
+     * @param mixed $resetPasswordToken
+     * @return User
+     */
+    public function setResetPasswordToken($resetPasswordToken)
+    {
+        $this->resetPasswordToken = $resetPasswordToken;
+        return $this;
+    }
+
 
     /**
      * @return ?string
