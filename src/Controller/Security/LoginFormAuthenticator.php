@@ -23,9 +23,16 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     use TargetPathTrait;
 
     private $login_route;
+    private UserRepository $userRepository;
+    private RouterInterface $router;
 
-    public function __construct(private UserRepository $userRepository, private RouterInterface $router)
+    public function __construct(
+        UserRepository $userRepository,
+        RouterInterface $router
+    )
     {
+        $this->userRepository = $userRepository;
+        $this->router = $router;
     }
 
 

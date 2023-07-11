@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>
+        {{ 'User log list' }}
+    </title>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="h3 mb-3">
+                            {{ 'User log list' }}
+                        </h1>
+                    </div>
+                    <div class="card-body row">
+                        <table id="userLogList" class="display responsive nowrap" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>{{ 'Id' }}</th>
+                                <th>{{ 'User' }}</th>
+                                <th>{{ 'Created At' }}</th>
+                                <th>{{ 'Message' }}</th>
+                                <th>{{ 'Type' }}</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts_bottom %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $('#userLogList').DataTable({
+                responsive: true,
+                stateSave: true,
+                serverSide: true,
+                retrieve: true,
+                paginate: true,
+                searching: true,
+                ajax: {
+                    url: "{{ path('user_logs_data') }}",
+                    type: 'POST'
+                },
+                columns: [
+                    {
+                        "data": "id",
+                    },
+                    {
+                        "data": "username",
+                    },
+                    {
+                        "data": "createdAt",
+                    },
+                    {
+                        "data": "message",
+                    },
+                    {
+                        "data": "type",
+                    },
+                ]
+            });
+        });
+    </script>
+{% endblock %}
