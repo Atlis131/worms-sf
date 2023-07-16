@@ -3,9 +3,7 @@
 namespace App\Datatables;
 
 use App\Entity\UserLog;
-use App\Entity\Weapon;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class UserLogDatatable
 {
@@ -14,15 +12,12 @@ class UserLogDatatable
     private ?int $recordsCount;
     private ?array $orderColumn = null;
     private EntityManagerInterface $em;
-    private Container $container;
 
     public function __construct(
         EntityManagerInterface $em,
-        Container              $container
     )
     {
         $this->em = $em;
-        $this->container = $container;
     }
 
     public function getDatatableData($request): array

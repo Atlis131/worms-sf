@@ -21,7 +21,11 @@ class EmailService
         $this->container = $container;
     }
 
-    public function sendEmail($title, $content, $recipient)
+    public function sendEmail(
+        $title,
+        $content,
+        $recipient
+    ): void
     {
         $notification = (new Email())
             ->subject($title)
@@ -30,6 +34,5 @@ class EmailService
             ->html($content);
 
         $this->mailer->send($notification);
-
     }
 }

@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\User;
 use App\Entity\UserLog;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 
 class UserLogService
@@ -18,7 +19,7 @@ class UserLogService
     }
 
     public function addToLog(
-        User $user,
+        User   $user,
         string $message,
         string $type
     ): void
@@ -26,7 +27,7 @@ class UserLogService
         $userLog = new UserLog();
 
         $userLog
-            ->setCreatedAt(new \DateTimeImmutable('now'))
+            ->setCreatedAt(new DateTimeImmutable('now'))
             ->setUser($user)
             ->setMessage($message)
             ->setType($type);
@@ -34,5 +35,4 @@ class UserLogService
         $this->entityManager->persist($userLog);
         $this->entityManager->flush();
     }
-
 }

@@ -20,7 +20,7 @@ class ProfileController extends AbstractController
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        UserLogService $userLogService
+        UserLogService         $userLogService
     )
     {
         $this->entityManager = $entityManager;
@@ -30,7 +30,10 @@ class ProfileController extends AbstractController
     /**
      * @Route("/user/profile", name="user_profile")
      */
-    public function profile(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface): Response
+    public function profile(
+        Request                     $request,
+        UserPasswordHasherInterface $userPasswordHasherInterface
+    ): Response
     {
         /* @var User $user */
         $user = $this->getUser();
@@ -53,7 +56,7 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('pages/user/profile.html.twig', [
-            'user' => $user,
+            'user'               => $user,
             'changePasswordForm' => $userChangePasswordForm->createView()
         ]);
     }

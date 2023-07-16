@@ -14,7 +14,7 @@ class RandomController extends AbstractController
     private RandomWeaponsService $randomWeaponsService;
 
     public function __construct(
-        RandomWeaponsService   $randomWeaponsService,
+        RandomWeaponsService $randomWeaponsService,
     )
     {
         $this->randomWeaponsService = $randomWeaponsService;
