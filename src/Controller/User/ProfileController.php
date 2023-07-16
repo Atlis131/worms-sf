@@ -4,6 +4,7 @@ namespace App\Controller\User;
 
 use App\Entity\User;
 use App\Form\UserChangePasswordType;
+use App\Service\UserLogService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,18 +16,24 @@ class ProfileController extends AbstractController
 {
 
     private EntityManagerInterface $entityManager;
+    private UserLogService $userLogService;
 
     public function __construct(
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        UserLogService         $userLogService
     )
     {
         $this->entityManager = $entityManager;
+        $this->userLogService = $userLogService;
     }
 
     /**
      * @Route("/user/profile", name="user_profile")
      */
-    public function profile(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface): Response
+    public function profile(
+        Request                     $request,
+        UserPasswordHasherInterface $userPasswordHasherInterface
+    ): Response
     {
         /* @var User $user */
         $user = $this->getUser();
@@ -44,10 +51,12 @@ class ProfileController extends AbstractController
             $this->entityManager->flush();
 
             $this->addFlash('success', 'Successfully changed your password');
+
+            $this->userLogService->addToLog($user, 'Successfully changed password via profile', 'Security');
         }
 
         return $this->render('pages/user/profile.html.twig', [
-            'user' => $user,
+            'user'               => $user,
             'changePasswordForm' => $userChangePasswordForm->createView()
         ]);
     }

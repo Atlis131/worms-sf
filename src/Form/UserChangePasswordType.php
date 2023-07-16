@@ -16,7 +16,10 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class UserChangePasswordType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(
+        FormBuilderInterface $builder,
+        array                $options
+    ): void
     {
         if (!$options['resetPassword']) {
             $builder
@@ -28,7 +31,7 @@ class UserChangePasswordType extends AbstractType
                     'label'       => 'Current password',
                     'attr'        => [
                         'placeholder' => 'Current password',
-                        'class' => 'form-control mb-1'
+                        'class'       => 'form-control mb-1'
                     ],
                 ]);
         }
@@ -49,26 +52,28 @@ class UserChangePasswordType extends AbstractType
                     'label' => 'New password',
                     'attr'  => [
                         'placeholder' => 'New password',
-                        'class' => 'form-control mb-1'
+                        'class'       => 'form-control mb-1'
                     ]
                 ],
                 'second_options' => [
                     'label' => 'Retype new password',
                     'attr'  => [
                         'placeholder' => 'Retype new password',
-                        'class' => 'form-control mb-2'
+                        'class'       => 'form-control mb-2'
                     ]
                 ],
             ])
             ->add('save', SubmitType::class, [
-                'label'              => 'Save',
-                'attr'               => [
+                'label' => 'Save',
+                'attr'  => [
                     'class' => 'btn btn-primary'
                 ]
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(
+        OptionsResolver $resolver
+    ): void
     {
         $resolver->setDefaults([
             'data_class'    => User::class,

@@ -20,7 +20,9 @@ class RandomWeaponsService
         $this->container = $container;
     }
 
-    public function getRandomWeapons($request): array
+    public function getRandomWeapons(
+        $request
+    ): array
     {
         $normalCount = $request->get('countNormal');
         $craftedCount = $request->get('countCrafted');
@@ -83,7 +85,11 @@ class RandomWeaponsService
         ];
     }
 
-    private function getWeaponNames($includeTools, $includeOpenMapWeapons, $includeSentryGuns): array
+    private function getWeaponNames(
+        $includeTools,
+        $includeOpenMapWeapons,
+        $includeSentryGuns
+    ): array
     {
         $allWeapons = $this->em->getRepository(Weapon::class)->findAllWeapons(
             $includeTools,
@@ -107,5 +113,4 @@ class RandomWeaponsService
             'normalWeapons'  => $normalWeapons
         ];
     }
-
 }

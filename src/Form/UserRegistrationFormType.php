@@ -16,7 +16,10 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class UserRegistrationFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(
+        FormBuilderInterface $builder,
+        array                $options
+    ): void
     {
         $builder
             ->add('name', TextType::class, [
@@ -26,9 +29,9 @@ class UserRegistrationFormType extends AbstractType
                 'label' => 'E-Mail'
             ])
             ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'mapped' => false,
-                'constraints' => [
+                'type'           => PasswordType::class,
+                'mapped'         => false,
+                'constraints'    => [
                     new Length(null, 8),
                     new Regex("/[a-z]/", 'Your password must contain at least one lowercase letter'),
                     new Regex("/[A-Z]/", 'Your password must contain at least one uppercase letter'),
@@ -37,25 +40,27 @@ class UserRegistrationFormType extends AbstractType
                     new Regex("/ /", 'Your password cannot contain spaces', null, false),
                     new NotCompromisedPassword()
                 ],
-                'first_options' => [
+                'first_options'  => [
                     'label' => 'Password',
-                    'attr' => [
+                    'attr'  => [
                         'placeholder' => 'Password',
-                        'class' => 'form-control',
-                        'style' => 'margin-bottom:12px'
+                        'class'       => 'form-control',
+                        'style'       => 'margin-bottom:12px'
                     ]
                 ],
                 'second_options' => [
                     'label' => 'Retype Password',
-                    'attr' => [
+                    'attr'  => [
                         'placeholder' => 'Retype Password',
-                        'class' => 'form-control'
+                        'class'       => 'form-control'
                     ]
                 ],
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(
+        OptionsResolver $resolver
+    ): void
     {
         $resolver->setDefaults([
             'data_class' => UserRegistrationFormModel::class,

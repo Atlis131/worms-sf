@@ -41,7 +41,7 @@ class EditController extends AbstractController
                 $request
                     ->getSession()
                     ->getFlashBag()
-                    ->add('success', 'Succesfully changed user');
+                    ->add('success', 'Successfully changed user');
 
                 return $this->redirectToRoute('user_list');
             }

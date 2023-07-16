@@ -8,6 +8,7 @@ use App\Form\UserRegistrationFormType;
 use App\Repository\UserRepository;
 use App\Service\EmailService;
 use App\Service\EmailVerifier;
+use App\Service\UserLogService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -28,33 +29,39 @@ class SecurityController extends AbstractController
     private EntityManagerInterface $em;
     private EmailVerifier $emailVerifier;
     private EmailService $emailService;
+    private UserLogService $userLogService;
+    private UserRepository $userRepository;
 
     public function __construct(
         EntityManagerInterface $em,
         EmailVerifier          $emailVerifier,
-        EmailService           $emailService
+        EmailService           $emailService,
+        UserLogService         $userLogService,
+        UserRepository         $userRepository,
     )
     {
         $this->em = $em;
         $this->emailVerifier = $emailVerifier;
         $this->emailService = $emailService;
+        $this->userLogService = $userLogService;
+        $this->userRepository = $userRepository;
     }
 
     /**
      * @Route("/login", name="login")
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(
+        AuthenticationUtils $authenticationUtils
+    ): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();
 
         if ($this->getUser()) {
             return $this->redirectToRoute('homepage');
         }
 
         return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error'         => $error,
+            'error' => $error,
         ]);
     }
 
@@ -93,6 +100,8 @@ class SecurityController extends AbstractController
             $this->em->persist($user);
             $this->em->flush();
 
+            $this->userLogService->addToLog($user, 'Created account', 'Security');
+
             $this->emailVerifier->sendEmailConfirmation('verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address($this->getParameter('email')['username'], $this->getParameter('email')['name']))
@@ -116,7 +125,6 @@ class SecurityController extends AbstractController
      */
     public function verifyUserEmail(
         Request                    $request,
-        UserRepository             $userRepository,
         UserAuthenticatorInterface $guardHandler,
         LoginFormAuthenticator     $formAuthenticator
     ): Response
@@ -131,7 +139,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('register');
         }
 
-        $user = $userRepository->findOneBy(['id' => $userId]);
+        $user = $this->userRepository->findOneBy(['id' => $userId]);
 
         if (null === $user) {
             return $this->redirectToRoute('register');
@@ -142,10 +150,14 @@ class SecurityController extends AbstractController
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('error', $exception->getReason());
 
+            $this->userLogService->addToLog($user, 'Failed to verify ' . substr($exception->getReason(), 0, 128) . '...', 'Security');
+
             return $this->redirectToRoute('register');
         }
 
         $this->addFlash('success', 'Thank you for verifying your e-mail, enjoy your stay!');
+
+        $this->userLogService->addToLog($user, 'Verified account', 'Security');
 
         return $guardHandler->authenticateUser(
             $user,
@@ -164,13 +176,16 @@ class SecurityController extends AbstractController
         }
 
         if ($request->isMethod('POST')) {
-            $email = $request->get('email');
-
             $user = $this->em->getRepository(User::class)->findOneBy([
-                'email' => $email
+                'email' => $request->get('email')
             ]);
 
             if ($user) {
+                if (!$user->getEmailVerificationDate()) {
+                    $this->addFlash('error', 'Your account needs to be activated first!');
+                    return $this->redirectToRoute('homepage');
+                }
+
                 $currDate = new DateTime('now');
                 $passwordResetToken = md5($user->getEmail() . $currDate->format('Y-m-d H:i:s') . $user->getName());
 
@@ -185,6 +200,8 @@ class SecurityController extends AbstractController
             }
 
             $this->addFlash('success', 'Check your email for instructions how to reset your password');
+
+            $this->userLogService->addToLog($user, 'Requested password reset', 'Security');
 
             return $this->redirectToRoute('homepage');
         }
@@ -222,6 +239,8 @@ class SecurityController extends AbstractController
                 $this->em->persist($user);
                 $this->em->flush();
 
+                $this->userLogService->addToLog($user, 'Requested password reset - invalid / expired token', 'Security');
+
                 return $this->redirectToRoute('login');
             }
 
@@ -245,6 +264,8 @@ class SecurityController extends AbstractController
 
                 $this->addFlash('success', "Successfully changed password! You've been automatically logged in!");
 
+                $this->userLogService->addToLog($user, 'Successfully changed password via email', 'Security');
+
                 return $guardHandler->authenticateUser(
                     $user,
                     $formAuthenticator,
@@ -259,7 +280,9 @@ class SecurityController extends AbstractController
         }
     }
 
-    private function sendPasswordResetEmail(User $user): void
+    private function sendPasswordResetEmail(
+        User $user
+    ): void
     {
         $url = $this->generateUrl('set_password', [
             'passwordHash' => $user->getResetPasswordToken()

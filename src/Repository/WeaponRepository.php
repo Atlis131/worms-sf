@@ -11,14 +11,21 @@ class WeaponRepository extends EntityRepository
 {
     private EntityManagerInterface $em;
 
-    public function __construct(EntityManagerInterface $em, ClassMetadata $class)
+    public function __construct(
+        EntityManagerInterface $em,
+        ClassMetadata          $class
+    )
     {
         $this->em = $em;
 
         parent::__construct($em, $class);
     }
 
-    public function findAllWeapons($includeTools, $includeOpenMapWeapons, $includeSentryGuns)
+    public function findAllWeapons(
+        $includeTools,
+        $includeOpenMapWeapons,
+        $includeSentryGuns
+    )
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -54,7 +61,9 @@ class WeaponRepository extends EntityRepository
         return $qb->getResult();
     }
 
-    public function getWeaponsCount($search)
+    public function getWeaponsCount(
+        $search
+    )
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -74,7 +83,12 @@ class WeaponRepository extends EntityRepository
         return $qb->getSingleScalarResult();
     }
 
-    public function getWeaponsList($firstRecord, $recordsCount, $order, $search)
+    public function getWeaponsList(
+        $firstRecord,
+        $recordsCount,
+        $order,
+        $search
+    )
     {
         $qb = $this->em->createQueryBuilder();
 

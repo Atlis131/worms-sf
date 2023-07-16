@@ -10,14 +10,18 @@
             </li>
             <li class="sidebar-item {{ 'weapons_random' in app.request.get('_route') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ path('weapons_random') }}">
-                    <i class="align-middle" data-feather="sliders"></i> <span
-                            class="align-middle">{{ 'Weapons Drawing' }}</span>
+                    <i class="align-middle" data-feather="sliders"></i>
+                    <span class="align-middle">
+                        {{ 'Weapons Drawing' }}
+                    </span>
                 </a>
             </li>
             <li class="sidebar-item {{ 'weapons_list' in app.request.get('_route') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ path('weapons_list') }}">
-                    <i class="align-middle" data-feather="list"></i> <span
-                            class="align-middle">{{ 'Weapons / Tools list' }}</span>
+                    <i class="align-middle" data-feather="list"></i>
+                    <span class="align-middle">
+                        {{ 'Weapons / Tools list' }}
+                    </span>
                 </a>
             </li>
             {% if is_granted('ROLE_ADMIN') %}
@@ -26,8 +30,18 @@
                 </li>
                 <li class="sidebar-item {{ 'user_list' in app.request.get('_route') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ path('user_list') }}">
-                        <i class="align-middle" data-feather="list"></i> <span
-                                class="align-middle">{{ 'Users' }}</span>
+                        <i class="align-middle" data-feather="list"></i>
+                        <span class="align-middle">
+                            {{ 'Users' }}
+                        </span>
+                    </a>
+                </li>
+                <li class="sidebar-item {{ 'user_logs' in app.request.get('_route') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ path('user_logs') }}">
+                        <i class="align-middle" data-feather="clock"></i>
+                        <span class="align-middle">
+                            {{ 'User Logs' }}
+                        </span>
                     </a>
                 </li>
             {% endif %}
