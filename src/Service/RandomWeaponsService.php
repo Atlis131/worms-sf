@@ -30,10 +30,15 @@ class RandomWeaponsService
         $includeOpenMapWeapons = $request->get('includeOpenMapWeapons') == 'true';
         $includeSentryGuns = $request->get('includeSentryGuns') == 'true';
         $randomizeCount = $request->get('randomizeCount') == 'true';
+        $randomizeDelay = $request->get('randomizeDelay') == 'true';
 
         $craftedWeapons = $normalWeapons = [];
 
-        $weapons = $this->getWeaponNames($includeTools, $includeOpenMapWeapons, $includeSentryGuns);
+        $weapons = $this->getWeaponNames(
+            $includeTools,
+            $includeOpenMapWeapons,
+            $includeSentryGuns
+        );
 
         for ($i = 0; $i < $craftedCount; $i++) {
             $index = rand(0, count($weapons['craftedWeapons']) - 1);
@@ -44,10 +49,18 @@ class RandomWeaponsService
             ];
 
             if ($randomizeCount) {
-                if ($weapons['craftedWeapons'][$index]->getIsOpenMapWeapon()) {
-                    $craftedWeapon['count'] = rand(1, 3);
+                if ($weapons['craftedWeapons'][$index]->getIsOpenMapWeapon() || str_contains($weapons['craftedWeapons'][$index]->getName(), 'Sentry')) {
+                    $craftedWeapon['count'] = rand(1, 2);
                 } else {
-                    $craftedWeapon['count'] = rand(1, 10);
+                    $craftedWeapon['count'] = rand(2, 6);
+                }
+            }
+
+            if ($randomizeDelay) {
+                if ($weapons['craftedWeapons'][$index]->getIsOpenMapWeapon() || str_contains($weapons['craftedWeapons'][$index]->getName(), 'Sentry')) {
+                    $craftedWeapon['delay'] = rand(5, 9);
+                } else {
+                    $craftedWeapon['delay'] = rand(3, 6);
                 }
             }
 
@@ -66,10 +79,18 @@ class RandomWeaponsService
             ];
 
             if ($randomizeCount) {
-                if ($weapons['normalWeapons'][$index]->getIsOpenMapWeapon()) {
-                    $normalWeapon['count'] = rand(1, 3);
+                if ($weapons['normalWeapons'][$index]->getIsOpenMapWeapon() || str_contains($weapons['normalWeapons'][$index]->getName(), 'Sentry')) {
+                    $normalWeapon['count'] = rand(1, 2);
                 } else {
-                    $normalWeapon['count'] = rand(1, 10);
+                    $normalWeapon['count'] = rand(0, 9);
+                }
+            }
+
+            if ($randomizeDelay) {
+                if ($weapons['normalWeapons'][$index]->getIsOpenMapWeapon() || str_contains($weapons['normalWeapons'][$index]->getName(), 'Sentry')) {
+                    $normalWeapon['delay'] = rand(3, 9);
+                } else {
+                    $normalWeapon['delay'] = rand(0, 2);
                 }
             }
 
