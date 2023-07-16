@@ -85,6 +85,16 @@
                             </p>
                         </div>
                     </div>
+                    <div class="col-lg-12 row">
+                        <div class="col-lg-6">
+                            <p>
+                                <input type="checkbox" id="randomizeDelay">
+                                <label for="randomizeDelay">
+                                    {{ "Randomize weapons delay" }}
+                                </label>
+                            </p>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="mt-2 text-center">
@@ -124,14 +134,20 @@
 
         function createWeaponEntry(weapon, parent) {
             let html = "";
-            html += "<div class='col-lg-4 mb-1' style='text-align: left'>";
+            html += "<div class='col-lg-4 mb-3' style='text-align: left'>";
             html += "<img width='35px' src='" + weapon.image + "'>";
-            html += "<span style='margin-left:5px; font-size:15px'>" + weapon.name + "</span>";
+            html += "<span style='margin-left:5px; font-size:15px'>" + weapon.name + "</span><br>";
 
-            if (weapon.count) {
-                let count = weapon.count === 10 ? '∞' : weapon.count;
+            if (weapon.count > 0) {
+                html += " Count: (" + weapon.count + ")";
+            } else if (weapon.count == 0) {
+                html += " Count: (" + '∞' + ")";
+            }
 
-                html += " (" + count + ")";
+            if (weapon.delay > 0) {
+                html += " Delay: [" + weapon.delay + "]";
+            } else if (weapon.delay == 0) {
+                html += " Delay: [" + 0 + "]";
             }
 
             html += "</div>";
@@ -160,6 +176,7 @@
             let includeOpenMapWeapons = $('#includeOpenMapWeapons').is(":checked");
             let includeSentryGuns = $('#includeSentryGuns').is(":checked");
             let randomizeCount = $('#randomizeCount').is(":checked");
+            let randomizeDelay = $('#randomizeDelay').is(":checked");
 
             if (includeTools) {
                 $('#craftedWeaponsHeader').text('Crafted weapons & tools');
@@ -178,7 +195,8 @@
                     'includeTools': includeTools,
                     'includeOpenMapWeapons': includeOpenMapWeapons,
                     'includeSentryGuns': includeSentryGuns,
-                    'randomizeCount': randomizeCount
+                    'randomizeCount': randomizeCount,
+                    'randomizeDelay': randomizeDelay
                 }
             }
             $.ajax(settings)
