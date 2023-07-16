@@ -47,6 +47,9 @@
                 retrieve: true,
                 paginate: true,
                 searching: true,
+                order: [
+                    'id', 'desc'
+                ],
                 ajax: {
                     url: "{{ path('user_logs_data') }}",
                     type: 'POST'

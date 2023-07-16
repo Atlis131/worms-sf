@@ -18,7 +18,7 @@ class UserLogRepository extends ServiceEntityRepository
     private EntityManagerInterface $em;
 
     public function __construct(
-        ManagerRegistry $registry,
+        ManagerRegistry        $registry,
         EntityManagerInterface $em
     )
     {
@@ -47,7 +47,12 @@ class UserLogRepository extends ServiceEntityRepository
         return $qb->getSingleScalarResult();
     }
 
-    public function getLogsList($firstRecord, $recordsCount, $order, $search)
+    public function getLogsList(
+        $firstRecord,
+        $recordsCount,
+        $order,
+        $search
+    )
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -66,7 +71,7 @@ class UserLogRepository extends ServiceEntityRepository
                 ->setParameter('phrase', '%' . $search . '%');
         }
 
-        $orderColumn = $order['column'] == 'username' ? 'u.'.$order['column'] : 'ul.'.$order['column'];
+        $orderColumn = $order['column'] == 'username' ? 'u.' . $order['column'] : 'ul.' . $order['column'];
 
         $qb = $qb
             ->orderBy($orderColumn, strtoupper($order['dir']))

@@ -25,7 +25,9 @@ class EditController extends AbstractController
     /**
      * @Route("/weapons/edit/{weaponId}", name="weapons_edit")
      */
-    public function edit($weaponId, Request $request): Response
+    public function edit(
+        int     $weaponId,
+        Request $request): Response
     {
         $weapon = $this->em->getRepository(Weapon::class)->findOneBy([
             'id' => $weaponId
@@ -42,7 +44,7 @@ class EditController extends AbstractController
                 $request
                     ->getSession()
                     ->getFlashBag()
-                    ->add('success', 'Succesfully changed weapon');
+                    ->add('success', 'Successfully changed weapon');
 
                 return $this->redirectToRoute('weapons_list');
             }
@@ -56,7 +58,9 @@ class EditController extends AbstractController
     /**
      * @Route("/weapons/settings", name="weapons_toggle_settings")
      */
-    public function settings(Request $request): Response
+    public function settings(
+        Request $request
+    ): Response
     {
         $weaponId = $request->get('weaponId');
         $settingName = $request->get('settingName');
@@ -78,11 +82,13 @@ class EditController extends AbstractController
                 $weapon->setType(!$weapon->getType());
                 $message = 'Changed weapon type setting';
                 break;
+            default:
+                $message = 'Unsupported type';
+                break;
         }
 
         $this->em->persist($weapon);
         $this->em->flush();
-
 
         return new JsonResponse($message);
     }

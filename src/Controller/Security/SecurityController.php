@@ -50,18 +50,18 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="login")
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(
+        AuthenticationUtils $authenticationUtils
+    ): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();
 
         if ($this->getUser()) {
             return $this->redirectToRoute('homepage');
         }
 
         return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error'         => $error,
+            'error' => $error,
         ]);
     }
 
@@ -150,7 +150,7 @@ class SecurityController extends AbstractController
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('error', $exception->getReason());
 
-            $this->userLogService->addToLog($user, 'Failed to verify ' . substr($exception->getReason(),0,128) . '...', 'Security');
+            $this->userLogService->addToLog($user, 'Failed to verify ' . substr($exception->getReason(), 0, 128) . '...', 'Security');
 
             return $this->redirectToRoute('register');
         }
@@ -176,13 +176,16 @@ class SecurityController extends AbstractController
         }
 
         if ($request->isMethod('POST')) {
-            $email = $request->get('email');
-
             $user = $this->em->getRepository(User::class)->findOneBy([
-                'email' => $email
+                'email' => $request->get('email')
             ]);
 
             if ($user) {
+                if (!$user->getEmailVerificationDate()) {
+                    $this->addFlash('error', 'Your account needs to be activated first!');
+                    return $this->redirectToRoute('homepage');
+                }
+
                 $currDate = new DateTime('now');
                 $passwordResetToken = md5($user->getEmail() . $currDate->format('Y-m-d H:i:s') . $user->getName());
 
@@ -277,7 +280,9 @@ class SecurityController extends AbstractController
         }
     }
 
-    private function sendPasswordResetEmail(User $user): void
+    private function sendPasswordResetEmail(
+        User $user
+    ): void
     {
         $url = $this->generateUrl('set_password', [
             'passwordHash' => $user->getResetPasswordToken()
