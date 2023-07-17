@@ -13,6 +13,49 @@
                 <div class="card">
                     <div class="card-header">
                         <h1 class="h3 mb-3">
+                            {{ 'Filters' }}
+                        </h1>
+                    </div>
+                    <div class="card-body col-lg-12 row">
+                        <div class="col-lg-3">
+                            <label for="weaponType">{{ 'Weapon type' }}</label>
+                            <select id="weaponType" class="form-control">
+                                <option value="">{{ '-' }}</option>
+                                <option value="0">{{ 'Regular' }}</option>
+                                <option value="1">{{ 'Crafted' }}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="tool">{{ 'Tool' }}</label>
+                            <select id="tool" class="form-control">
+                                <option value="">{{ '-' }}</option>
+                                <option value="0">{{ 'No' }}</option>
+                                <option value="1">{{ 'Yes' }}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="openMap">{{ 'Open map weapon' }}</label>
+                            <select id="openMap" class="form-control">
+                                <option value="">{{ '-' }}</option>
+                                <option value="0">{{ 'No' }}</option>
+                                <option value="1">{{ 'Yes' }}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3">
+                            <button class="btn btn-warning mt-4" id="clearFilters" style="float: right;">{{ 'Clear filters' }}</button>
+                            <button class="btn btn-success mt-4" id="search" style="float: right; margin-right: 5px">{{ 'Search' }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="h3 mb-3">
                             {{ 'All weapons / tools list' }}
                         </h1>
                     </div>
@@ -33,7 +76,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 {% endblock %}
 
@@ -50,7 +92,14 @@
                 searching: true,
                 ajax: {
                     url: "{{ path('weapons_list_data') }}",
-                    type: 'POST'
+                    type: 'POST',
+                    'data': function (d) {
+                        return $.extend({}, d, {
+                            "weaponType": getCookie('weaponType')[0],
+                            "tool": getCookie('tool')[0],
+                            "openMap": getCookie('openMap')[0],
+                        });
+                    },
                 },
                 columns: [
                     {
@@ -118,6 +167,81 @@
                         }
                     }
                 ]
+            });
+
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                let cookie = unescape(parts.pop().split(';').shift());
+                let strippedCookie = cookie.replace(/[\[\]"]+/g, '');
+                const words = strippedCookie.split(',');
+                let cookieArray = Array.from(words);
+                return cookieArray;
+            }
+
+            function setDefaultOption(cookie, element) {
+                const defaultOption = document.createElement('option');
+                defaultOption.selected = true;
+                defaultOption.disabled = true;
+                defaultOption.hidden = true;
+                defaultOption.value = "";
+                defaultOption.innerText = getCookie(cookie);
+                document.getElementById(element).prepend(defaultOption);
+            }
+
+            function setAllCookies(cookie1, name1, element, cookie2) {
+                setCookie(cookie1, name1);
+                let c = document.getElementById(element);
+                let categoryName = c.options[c.selectedIndex].text;
+                setCookie(cookie2, categoryName);
+            }
+
+            function setCookie(name, value) {
+                document.cookie = name + '=' + value;
+            }
+
+            function removeCookie(name) {
+                document.cookie = name + '=';
+            }
+
+            $('#weaponType').on('change', function () {
+                setAllCookies('weaponType', $(this).val(), 'weaponType', 'weaponTypeName');
+            });
+
+            $('#tool').on('change', function () {
+                setAllCookies('tool', $(this).val(), 'tool', 'toolName');
+            });
+
+            $('#openMap').on('change', function () {
+                setAllCookies('openMap', $(this).val(), 'openMap', 'openMapName');
+            });
+
+            $('#clearFilters').on("click", function () {
+                $('#weaponType').val(null).trigger('change');
+                $('#tool').val(null).trigger('change');
+                $('#openMap').val(null).trigger('change');
+                removeCookie("weaponType");
+                removeCookie("tool");
+                removeCookie("openMap");
+                window.location.reload();
+            });
+
+            $('#search').on("click", function () {
+                table.draw();
+            });
+
+            $(document).ready(function () {
+                if (getCookie('weaponType') != 'null' && getCookie('weaponType') != '') {
+                    setDefaultOption('weaponTypeName', 'weaponType');
+                }
+
+                if (getCookie('tool') != 'null' && getCookie('tool') != '') {
+                    setDefaultOption('toolName', 'tool');
+                }
+
+                if (getCookie('openMap') != 'null' && getCookie('openMap') != '') {
+                    setDefaultOption('openMapName', 'openMap');
+                }
             });
 
             {% if is_granted("ROLE_ADMIN") %}

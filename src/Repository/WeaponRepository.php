@@ -62,7 +62,8 @@ class WeaponRepository extends EntityRepository
     }
 
     public function getWeaponsCount(
-        $search
+        $search,
+        $filters = []
     )
     {
         $qb = $this->em->createQueryBuilder();
@@ -77,6 +78,24 @@ class WeaponRepository extends EntityRepository
                 ->setParameter('phrase', '%' . $search . '%');
         }
 
+        if (!empty($filters)) {
+            if (isset($filters['weaponType'])) {
+                $qb
+                    ->andWhere("w.type = :weaponType")
+                    ->setParameter('weaponType', $filters['weaponType']);
+            }
+            if (isset($filters['tool'])) {
+                $qb
+                    ->andWhere("w.isTool = :tool")
+                    ->setParameter('tool', $filters['tool']);
+            }
+            if (isset($filters['openMap'])) {
+                $qb
+                    ->andWhere("w.isOpenMapWeapon = :openMap")
+                    ->setParameter('openMap', $filters['openMap']);
+            }
+        }
+
         $qb = $qb
             ->getQuery();
 
@@ -87,7 +106,8 @@ class WeaponRepository extends EntityRepository
         $firstRecord,
         $recordsCount,
         $order,
-        $search
+        $search,
+        $filters = []
     )
     {
         $qb = $this->em->createQueryBuilder();
@@ -100,6 +120,24 @@ class WeaponRepository extends EntityRepository
             ->addSelect('w.isOpenMapWeapon as isOpenMapWeapon')
             ->addSelect('w.imageName as imageName')
             ->from(Weapon::class, 'w');
+
+        if (!empty($filters)) {
+            if (isset($filters['weaponType'])) {
+                $qb
+                    ->andWhere("w.type = :weaponType")
+                    ->setParameter('weaponType', $filters['weaponType']);
+            }
+            if (isset($filters['tool'])) {
+                $qb
+                    ->andWhere("w.isTool = :tool")
+                    ->setParameter('tool', $filters['tool']);
+            }
+            if (isset($filters['openMap'])) {
+                $qb
+                    ->andWhere("w.isOpenMapWeapon = :openMap")
+                    ->setParameter('openMap', $filters['openMap']);
+            }
+        }
 
         if (!is_null($search)) {
             $qb = $qb
