@@ -12,6 +12,7 @@ class WeaponsDatatable
     private ?string $search = null;
     private ?int $recordsCount;
     private ?array $orderColumn = null;
+    private ?array $filters = [];
     private EntityManagerInterface $em;
     private Container $container;
 
@@ -31,8 +32,8 @@ class WeaponsDatatable
         $weaponsRepository = $this->em->getRepository(Weapon::class);
 
         $weaponsCount = $weaponsRepository->getWeaponsCount($this->search);
-        $filteredWeaponsCount = $weaponsRepository->getWeaponsCount($this->search);
-        $weapons = $weaponsRepository->getWeaponsList($this->firstRecord, $this->recordsCount, $this->orderColumn, $this->search);
+        $filteredWeaponsCount = $weaponsRepository->getWeaponsCount($this->search, $this->filters);
+        $weapons = $weaponsRepository->getWeaponsList($this->firstRecord, $this->recordsCount, $this->orderColumn, $this->search, $this->filters);
 
         $weaponsArray = [];
 
@@ -92,6 +93,16 @@ class WeaponsDatatable
 
         if (!is_null($request->get('search')) && $request->get('search')['value'] !== '') {
             $this->search = $request->get('search')['value'];
+        }
+
+        if ($request->get('weaponType') != '') {
+            $this->filters['weaponType'] = $request->get('weaponType');
+        }
+        if ($request->get('tool') != '') {
+            $this->filters['tool'] = $request->get('tool');
+        }
+        if ($request->get('openMap') != '') {
+            $this->filters['openMap'] = $request->get('openMap');
         }
     }
 }
