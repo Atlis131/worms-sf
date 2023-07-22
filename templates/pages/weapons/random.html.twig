@@ -45,57 +45,59 @@
                     </div>
                 </div>
 
-                <div class="row mt-4 text-center">
+                <div class="row mt-3">
                     <p>
-                        {{ 'Additional options' }}
+                        {{ 'Additions' }}
                     </p>
                     <div class="col-lg-12 row">
-                        <div class="col-lg-6">
-                            <p>
-                                <input type="checkbox" id="includeTools">
-                                <label for="includeTools">
-                                    {{ "Include tools" }}
+                        <div class="col-lg-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="includeTools">
+                                <label class="form-check-label" for="includeTools">
+                                    {{ "Tools" }}
                                 </label>
-                            </p>
+                            </div>
                         </div>
-                        <div class="col-lg-6">
-                            <p>
-                                <input type="checkbox" id="includeOpenMapWeapons">
+                        <div class="col-lg-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="includeOpenMapWeapons">
                                 <label for="includeOpenMapWeapons">
-                                    {{ "Include open map weapons" }}
+                                    {{ "Open map weapons" }}
                                 </label>
-                            </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-12 row">
-                        <div class="col-lg-6">
-                            <p>
-                                <input type="checkbox" id="includeSentryGuns">
+                        <div class="col-lg-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="includeSentryGuns">
                                 <label for="includeSentryGuns">
-                                    {{ "Include sentry guns" }}
+                                    {{ "Sentry guns" }}
                                 </label>
-                            </p>
+                            </div>
                         </div>
-                        <div class="col-lg-6">
-                            <p>
-                                <input type="checkbox" id="randomizeCount">
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <p>
+                        {{ 'Options' }}
+                    </p>
+                    <div class="col-lg-12 row mb-2">
+                        <div class="col-lg-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="randomizeCount">
                                 <label for="randomizeCount">
-                                    {{ "Randomize weapons count" }}
+                                    {{ "Rand. weapons count" }}
                                 </label>
-                            </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-12 row">
-                        <div class="col-lg-6">
-                            <p>
-                                <input type="checkbox" id="randomizeDelay">
+                        <div class="col-lg-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="randomizeDelay">
                                 <label for="randomizeDelay">
-                                    {{ "Randomize weapons delay" }}
+                                    {{ "Rand. weapons delay" }}
                                 </label>
-                            </p>
+                            </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="mt-2 text-center">
                     <button type="button" id="rollButton" class="btn btn-success">
@@ -109,7 +111,7 @@
         <div class="card col-lg-6 offset-lg-3">
             <div class="card-header">
                 <h2 style="font-weight: 600" id="regularWeaponsHeader">
-                    {{ 'Regular weapons & tools' }}
+                    {{ 'Regular' }}
                 </h2>
             </div>
             <div class="card-body row" id="normalWeapons"></div>
@@ -119,7 +121,7 @@
         <div class="card col-lg-6 offset-lg-3">
             <div class="card-header">
                 <h2 style="font-weight: 600" id="craftedWeaponsHeader">
-                    {{ 'Crafted weapons & tools' }}
+                    {{ 'Crafted' }}
                 </h2>
             </div>
             <div class="card-body row" id="craftedWeapons"></div>
@@ -177,14 +179,6 @@
             let includeSentryGuns = $('#includeSentryGuns').is(":checked");
             let randomizeCount = $('#randomizeCount').is(":checked");
             let randomizeDelay = $('#randomizeDelay').is(":checked");
-
-            if (includeTools) {
-                $('#craftedWeaponsHeader').text('Crafted weapons & tools');
-                $('#regularWeaponsHeader').text('Regular weapons & tools');
-            } else {
-                $('#craftedWeaponsHeader').text('Crafted weapons');
-                $('#regularWeaponsHeader').text('Regular weapons');
-            }
 
             let settings = {
                 'url': "{{ path('weapons_random_get') }}",
