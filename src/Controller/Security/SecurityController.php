@@ -27,10 +27,10 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 class SecurityController extends AbstractController
 {
     private EntityManagerInterface $em;
-    private EmailVerifier $emailVerifier;
-    private EmailService $emailService;
-    private UserLogService $userLogService;
-    private UserRepository $userRepository;
+    private EmailVerifier          $emailVerifier;
+    private EmailService           $emailService;
+    private UserLogService         $userLogService;
+    private UserRepository         $userRepository;
 
     public function __construct(
         EntityManagerInterface $em,
