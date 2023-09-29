@@ -7,10 +7,10 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserLogDatatable
 {
-    private ?int $firstRecord;
-    private ?string $search = null;
-    private ?int $recordsCount;
-    private ?array $orderColumn = null;
+    private ?int                   $firstRecord;
+    private ?string                $search      = null;
+    private ?int                   $recordsCount;
+    private ?array                 $orderColumn = null;
     private EntityManagerInterface $em;
 
     public function __construct(

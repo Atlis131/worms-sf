@@ -16,7 +16,7 @@ class ProfileController extends AbstractController
 {
 
     private EntityManagerInterface $entityManager;
-    private UserLogService $userLogService;
+    private UserLogService         $userLogService;
 
     public function __construct(
         EntityManagerInterface $entityManager,
