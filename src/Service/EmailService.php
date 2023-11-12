@@ -10,7 +10,7 @@ use Symfony\Component\Mime\Email;
 class EmailService
 {
     private MailerInterface $mailer;
-    private Container $container;
+    private Container       $container;
 
     public function __construct(
         MailerInterface $mailer,

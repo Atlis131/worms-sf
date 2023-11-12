@@ -8,13 +8,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class WeaponsDatatable
 {
-    private ?int $firstRecord;
-    private ?string $search = null;
-    private ?int $recordsCount;
-    private ?array $orderColumn = null;
-    private ?array $filters = [];
+    private ?int                   $firstRecord;
+    private ?string                $search      = null;
+    private ?int                   $recordsCount;
+    private ?array                 $orderColumn = null;
+    private ?array                 $filters     = [];
     private EntityManagerInterface $em;
-    private Container $container;
+    private Container              $container;
 
     public function __construct(
         EntityManagerInterface $em,
