@@ -64,7 +64,7 @@ class WeaponRepository extends EntityRepository
     public function getWeaponsCount(
         $search,
         $filters = []
-    )
+    ): float|bool|int|string|null
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -79,11 +79,6 @@ class WeaponRepository extends EntityRepository
         }
 
         if (!empty($filters)) {
-            if (isset($filters['weaponType'])) {
-                $qb
-                    ->andWhere("w.type = :weaponType")
-                    ->setParameter('weaponType', $filters['weaponType']);
-            }
             if (isset($filters['tool'])) {
                 $qb
                     ->andWhere("w.isTool = :tool")
@@ -93,6 +88,11 @@ class WeaponRepository extends EntityRepository
                 $qb
                     ->andWhere("w.isOpenMapWeapon = :openMap")
                     ->setParameter('openMap', $filters['openMap']);
+            }
+            if (isset($filters['weaponType'])) {
+                $qb
+                    ->andWhere("w.type = :weaponType")
+                    ->setParameter('weaponType', $filters['weaponType']);
             }
         }
 

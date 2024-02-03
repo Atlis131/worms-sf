@@ -3,14 +3,9 @@
 namespace App\Datatables;
 
 use App\Entity\UserLog;
-use Doctrine\ORM\EntityManagerInterface;
 
 class UserLogDatatable extends Datatable
 {
-    public function __construct(EntityManagerInterface $em)
-    {
-        parent::__construct($em);
-    }
 
     public function getDatatableData($request): array
     {
