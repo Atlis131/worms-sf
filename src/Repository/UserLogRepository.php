@@ -27,7 +27,7 @@ class UserLogRepository extends ServiceEntityRepository
         parent::__construct($registry, UserLog::class);
     }
 
-    public function getLogsCount($search)
+    public function getLogsCount($search): float|bool|int|string|null
     {
         $qb = $this->em->createQueryBuilder();
 
