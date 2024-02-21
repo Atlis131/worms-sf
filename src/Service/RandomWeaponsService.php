@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 class RandomWeaponsService
 {
     private EntityManagerInterface $em;
-    private Container              $container;
+    private Container $container;
 
     public function __construct(
         EntityManagerInterface $em,
@@ -35,48 +35,46 @@ class RandomWeaponsService
         $randomizeCount = $request->get('randomizeCount') == 'true';
         $randomizeDelay = $request->get('randomizeDelay') == 'true';
 
-        $weapons = $this->getWeaponNames(
+        $allRegularWeapons = $this->getWeaponNames(
             $includeTools,
             $includeOpenMapWeapons,
-            $includeSentryGuns
+            $includeSentryGuns,
+            0
         );
 
-        $craftedWeapons = $this->getCraftedWeapons($craftedCount, $randomizeCount, $randomizeDelay, $weapons['craftedWeapons']);
-        $normalWeapons = $this->getNormalWeapons($normalCount, $randomizeCount, $randomizeDelay, $weapons['normalWeapons']);
+        $regularWeapons = $this->getNormalWeapons($normalCount, $randomizeCount, $randomizeDelay, $allRegularWeapons);
+
+        $allCraftedWeapons = $this->getWeaponNames(
+            $includeTools,
+            $includeOpenMapWeapons,
+            $includeSentryGuns,
+            1,
+            $regularWeapons
+        );
+
+        $craftedWeapons = $this->getCraftedWeapons($craftedCount, $randomizeCount, $randomizeDelay, $allCraftedWeapons);
 
         return [
             'craftedWeapons' => $craftedWeapons,
-            'normalWeapons'  => $normalWeapons
+            'normalWeapons' => $regularWeapons
         ];
     }
 
     private function getWeaponNames(
-        bool $includeTools,
-        bool $includeOpenMapWeapons,
-        bool $includeSentryGuns
+        bool   $includeTools,
+        bool   $includeOpenMapWeapons,
+        bool   $includeSentryGuns,
+        string $type,
+        array  $regularWeapons = null
     ): array
     {
-        $allWeapons = $this->em->getRepository(Weapon::class)->findAllWeapons(
+        return $this->em->getRepository(Weapon::class)->findAllWeapons(
             $includeTools,
             $includeOpenMapWeapons,
-            $includeSentryGuns
+            $includeSentryGuns,
+            $type,
+            $regularWeapons
         );
-
-        $normalWeapons = [];
-        $craftedWeapons = [];
-
-        foreach ($allWeapons as $weapon) {
-            if ($weapon->getType() == 1) {
-                $craftedWeapons[] = $weapon;
-            } else {
-                $normalWeapons[] = $weapon;
-            }
-        }
-
-        return [
-            'craftedWeapons' => $craftedWeapons,
-            'normalWeapons'  => $normalWeapons
-        ];
     }
 
     private function getCraftedWeapons(
@@ -92,7 +90,7 @@ class RandomWeaponsService
             $index = rand(0, count($allCraftedWeapons) - 1);
 
             $craftedWeapon = [
-                'name'  => $allCraftedWeapons[$index]->getName(),
+                'name' => $allCraftedWeapons[$index]->getName(),
                 'image' => $this->container->getParameter('base_url') . '/images/weapons/' . $allCraftedWeapons[$index]->getImageName() . '.png'
             ];
 
@@ -134,7 +132,8 @@ class RandomWeaponsService
             $index = rand(0, count($allNormalWeapons) - 1);
 
             $normalWeapon = [
-                'name'  => $allNormalWeapons[$index]->getName(),
+                'id' => $allNormalWeapons[$index]->getId(),
+                'name' => $allNormalWeapons[$index]->getName(),
                 'image' => $this->container->getParameter('base_url') . '/images/weapons/' . $allNormalWeapons[$index]->getImageName() . '.png'
             ];
 
