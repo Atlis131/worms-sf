@@ -42,6 +42,12 @@ class Weapon
      */
     private ?bool $isOpenMapWeapon = false;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Weapon::class)
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private ?Weapon $baseVersion;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -123,6 +129,16 @@ class Weapon
     {
         $this->isOpenMapWeapon = $isOpenMapWeapon;
         return $this;
+    }
+
+    public function getBaseVersion(): ?Weapon
+    {
+        return $this->baseVersion;
+    }
+
+    public function setBaseVersion(?Weapon $baseVersion): void
+    {
+        $this->baseVersion = $baseVersion;
     }
 
 }

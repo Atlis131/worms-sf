@@ -119,7 +119,10 @@ class WeaponRepository extends EntityRepository
             ->addSelect('w.type as type')
             ->addSelect('w.isOpenMapWeapon as isOpenMapWeapon')
             ->addSelect('w.imageName as imageName')
-            ->from(Weapon::class, 'w');
+            ->addSelect('bv.id as baseVersionId')
+            ->addSelect('bv.name as baseVersionName')
+            ->from(Weapon::class, 'w')
+            ->leftJoin('w.baseVersion', 'bv');
 
         if (!empty($filters)) {
             if (isset($filters['weaponType'])) {
