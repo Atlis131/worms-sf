@@ -16,6 +16,11 @@
                         {{ form_start(form) }}
 
                         {{ form_row(form.name) }}
+
+                        {% if weaponType == 1 %}
+                            {{ form_row(form.baseVersion) }}
+                        {% endif %}
+
                         {{ form_row(form.type) }}
                         {{ form_row(form.isTool) }}
                         {{ form_row(form.isOpenMapWeapon) }}
@@ -23,7 +28,9 @@
 
                         {{ form_row(form.save) }}
 
-                        {{ form_end(form) }}
+                        {{ form_row(form._token) }}
+
+                        {{ form_end(form, {'render_rest': false}) }}
                     </div>
                 </div>
             </div>

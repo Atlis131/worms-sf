@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Weapon;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -24,7 +25,9 @@ class WeaponRepository extends EntityRepository
     public function findAllWeapons(
         $includeTools,
         $includeOpenMapWeapons,
-        $includeSentryGuns
+        $includeSentryGuns,
+        $type,
+        $regularWeapons
     )
     {
         $qb = $this->em->createQueryBuilder();
@@ -55,7 +58,30 @@ class WeaponRepository extends EntityRepository
                 ->setParameter('phrase', '%' . 'sentry' . '%');
         }
 
+        if ($regularWeapons) {
+            $weaponIds = [];
+
+            foreach ($regularWeapons as $regularWeapon) {
+                $weaponIds[] = $regularWeapon['id'];
+            }
+
+            $qb2 = $this->createQueryBuilder('wc');
+
+            $sub = $qb2->select('w2.id')
+                ->from(Weapon::class, 'w2')
+                ->leftJoin('w2.baseVersion', 'wb')
+                ->andWhere('wb.id in (:weapons)');
+
+            $qb
+                ->andWhere(
+                    $qb->expr()->notIn('w.id',  $sub->getDQL())
+                )
+                ->setParameter('weapons', $weaponIds,Connection::PARAM_STR_ARRAY);
+        }
+
         $qb = $qb
+            ->andWhere('w.type = :type')
+            ->setParameter('type', $type)
             ->getQuery();
 
         return $qb->getResult();
@@ -119,7 +145,11 @@ class WeaponRepository extends EntityRepository
             ->addSelect('w.type as type')
             ->addSelect('w.isOpenMapWeapon as isOpenMapWeapon')
             ->addSelect('w.imageName as imageName')
-            ->from(Weapon::class, 'w');
+            ->addSelect('bv.id as baseVersionId')
+            ->addSelect('bv.name as baseVersionName')
+            ->addSelect('bv.imageName as baseVersionImageName')
+            ->from(Weapon::class, 'w')
+            ->leftJoin('w.baseVersion', 'bv');
 
         if (!empty($filters)) {
             if (isset($filters['weaponType'])) {

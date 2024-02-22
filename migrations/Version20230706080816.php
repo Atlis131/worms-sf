@@ -30,7 +30,7 @@ final class Version20230706080816 extends AbstractMigration
                             (7, 'Shotgun', 0, 0, 0, 'Shotgun'),
                             (8, 'Uzi', 0, 0, 0, 'Uzi'),
                             (9, 'Minigun', 1, 0, 0, 'Minigun'),
-                            (10, 'Mine', 0, 0, 1, 'Mine'),
+                            (10, 'Mine', 0, 0, 0, 'Mine'),
                             (11, 'Dynamite', 0, 0, 0, 'Dynamite'),
                             (12, 'Baseball Bat', 0, 0, 0, 'BaseballBat'),
                             (13, 'Homing Missile', 0, 0, 0, 'HomingMissile'),
