@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -11,42 +12,40 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="user")
- * @method string getUserIdentifier()
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $username;
+    private string $username;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $username_canonical;
+    private string $username_canonical;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $email_canonical;
+    private string $email_canonical;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $enabled = 1;
+    private bool $enabled = true;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $password;
+    private string $password;
 
     /**
      * @Assert\Length(min=8)
@@ -78,120 +77,120 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private string $email;
 
     /**
      * @ORM\Column(name="name", type="string", nullable=false)
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $registrationDate;
+    private ?DateTime $registrationDate;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $emailVerificationDate;
+    private ?DateTime $emailVerificationDate;
 
     /**
      * @ORM\Column(type="string", length=128, nullable=true)
      */
-    private $resetPasswordToken;
+    private ?string $resetPasswordToken;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $resetPasswordTokenTime;
+    private ?DateTime $resetPasswordTokenTime;
 
     /**
      * @ORM\Column(type="array")
      */
-    private $roles = [];
+    private array $roles = [];
 
     public function __construct()
     {
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function setId($id)
+    public function setId($id): static
     {
         $this->id = $id;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getUsername()
+    public function getUserIdentifier(): string
     {
         return $this->username;
     }
 
     /**
-     * @param mixed $username
+     * @param string $username
      * @return User
      */
-    public function setUsername($username)
+    public function setUsername(string $username): static
     {
         $this->username = $username;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getUsernameCanonical()
+    public function getUsernameCanonical(): string
     {
         return $this->username_canonical;
     }
 
     /**
-     * @param mixed $username_canonical
+     * @param string $username_canonical
      * @return User
      */
-    public function setUsernameCanonical($username_canonical)
+    public function setUsernameCanonical(string $username_canonical): static
     {
         $this->username_canonical = $username_canonical;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getEmailCanonical()
+    public function getEmailCanonical(): string
     {
         return $this->email_canonical;
     }
 
     /**
-     * @param mixed $email_canonical
+     * @param string $email_canonical
      * @return User
      */
-    public function setEmailCanonical($email_canonical)
+    public function setEmailCanonical(string $email_canonical): static
     {
         $this->email_canonical = $email_canonical;
         return $this;
     }
 
     /**
-     * @return int
+     * @return bool
      */
-    public function getEnabled(): int
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
     /**
-     * @param int $enabled
+     * @param bool $enabled
      * @return User
      */
-    public function setEnabled(int $enabled): User
+    public function setEnabled(bool $enabled): User
     {
         $this->enabled = $enabled;
         return $this;
@@ -224,28 +223,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @param mixed $password
+     * @param string $password
      * @return User
      */
-    public function setPassword($password)
+    public function setPassword(string $password): static
     {
         $this->password = $password;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
     /**
-     * @param mixed $email
+     * @param string $email
      * @return User
      */
-    public function setEmail($email)
+    public function setEmail(string $email): static
     {
         $this->email = $email;
         return $this;
@@ -271,90 +270,90 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      * @return User
      */
-    public function setName($name)
+    public function setName(string $name): static
     {
         $this->name = $name;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return DateTime|null
      */
-    public function getEmailVerificationDate()
+    public function getEmailVerificationDate(): ?DateTime
     {
         return $this->emailVerificationDate;
     }
 
     /**
-     * @param mixed $emailVerificationDate
+     * @param DateTime|null $emailVerificationDate
      * @return User
      */
-    public function setEmailVerificationDate($emailVerificationDate)
+    public function setEmailVerificationDate(?DateTime $emailVerificationDate): static
     {
         $this->emailVerificationDate = $emailVerificationDate;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return DateTime|null
      */
-    public function getRegistrationDate()
+    public function getRegistrationDate(): ?DateTime
     {
         return $this->registrationDate;
     }
 
     /**
-     * @param mixed $registrationDate
+     * @param DateTime|null $registrationDate
      * @return User
      */
-    public function setRegistrationDate($registrationDate)
+    public function setRegistrationDate(?DateTime $registrationDate): static
     {
         $this->registrationDate = $registrationDate;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return DateTime|null
      */
-    public function getResetPasswordTokenTime()
+    public function getResetPasswordTokenTime(): ?DateTime
     {
         return $this->resetPasswordTokenTime;
     }
 
     /**
-     * @param mixed $resetPasswordTokenTime
+     * @param DateTime|null $resetPasswordTokenTime
      * @return User
      */
-    public function setResetPasswordTokenTime($resetPasswordTokenTime)
+    public function setResetPasswordTokenTime(?DateTime $resetPasswordTokenTime): static
     {
         $this->resetPasswordTokenTime = $resetPasswordTokenTime;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getResetPasswordToken()
+    public function getResetPasswordToken(): ?string
     {
         return $this->resetPasswordToken;
     }
 
     /**
-     * @param mixed $resetPasswordToken
+     * @param string|null $resetPasswordToken
      * @return User
      */
-    public function setResetPasswordToken($resetPasswordToken)
+    public function setResetPasswordToken(?string $resetPasswordToken): static
     {
         $this->resetPasswordToken = $resetPasswordToken;
         return $this;

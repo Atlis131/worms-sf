@@ -42,8 +42,10 @@
                             </select>
                         </div>
                         <div class="col-lg-3">
-                            <button class="btn btn-warning mt-4" id="clearFilters" style="float: right;">{{ 'Clear filters' }}</button>
-                            <button class="btn btn-success mt-4" id="search" style="float: right; margin-right: 5px">{{ 'Search' }}</button>
+                            <button class="btn btn-warning mt-4" id="clearFilters"
+                                    style="float: right;">{{ 'Clear filters' }}</button>
+                            <button class="btn btn-success mt-4" id="search"
+                                    style="float: right; margin-right: 5px">{{ 'Search' }}</button>
                         </div>
                     </div>
                 </div>
@@ -65,9 +67,13 @@
                             <tr>
                                 <th>{{ 'Id' }}</th>
                                 <th>{{ 'Name' }}</th>
+                                <th>{{ 'Base version' }}</th>
                                 <th>{{ 'Type' }}</th>
                                 <th>{{ 'Tool' }}</th>
                                 <th>{{ 'Open map' }}</th>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <th>{{ 'Actions' }}</th>
+                                {% endif %}
                             </tr>
                             </thead>
                             <tbody></tbody>
@@ -116,10 +122,21 @@
                         }
                     },
                     {
+                        "data": "baseVersion",
+                        'render': function (data) {
+                            let html = '';
+
+                            html += "<img src='" + data.image + "' height='40px'>"
+                            html += "<span style='margin-left:5px'>" + data.name + "</span>"
+
+                            return html;
+                        }
+                    },
+                    {
                         "data": "type",
                         'render': function (data) {
                             let html = "";
-                            html += '<div class="toggleSettings" data-weaponId="' + data.id + '" data-settingName="type">'
+                            html += '<div class="toggleSettings" data-weaponId="' + data.id + '">'
 
                             if (data.type === 0) {
                                 html += '<span class="btn-primary btn" style="cursor: hand"> {{ 'Regular' }} </span>';
@@ -136,7 +153,7 @@
                         "data": "isTool",
                         'render': function (data) {
                             let html = "";
-                            html += '<div class="toggleSettings" data-weaponId="' + data.id + '" data-settingName="tool">'
+                            html += '<div class="toggleSettings" data-weaponId="' + data.id + '">'
 
                             if (data.isTool) {
                                 html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
@@ -153,7 +170,7 @@
                         "data": "isOpenMapWeapon",
                         'render': function (data) {
                             let html = "";
-                            html += '<div class="toggleSettings" data-weaponId="' + data.id + '" data-settingName="openMapWeapon">'
+                            html += '<div class="toggleSettings" data-weaponId="' + data.id + '">'
 
                             if (data.isOpenMapWeapon) {
                                 html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
@@ -165,7 +182,22 @@
 
                             return html;
                         }
+                    },
+                    {% if is_granted('ROLE_ADMIN') %}
+                    {
+                        "data": "actions",
+                        "sortable": false,
+                        'render': function (data) {
+                            let html = "";
+
+                            if (data.edit) {
+                                html += '<a class="btn-info btn" style="cursor: hand" href=' + data.edit + '> {{ 'Edit' }} </span>';
+                            }
+
+                            return html;
+                        }
                     }
+                    {% endif %}
                 ]
             });
 
@@ -243,29 +275,6 @@
                     setDefaultOption('openMapName', 'openMap');
                 }
             });
-
-            {% if is_granted("ROLE_ADMIN") %}
-
-            $(document).on('click', '.toggleSettings', function (e) {
-                console.log('a');
-                let weaponId = $(this).data('weaponid');
-                let settingName = $(this).data('settingname');
-
-                let settings = {
-                    'url': "{{ path('weapons_toggle_settings') }}",
-                    'type': "POST",
-                    'data': {
-                        'weaponId': weaponId,
-                        'settingName': settingName,
-                    }
-                }
-                $.ajax(settings)
-                    .done(function () {
-                        table.ajax.reload();
-                    });
-            });
-
-            {% endif %}
         });
     </script>
 {% endblock %}

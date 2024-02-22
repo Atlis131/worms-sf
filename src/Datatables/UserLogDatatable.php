@@ -3,22 +3,9 @@
 namespace App\Datatables;
 
 use App\Entity\UserLog;
-use Doctrine\ORM\EntityManagerInterface;
 
-class UserLogDatatable
+class UserLogDatatable extends Datatable
 {
-    private ?int                   $firstRecord;
-    private ?string                $search      = null;
-    private ?int                   $recordsCount;
-    private ?array                 $orderColumn = null;
-    private EntityManagerInterface $em;
-
-    public function __construct(
-        EntityManagerInterface $em,
-    )
-    {
-        $this->em = $em;
-    }
 
     public function getDatatableData($request): array
     {
@@ -58,24 +45,5 @@ class UserLogDatatable
             'recordsFiltered' => $records['filtered'],
             'data'            => $records['data'],
         ];
-    }
-
-    private function processRequest($request): void
-    {
-        $this->firstRecord = $request->get('start');
-        $this->recordsCount = $request->get('length');
-
-        $columns = $request->get('columns');
-
-        if (!is_null($request->get('order')) && isset($request->get('order')[0])) {
-            $this->orderColumn = [
-                'column' => $columns[$request->get('order')[0]['column']]['data'],
-                'dir'    => $request->get('order')[0]['dir']
-            ];
-        }
-
-        if (!is_null($request->get('search')) && $request->get('search')['value'] !== '') {
-            $this->search = $request->get('search')['value'];
-        }
     }
 }

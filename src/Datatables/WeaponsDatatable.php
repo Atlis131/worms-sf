@@ -5,24 +5,22 @@ namespace App\Datatables;
 use App\Entity\Weapon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
+use Symfony\Component\Routing\RouterInterface;
 
-class WeaponsDatatable
+class WeaponsDatatable extends Datatable
 {
-    private ?int                   $firstRecord;
-    private ?string                $search      = null;
-    private ?int                   $recordsCount;
-    private ?array                 $orderColumn = null;
-    private ?array                 $filters     = [];
-    private EntityManagerInterface $em;
-    private Container              $container;
+    private Container $container;
+    private RouterInterface $router;
 
     public function __construct(
         EntityManagerInterface $em,
-        Container              $container
+        Container              $container,
+        RouterInterface        $router
     )
     {
-        $this->em = $em;
+        parent::__construct($em);
         $this->container = $container;
+        $this->router = $router;
     }
 
     public function getDatatableData($request): array
@@ -41,68 +39,63 @@ class WeaponsDatatable
             $weaponData['id'] = $weapon['id'];
 
             $weaponData['name'] = [
-                'name'  => $weapon['name'],
+                'name' => $weapon['name'],
                 'image' => $this->container->getParameter('base_url') . '/images/weapons/' . $weapon['imageName'] . '.png'
             ];
 
             $weaponData['type'] = [
                 'type' => $weapon['type'],
-                'id'   => $weapon['id']
+                'id' => $weapon['id']
             ];
 
             $weaponData['isTool'] = [
                 'isTool' => $weapon['isTool'],
-                'id'     => $weapon['id']
+                'id' => $weapon['id']
             ];
 
             $weaponData['isOpenMapWeapon'] = [
                 'isOpenMapWeapon' => $weapon['isOpenMapWeapon'],
-                'id'              => $weapon['id']
+                'id' => $weapon['id']
+            ];
+
+            if (isset($weapon['baseVersionId'])) {
+                $weaponData['baseVersion'] = [
+                    'name' => $weapon['baseVersionName'],
+                    'image' => $this->container->getParameter('base_url') . '/images/weapons/' . $weapon['baseVersionImageName'] . '.png',
+                    'id' => $weapon['baseVersionId']
+                ];
+            } else {
+                if ($weapon['type'] == 1) {
+                    $weaponData['baseVersion'] = [
+                        'name' => 'Undefined',
+                        'image' => $this->container->getParameter('base_url') . '/assets/img/undefined.webp',
+                    ];
+                } else {
+                    $weaponData['baseVersion'] = [
+                        'name' => 'Base weapon already.',
+                        'image' => $this->container->getParameter('base_url') . '/assets/img/undefined.webp',
+                    ];
+                }
+            }
+
+            $weaponData['actions'] = [
+                'edit' => $this->router->generate('weapons_edit', ['weaponId' => $weapon['id']])
             ];
 
             $weaponsArray[] = $weaponData;
         }
 
         $records = [
-            'total'    => $weaponsCount,
+            'total' => $weaponsCount,
             'filtered' => $filteredWeaponsCount,
-            'data'     => $weaponsArray
+            'data' => $weaponsArray
         ];
 
         return [
-            'draw'            => $request->get('draw'),
-            'recordsTotal'    => $records['total'],
+            'draw' => $request->get('draw'),
+            'recordsTotal' => $records['total'],
             'recordsFiltered' => $records['filtered'],
-            'data'            => $records['data'],
+            'data' => $records['data'],
         ];
-    }
-
-    private function processRequest($request): void
-    {
-        $this->firstRecord = $request->get('start');
-        $this->recordsCount = $request->get('length');
-
-        $columns = $request->get('columns');
-
-        if (!is_null($request->get('order')) && isset($request->get('order')[0])) {
-            $this->orderColumn = [
-                'column' => $columns[$request->get('order')[0]['column']]['data'],
-                'dir'    => $request->get('order')[0]['dir']
-            ];
-        }
-
-        if (!is_null($request->get('search')) && $request->get('search')['value'] !== '') {
-            $this->search = $request->get('search')['value'];
-        }
-
-        if ($request->get('weaponType') != '') {
-            $this->filters['weaponType'] = $request->get('weaponType');
-        }
-        if ($request->get('tool') != '') {
-            $this->filters['tool'] = $request->get('tool');
-        }
-        if ($request->get('openMap') != '') {
-            $this->filters['openMap'] = $request->get('openMap');
-        }
     }
 }

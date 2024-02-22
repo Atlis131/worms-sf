@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
@@ -21,6 +22,9 @@ class EmailService
         $this->container = $container;
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     public function sendEmail(
         $title,
         $content,
