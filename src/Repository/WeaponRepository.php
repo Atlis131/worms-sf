@@ -147,6 +147,7 @@ class WeaponRepository extends EntityRepository
             ->addSelect('w.imageName as imageName')
             ->addSelect('bv.id as baseVersionId')
             ->addSelect('bv.name as baseVersionName')
+            ->addSelect('bv.imageName as baseVersionImageName')
             ->from(Weapon::class, 'w')
             ->leftJoin('w.baseVersion', 'bv');
 

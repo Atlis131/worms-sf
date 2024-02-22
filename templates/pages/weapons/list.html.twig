@@ -71,7 +71,9 @@
                                 <th>{{ 'Type' }}</th>
                                 <th>{{ 'Tool' }}</th>
                                 <th>{{ 'Open map' }}</th>
-                                <th>{{ 'Actions' }}</th>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <th>{{ 'Actions' }}</th>
+                                {% endif %}
                             </tr>
                             </thead>
                             <tbody></tbody>
@@ -181,11 +183,12 @@
                             return html;
                         }
                     },
+                    {% if is_granted('ROLE_ADMIN') %}
                     {
                         "data": "actions",
+                        "sortable": false,
                         'render': function (data) {
                             let html = "";
-                            console.log(data);
 
                             if (data.edit) {
                                 html += '<a class="btn-info btn" style="cursor: hand" href=' + data.edit + '> {{ 'Edit' }} </span>';
@@ -194,6 +197,7 @@
                             return html;
                         }
                     }
+                    {% endif %}
                 ]
             });
 
