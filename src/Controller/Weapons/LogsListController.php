@@ -20,18 +20,13 @@ class LogsListController extends AbstractController
         $this->weaponLogDatatable = $weaponLogDatatable;
     }
 
-
-    /**
-     * @Route("/weapons/logs", name="weapons_logs")
-     */
+    #[Route('/weapons/logs', name: 'weapons_logs')]
     public function list(): Response
     {
         return $this->render('pages/weapons/log.html.twig');
     }
 
-    /**
-     * @Route("/weapons/logs/data", name="weapons_logs_data", methods={"POST"})
-     */
+    #[Route('/weapons/logs/data', name: 'weapons_logs_data', methods: ["POST"])]
     public function listData(Request $request): JsonResponse
     {
         $response = $this->weaponLogDatatable->getDatatableData($request);

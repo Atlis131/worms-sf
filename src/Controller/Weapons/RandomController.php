@@ -19,18 +19,14 @@ class RandomController extends AbstractController
     {
         $this->randomWeaponsService = $randomWeaponsService;
     }
-
-    /**
-     * @Route("/weapons/draw", name="weapons_random")
-     */
+    
+    #[Route('/weapons/draw', name: 'weapons_random')]
     public function drawWeapons(): Response
     {
         return $this->render('pages/weapons/random.html.twig');
     }
 
-    /**
-     * @Route("/weapons/random", name="weapons_random_get", options={"expose"=true})
-     */
+    #[Route('/weapons/random', name: 'weapons_random_get', options: ["expose" =>  true])]
     public function getRandomWeapons(Request $request): JsonResponse
     {
         $weapons = $this->randomWeaponsService->getRandomWeapons($request);

@@ -20,18 +20,13 @@ class ListController extends AbstractController
         $this->weaponsDatatable = $weaponsDatatable;
     }
 
-
-    /**
-     * @Route("/weapons/list", name="weapons_list")
-     */
+    #[Route('/weapons/list', name: 'weapons_list')]
     public function list(): Response
     {
         return $this->render('pages/weapons/list.html.twig');
     }
 
-    /**
-     * @Route("/weapons/list/data", name="weapons_list_data", methods={"POST"})
-     */
+    #[Route('/weapons/list/data', name: 'weapons_list_data', methods: ["POST"])]
     public function listData(Request $request): JsonResponse
     {
         $response = $this->weaponsDatatable->getDatatableData($request);

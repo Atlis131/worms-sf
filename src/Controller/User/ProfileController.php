@@ -27,9 +27,7 @@ class ProfileController extends AbstractController
         $this->userLogService = $userLogService;
     }
 
-    /**
-     * @Route("/user/profile", name="user_profile")
-     */
+    #[Route('/user/profile', name: 'user_profile')]
     public function profile(
         Request                     $request,
         UserPasswordHasherInterface $userPasswordHasherInterface

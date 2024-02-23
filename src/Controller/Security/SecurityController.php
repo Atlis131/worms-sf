@@ -47,9 +47,7 @@ class SecurityController extends AbstractController
         $this->userRepository = $userRepository;
     }
 
-    /**
-     * @Route("/login", name="login")
-     */
+    #[Route('/login', name: 'login')]
     public function login(
         AuthenticationUtils $authenticationUtils
     ): Response
@@ -65,9 +63,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/register", name="register")
-     */
+    #[Route('/register', name: 'register')]
     public function register(
         Request                     $request,
         UserPasswordHasherInterface $userPasswordHasherInterface
@@ -120,9 +116,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/verify-email", name="verify_email")
-     */
+    #[Route('/verify-email', name: 'verify_email')]
     public function verifyUserEmail(
         Request                    $request,
         UserAuthenticatorInterface $guardHandler,
@@ -166,9 +160,7 @@ class SecurityController extends AbstractController
         );
     }
 
-    /**
-     * @Route ("/reset-password", name="reset_password")
-     */
+    #[Route('/reset-password', name: 'reset_password')]
     public function resetPassword(Request $request): RedirectResponse|Response
     {
         if ($this->getUser()) {
@@ -209,9 +201,7 @@ class SecurityController extends AbstractController
         return $this->render('security/reset_password.html.twig',);
     }
 
-    /**
-     * @Route ("/set-password/{passwordHash}", name="set_password")
-     */
+    #[Route('/set-password/{passwordHash}', name: 'set_password')]
     public function setNewPassword(
         Request                     $request,
         UserPasswordHasherInterface $userPasswordHasherInterface,
@@ -296,9 +286,7 @@ class SecurityController extends AbstractController
         $this->emailService->sendEmail('[Worms Toolkit] Change your password', $body, trim($user->getEmail()));
     }
 
-    /**
-     * @Route("/logout", name="logout")
-     */
+    #[Route('/logout}', name: 'logout')]
     public function logout()
     {
 
