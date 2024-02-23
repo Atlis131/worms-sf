@@ -19,9 +19,7 @@ class ListController extends AbstractController
         $this->em = $em;
     }
 
-    /**
-     * @Route("/user/list", name="user_list")
-     */
+    #[Route('/user/list', name: 'user_list')]
     public function index(): Response
     {
         $users = $this->em->getRepository(User::class)->findAll();

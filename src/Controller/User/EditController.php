@@ -21,9 +21,7 @@ class EditController extends AbstractController
         $this->em = $em;
     }
 
-    /**
-     * @Route("/user/edit/{userId}", name="user_edit")
-     */
+    #[Route('/user/edit/{userId}', name: 'user_edit')]
     public function edit($userId, Request $request): Response
     {
         $user = $this->em->getRepository(User::class)->findOneBy([

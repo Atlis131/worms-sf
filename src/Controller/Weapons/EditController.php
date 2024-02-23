@@ -6,7 +6,6 @@ use App\Entity\Weapon;
 use App\Form\WeaponsType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,9 +21,7 @@ class EditController extends AbstractController
         $this->em = $em;
     }
 
-    /**
-     * @Route("/weapons/edit/{weaponId}", name="weapons_edit")
-     */
+    #[Route('/weapons/edit/{weaponId}', name: 'weapons_edit')]
     public function edit(
         int     $weaponId,
         Request $request): Response
@@ -54,43 +51,5 @@ class EditController extends AbstractController
             'form' => $form->createView(),
             'weaponType' => $weapon->getType()
         ]);
-    }
-
-    /**
-     * @Route("/weapons/settings", name="weapons_toggle_settings")
-     */
-    public function settings(
-        Request $request
-    ): Response
-    {
-        $weaponId = $request->get('weaponId');
-        $settingName = $request->get('settingName');
-
-        $weapon = $this->em->getRepository(Weapon::class)->findOneBy([
-            'id' => $weaponId
-        ]);
-
-        switch ($settingName) {
-            case 'tool':
-                $weapon->setIsTool(!$weapon->getIsTool());
-                $message = 'Changed weapon Tool setting';
-                break;
-            case 'openMapWeapon':
-                $weapon->setIsOpenMapWeapon(!$weapon->getIsOpenMapWeapon());
-                $message = 'Changed weapon openMapWeapon setting';
-                break;
-            case 'type':
-                $weapon->setType(!$weapon->getType());
-                $message = 'Changed weapon type setting';
-                break;
-            default:
-                $message = 'Unsupported type';
-                break;
-        }
-
-        $this->em->persist($weapon);
-        $this->em->flush();
-
-        return new JsonResponse($message);
     }
 }

@@ -20,18 +20,13 @@ class LogsListController extends AbstractController
         $this->userLogDatatable = $userLogDatatable;
     }
 
-
-    /**
-     * @Route("/user/logs", name="user_logs")
-     */
+    #[Route('/user/logs', name: 'user_logs')]
     public function list(): Response
     {
         return $this->render('pages/user/log.html.twig');
     }
 
-    /**
-     * @Route("/user/logs/data", name="user_logs_data", methods={"POST"})
-     */
+    #[Route('/user/logs/data', name: 'user_logs_data', methods: ['POST'])]
     public function listData(Request $request): JsonResponse
     {
         $response = $this->userLogDatatable->getDatatableData($request);
