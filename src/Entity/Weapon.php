@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\WeaponRepository")
  * @ORM\Table(name="weapon")
+ * @ORM\HasLifecycleCallbacks
  */
 class Weapon
 {

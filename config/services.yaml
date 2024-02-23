@@ -18,6 +18,12 @@ services:
 
     Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
 
+    App\Listener\WeaponListener:
+        tags:
+            name: 'doctrine.orm.entity_listener'
+            event: 'postUpdate'
+            entity: 'App\Entity\Weapon'
+
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
