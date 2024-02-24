@@ -2,7 +2,7 @@
 
 namespace App\Controller\User;
 
-use App\Entity\User;
+use App\Entity\User\User;
 use App\Form\UserChangePasswordType;
 use App\Service\UserLogService;
 use Doctrine\ORM\EntityManagerInterface;

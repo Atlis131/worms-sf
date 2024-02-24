@@ -2,7 +2,7 @@
 
 namespace App\Datatables;
 
-use App\Entity\UserLog;
+use App\Entity\User\UserLog;
 
 class UserLogDatatable extends Datatable
 {

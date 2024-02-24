@@ -2,7 +2,7 @@
 
 namespace App\Controller\Security;
 
-use App\Entity\User;
+use App\Entity\User\User;
 use App\Form\UserChangePasswordType;
 use App\Form\UserRegistrationFormType;
 use App\Repository\UserRepository;

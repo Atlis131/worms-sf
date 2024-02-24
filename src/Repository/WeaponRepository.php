@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Weapon;
+use App\Entity\Weapon\Weapon;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;

@@ -2,7 +2,7 @@
 
 namespace App\Datatables;
 
-use App\Entity\Weapon;
+use App\Entity\Weapon\Weapon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Routing\RouterInterface;

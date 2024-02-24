@@ -2,7 +2,7 @@
 
 namespace App\Controller\Security;
 
-use App\Entity\User;
+use App\Entity\User\User;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
