@@ -2,7 +2,7 @@
 
 namespace App\Datatables;
 
-use App\Entity\WeaponLog;
+use App\Entity\Weapon\WeaponLog;
 
 class WeaponLogDatatable extends Datatable
 {

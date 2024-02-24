@@ -2,8 +2,8 @@
 
 namespace App\Listener;
 
-use App\Entity\Weapon;
-use App\Entity\WeaponLog;
+use App\Entity\Weapon\Weapon;
+use App\Entity\Weapon\WeaponLog;
 use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\ORM\Events;

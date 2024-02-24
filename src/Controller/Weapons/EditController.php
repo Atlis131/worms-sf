@@ -2,7 +2,7 @@
 
 namespace App\Controller\Weapons;
 
-use App\Entity\Weapon;
+use App\Entity\Weapon\Weapon;
 use App\Form\WeaponsType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

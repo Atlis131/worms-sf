@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\UserLog;
+use App\Entity\User\UserLog;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;

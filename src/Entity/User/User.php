@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\User;
 
 use App\Repository\UserRepository;
 use DateTime;
@@ -9,104 +9,57 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="user")
- */
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: 'integer')]
     protected int $id;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
     private string $username;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
     private string $username_canonical;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
     private string $email_canonical;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private bool $enabled = true;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private string $password;
 
-    /**
-     * @Assert\Length(min=8)
-     * @Assert\Regex(
-     *     pattern="/[a-z]/",
-     *     message="Your password must contain at least one lowercase letter"
-     * )
-     * @Assert\Regex(
-     *     pattern="/[A-Z]/",
-     *     message="Your password must contain at least one uppercase letter"
-     * )
-     * @Assert\Regex(
-     *     pattern="/\d/",
-     *     message="Your password must contain at least one digit"
-     * )
-     * @Assert\Regex(
-     *     pattern="/[^a-zA-Z0-9]/",
-     *     message="Your password must contain at least one special character"
-     * )
-     * @Assert\Regex(
-     *     pattern="/ /",
-     *     match=false,
-     *     message="Your password cannot contain spaces"
-     * )
-     * @Assert\NotCompromisedPassword()
-     */
+    #[Assert\Length(min: 8)]
+    #[Assert\Regex(pattern: "/[a-z]/", message: "Your password must contain at least one lowercase letter")]
+    #[Assert\Regex(pattern: "/[A-Z]/", message: "Your password must contain at least one uppercase letter")]
+    #[Assert\Regex(pattern: "/\d/", message: "Your password must contain at least one digit")]
+    #[Assert\Regex(pattern: "/[^a-zA-Z0-9]/", message: "Your password must contain at least one special character")]
+    #[Assert\Regex(pattern: "/ /", message: "Your password cannot contain spaces", match: false)]
+    #[Assert\NotCompromisedPassword]
     private ?string $plainPassword = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private string $email;
 
-    /**
-     * @ORM\Column(name="name", type="string", nullable=false)
-     */
+    #[ORM\Column(type: 'string', nullable: false)]
     private string $name;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTime $registrationDate;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTime $emailVerificationDate;
 
-    /**
-     * @ORM\Column(type="string", length=128, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 128, nullable: true)]
     private ?string $resetPasswordToken;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTime $resetPasswordTokenTime;
 
-    /**
-     * @ORM\Column(type="array")
-     */
+    #[ORM\Column(type: 'array')]
     private array $roles = [];
 
     public function __construct()
