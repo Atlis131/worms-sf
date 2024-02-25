@@ -1,51 +1,36 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Weapon;
 
+use App\Repository\WeaponRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\WeaponRepository")
- * @ORM\Table(name="weapon")
- */
+#[ORM\Entity(repositoryClass: WeaponRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Weapon
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $name = null;
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
+    private string $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $imageName = null;
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
+    private string $imageName;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private ?int $type = null;
+    #[ORM\Column(type: 'smallint', nullable: false)]
+    private int $type;
 
-    /**
-     * @ORM\Column(type="boolean", options={"default" : false})
-     */
+    #[ORM\Column(type: 'boolean',options: ['default' => false])]
     private ?bool $isTool = false;
 
-    /**
-     * @ORM\Column(type="boolean", options={"default" : false})
-     */
+    #[ORM\Column(type: 'boolean',options: ['default' => false])]
     private ?bool $isOpenMapWeapon = false;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Weapon::class)
-     * @ORM\JoinColumn(nullable=true)
-     */
+    #[ORM\ManyToOne(targetEntity: Weapon::class)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Weapon $baseVersion;
 
     public function getId(): ?int

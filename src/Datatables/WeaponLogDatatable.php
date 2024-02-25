@@ -2,20 +2,20 @@
 
 namespace App\Datatables;
 
-use App\Entity\User\UserLog;
+use App\Entity\Weapon\WeaponLog;
 
-class UserLogDatatable extends Datatable
+class WeaponLogDatatable extends Datatable
 {
 
     public function getDatatableData($request): array
     {
         $this->processRequest($request);
 
-        $userLogs = $this->em->getRepository(UserLog::class);
+        $weaponLogs = $this->em->getRepository(WeaponLog::class);
 
-        $logsCount = $userLogs->getLogsCount($this->search);
-        $filteredLogsCount = $userLogs->getLogsCount($this->search);
-        $logs = $userLogs->getLogsList($this->firstRecord, $this->recordsCount, $this->orderColumn, $this->search);
+        $logsCount = $weaponLogs->getLogsCount($this->search);
+        $filteredLogsCount = $weaponLogs->getLogsCount($this->search);
+        $logs = $weaponLogs->getLogsList($this->firstRecord, $this->recordsCount, $this->orderColumn, $this->search);
 
         $logsArray = [];
 
@@ -28,7 +28,8 @@ class UserLogDatatable extends Datatable
             $logData['username'] = $log['username'];
             $logData['createdAt'] = $formattedData;
             $logData['type'] = $log['type'];
-            $logData['message'] = $log['message'];
+            $logData['newValue'] = $log['newValue'];
+            $logData['oldValue'] = $log['oldValue'];
 
             $logsArray[] = $logData;
         }

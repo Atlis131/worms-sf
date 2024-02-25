@@ -2,7 +2,7 @@
 
 namespace App\Controller\User;
 
-use App\Entity\User;
+use App\Entity\User\User;
 use App\Form\UserChangePasswordType;
 use App\Service\UserLogService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,9 +27,7 @@ class ProfileController extends AbstractController
         $this->userLogService = $userLogService;
     }
 
-    /**
-     * @Route("/user/profile", name="user_profile")
-     */
+    #[Route('/user/profile', name: 'user_profile')]
     public function profile(
         Request                     $request,
         UserPasswordHasherInterface $userPasswordHasherInterface

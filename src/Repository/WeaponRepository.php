@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Weapon;
+use App\Entity\Weapon\Weapon;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -76,7 +76,7 @@ class WeaponRepository extends EntityRepository
                 ->andWhere(
                     $qb->expr()->notIn('w.id',  $sub->getDQL())
                 )
-                ->setParameter('weapons', $weaponIds,Connection::PARAM_STR_ARRAY);
+                ->setParameter('weapons', $weaponIds);
         }
 
         $qb = $qb

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\User;
+namespace App\Controller\Weapons;
 
-use App\Datatables\UserLogDatatable;
+use App\Datatables\WeaponLogDatatable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,25 +11,25 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LogsListController extends AbstractController
 {
-    private UserLogDatatable $userLogDatatable;
+    private WeaponLogDatatable $weaponLogDatatable;
 
     public function __construct(
-        UserLogDatatable $userLogDatatable,
+        WeaponLogDatatable $weaponLogDatatable,
     )
     {
-        $this->userLogDatatable = $userLogDatatable;
+        $this->weaponLogDatatable = $weaponLogDatatable;
     }
 
-    #[Route('/user/logs', name: 'user_logs')]
+    #[Route('/weapons/logs', name: 'weapons_logs')]
     public function list(): Response
     {
-        return $this->render('pages/user/log.html.twig');
+        return $this->render('pages/weapons/log.html.twig');
     }
 
-    #[Route('/user/logs/data', name: 'user_logs_data', methods: ['POST'])]
+    #[Route('/weapons/logs/data', name: 'weapons_logs_data', methods: ["POST"])]
     public function listData(Request $request): JsonResponse
     {
-        $response = $this->userLogDatatable->getDatatableData($request);
+        $response = $this->weaponLogDatatable->getDatatableData($request);
 
         return new JsonResponse($response, 200);
     }

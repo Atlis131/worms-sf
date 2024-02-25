@@ -2,8 +2,8 @@
 
 namespace App\Service;
 
-use App\Entity\User;
-use App\Entity\UserLog;
+use App\Entity\User\User;
+use App\Entity\User\UserLog;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 

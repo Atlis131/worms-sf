@@ -2,7 +2,7 @@
 
 namespace App\Controller\User;
 
-use App\Entity\User;
+use App\Entity\User\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +19,7 @@ class ListController extends AbstractController
         $this->em = $em;
     }
 
-    /**
-     * @Route("/user/list", name="user_list")
-     */
+    #[Route('/user/list', name: 'user_list')]
     public function index(): Response
     {
         $users = $this->em->getRepository(User::class)->findAll();

@@ -2,7 +2,7 @@
 
 namespace App\Controller\User;
 
-use App\Entity\User;
+use App\Entity\User\User;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,9 +21,7 @@ class EditController extends AbstractController
         $this->em = $em;
     }
 
-    /**
-     * @Route("/user/edit/{userId}", name="user_edit")
-     */
+    #[Route('/user/edit/{userId}', name: 'user_edit')]
     public function edit($userId, Request $request): Response
     {
         $user = $this->em->getRepository(User::class)->findOneBy([
