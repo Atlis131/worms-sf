@@ -76,7 +76,7 @@ class WeaponRepository extends EntityRepository
                 ->andWhere(
                     $qb->expr()->notIn('w.id',  $sub->getDQL())
                 )
-                ->setParameter('weapons', $weaponIds,Connection::PARAM_STR_ARRAY);
+                ->setParameter('weapons', $weaponIds);
         }
 
         $qb = $qb

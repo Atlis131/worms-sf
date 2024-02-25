@@ -59,12 +59,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTime $resetPasswordTokenTime;
 
-    #[ORM\Column(type: 'array')]
+    #[ORM\Column(type: 'simple_array')]
     private array $roles = [];
-
-    public function __construct()
-    {
-    }
 
     public function getId(): int
     {
