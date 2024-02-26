@@ -40,7 +40,7 @@ class WeaponsDatatable extends Datatable
 
             $weaponData['name'] = [
                 'name' => $weapon['name'],
-                'image' => $this->container->getParameter('base_url') . '/images/weapons/' . $weapon['imageName'] . '.png'
+                'image' => $this->container->getParameter('base_url') . '/assets/img/weapons/' . $weapon['imageName'] . '.webp'
             ];
 
             $weaponData['type'] = [
@@ -61,7 +61,7 @@ class WeaponsDatatable extends Datatable
             if (isset($weapon['baseVersionId'])) {
                 $weaponData['baseVersion'] = [
                     'name' => $weapon['baseVersionName'],
-                    'image' => $this->container->getParameter('base_url') . '/images/weapons/' . $weapon['baseVersionImageName'] . '.png',
+                    'image' => $this->container->getParameter('base_url') . '/assets/img/weapons/' . $weapon['baseVersionImageName'] . '.webp',
                     'id' => $weapon['baseVersionId']
                 ];
             } else {
