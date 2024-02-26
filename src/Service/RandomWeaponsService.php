@@ -91,7 +91,7 @@ class RandomWeaponsService
 
             $craftedWeapon = [
                 'name' => $allCraftedWeapons[$index]->getName(),
-                'image' => $this->container->getParameter('base_url') . '/images/weapons/' . $allCraftedWeapons[$index]->getImageName() . '.png'
+                'image' => $this->container->getParameter('base_url') . '/assets/img/weapons/' . $allCraftedWeapons[$index]->getImageName() . '.webp'
             ];
 
             if ($randomizeCount) {
@@ -134,7 +134,7 @@ class RandomWeaponsService
             $normalWeapon = [
                 'id' => $allNormalWeapons[$index]->getId(),
                 'name' => $allNormalWeapons[$index]->getName(),
-                'image' => $this->container->getParameter('base_url') . '/images/weapons/' . $allNormalWeapons[$index]->getImageName() . '.png'
+                'image' => $this->container->getParameter('base_url') . '/assets/img/weapons/' . $allNormalWeapons[$index]->getImageName() . '.webp'
             ];
 
             if ($randomizeCount) {
