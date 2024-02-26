@@ -29,8 +29,8 @@ class WeaponsType extends AbstractType
             ])
             ->add('baseVersion', EntityType::class, array(
                 'label' => '* Base Version',
-                'class'  => Weapon::class,
-                'query_builder' => function(EntityRepository $er) {
+                'class' => Weapon::class,
+                'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('q')
                         ->andWhere('q.type = 0');
                 },
@@ -51,8 +51,8 @@ class WeaponsType extends AbstractType
                 'label' => '* Type',
                 'required' => true,
                 'choices' => [
-                    'Regular' => 0,
-                    'Crafted' => 1
+                    'Regular' => Weapon::WEAPON_TYPE_REGULAR,
+                    'Crafted' => Weapon::WEAPON_TYPE_CRAFTED
                 ],
                 'attr' => [
                     'class' => 'form-control mt-1 mb-2'
