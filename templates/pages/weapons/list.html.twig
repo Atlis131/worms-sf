@@ -115,7 +115,7 @@
                         "data": "name",
                         'render': function (data) {
                             let html = "";
-                            html += "<img src='" + data.image + "' height='40px'>"
+                            html += "<img alt='" + data.name + "' src='" + data.image + "' height='40px'>"
                             html += "<span style='margin-left:5px'>" + data.name + "</span>"
 
                             return html;
@@ -126,7 +126,7 @@
                         'render': function (data) {
                             let html = '';
 
-                            html += "<img src='" + data.image + "' height='40px'>"
+                            html += "<img alt='" + data.name + "' src='" + data.image + "' height='40px'>"
                             html += "<span style='margin-left:5px'>" + data.name + "</span>"
 
                             return html;
@@ -207,8 +207,7 @@
                 let cookie = unescape(parts.pop().split(';').shift());
                 let strippedCookie = cookie.replace(/[\[\]"]+/g, '');
                 const words = strippedCookie.split(',');
-                let cookieArray = Array.from(words);
-                return cookieArray;
+                return Array.from(words);
             }
 
             function setDefaultOption(cookie, element) {

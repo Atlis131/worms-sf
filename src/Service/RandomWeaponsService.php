@@ -39,7 +39,7 @@ class RandomWeaponsService
             $includeTools,
             $includeOpenMapWeapons,
             $includeSentryGuns,
-            0
+            Weapon::WEAPON_TYPE_REGULAR
         );
 
         $regularWeapons = $this->getNormalWeapons($normalCount, $randomizeCount, $randomizeDelay, $allRegularWeapons);
@@ -48,7 +48,7 @@ class RandomWeaponsService
             $includeTools,
             $includeOpenMapWeapons,
             $includeSentryGuns,
-            1,
+            Weapon::WEAPON_TYPE_CRAFTED,
             $regularWeapons
         );
 
