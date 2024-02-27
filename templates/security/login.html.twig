@@ -15,6 +15,11 @@
             {{ 'Create new account' }}
         </a>
     </div>
+    {% if error %}
+        <div class="mb-2 mt-3 text-danger text-center">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
     <form class="m-t" role="form" method="post">
         <div class="mb-3">
             <label for="_username" class="form-label">{{ 'Email' }}</label>
@@ -37,11 +42,6 @@
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        {% if error %}
-            <div class="mb-3">
-                {{ error.messageKey|trans(error.messageData, 'security') }}
-            </div>
-        {% endif %}
         {% if app.request.hasPreviousSession %}
             {% for type, messages in app.session.flashbag.all() %}
                 {% for message in messages %}

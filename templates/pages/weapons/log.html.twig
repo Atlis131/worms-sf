@@ -26,6 +26,7 @@
                             <tr>
                                 <th>{{ 'Id' }}</th>
                                 <th>{{ 'User' }}</th>
+                                <th>{{ 'Weapon' }}</th>
                                 <th>{{ 'Created At' }}</th>
                                 <th>{{ 'Type' }}</th>
                                 <th>{{ 'Old Value' }}</th>
@@ -71,6 +72,16 @@
                         "data": "username",
                     },
                     {
+                        "data": "weapon",
+                        'render': function (data) {
+                            let html = "";
+                            html += "<img alt='" + data.name + "' src='" + data.image + "' height='40px'>"
+                            html += "<span style='margin-left:5px'>" + data.name + "</span>"
+
+                            return html;
+                        }
+                    },
+                    {
                         "data": "createdAt",
                     },
                     {
@@ -78,9 +89,47 @@
                     },
                     {
                         "data": "oldValue",
+                        'render': function (data) {
+                            if (data.type == 'type') {
+                                if (data.value == 0) {
+                                    html = '<span class="btn-primary btn" style="cursor: hand"> {{ 'Regular' }} </span>';
+                                } else {
+                                    html = '<span class="btn-secondary btn" style="cursor: hand"> {{ 'Crafted' }} </span>';
+                                }
+                            } else if (data.type == 'isTool' || data.type == 'isOpenMapWeapon') {
+                                if (data.value == 1) {
+                                    html = '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
+                                } else {
+                                    html = '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
+                                }
+                            } else {
+                                html = data.value;
+                            }
+
+                            return html;
+                        }
                     },
                     {
                         "data": "newValue",
+                        'render': function (data) {
+                            if (data.type == 'type') {
+                                if (data.value == 0) {
+                                    html = '<span class="btn-primary btn" style="cursor: hand"> {{ 'Regular' }} </span>';
+                                } else {
+                                    html = '<span class="btn-secondary btn" style="cursor: hand"> {{ 'Crafted' }} </span>';
+                                }
+                            } else if (data.type == 'isTool' || data.type == 'isOpenMapWeapon') {
+                                if (data.value == 1) {
+                                    html = '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
+                                } else {
+                                    html = '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
+                                }
+                            } else {
+                                html = data.value;
+                            }
+
+                            return html;
+                        }
                     },
                 ]
             });
