@@ -97,7 +97,7 @@
                                     html = '<span class="btn-secondary btn" style="cursor: hand"> {{ 'Crafted' }} </span>';
                                 }
                             } else if (data.type == 'isTool' || data.type == 'isOpenMapWeapon') {
-                                if (data.value) {
+                                if (data.value == 1) {
                                     html = '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
                                 } else {
                                     html = '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
@@ -119,7 +119,7 @@
                                     html = '<span class="btn-secondary btn" style="cursor: hand"> {{ 'Crafted' }} </span>';
                                 }
                             } else if (data.type == 'isTool' || data.type == 'isOpenMapWeapon') {
-                                if (data.value) {
+                                if (data.value == 1) {
                                     html = '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
                                 } else {
                                     html = '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
