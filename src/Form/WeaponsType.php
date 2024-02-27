@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -45,6 +46,26 @@ class WeaponsType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control mt-1 mb-2'
+                ]
+            ])
+            ->add('min', NumberType::class, [
+                'label' => 'Minimum draw quantity',
+                'required' => true,
+                'html5' => true,
+                'attr' => [
+                    'class' => 'form-control mt-1 mb-2',
+                    'min' => 1,
+                    'max' => 10
+                ]
+            ])
+            ->add('max', NumberType::class, [
+                'label' => 'Maximum draw quantity',
+                'required' => true,
+                'html5' => true,
+                'attr' => [
+                    'class' => 'form-control mt-1 mb-2',
+                    'min' => 1,
+                    'max' => 10
                 ]
             ])
             ->add('type', ChoiceType::class, [

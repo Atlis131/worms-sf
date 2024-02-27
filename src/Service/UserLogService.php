@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\Entity\User\User;
 use App\Entity\User\UserLog;
-use DateTimeImmutable;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 class UserLogService
@@ -27,7 +27,7 @@ class UserLogService
         $userLog = new UserLog();
 
         $userLog
-            ->setCreatedAt(new DateTimeImmutable('now'))
+            ->setCreatedAt(new DateTime('now'))
             ->setUser($user)
             ->setMessage($message)
             ->setType($type);
