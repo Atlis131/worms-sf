@@ -4,6 +4,10 @@
     <title>{{ 'Users list' }}</title>
 {% endblock %}
 
+{% block styles %}
+    {% include 'partials/_styles_datatable.html.twig' %}
+{% endblock %}
+
 {% block content %}
     <div class="container-fluid p-0">
         <h1 class="h3 mb-3">{{ 'Users list' }}</h1>
@@ -56,6 +60,10 @@
 
 {% block javascripts_bottom %}
     {{ parent() }}
+
+    <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/js/dataTables.responsive.min.js') }}"></script>
+
     <script>
         $('#datatable').DataTable({
             responsive: true,

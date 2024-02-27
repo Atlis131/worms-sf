@@ -3,7 +3,7 @@
 namespace App\Entity\User;
 
 use App\Repository\UserLogRepository;
-use DateTimeImmutable;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserLogRepository::class)]
@@ -18,8 +18,8 @@ class UserLog
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user;
 
-    #[ORM\Column(type: 'datetime_immutable')]
-    private ?DateTimeImmutable $createdAt;
+    #[ORM\Column(type: 'datetime')]
+    private ?DateTime $createdAt;
 
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $type;
@@ -44,12 +44,12 @@ class UserLog
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeImmutable $createdAt): self
+    public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 

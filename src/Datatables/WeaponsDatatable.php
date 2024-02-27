@@ -43,20 +43,9 @@ class WeaponsDatatable extends Datatable
                 'image' => $this->container->getParameter('base_url') . '/assets/img/weapons/' . $weapon['imageName'] . '.webp'
             ];
 
-            $weaponData['type'] = [
-                'type' => $weapon['type'],
-                'id' => $weapon['id']
-            ];
-
-            $weaponData['isTool'] = [
-                'isTool' => $weapon['isTool'],
-                'id' => $weapon['id']
-            ];
-
-            $weaponData['isOpenMapWeapon'] = [
-                'isOpenMapWeapon' => $weapon['isOpenMapWeapon'],
-                'id' => $weapon['id']
-            ];
+            $weaponData['type'] = $weapon['type'];
+            $weaponData['isTool'] = $weapon['isTool'];
+            $weaponData['isOpenMapWeapon'] = $weapon['isOpenMapWeapon'];
 
             if (isset($weapon['baseVersionId'])) {
                 $weaponData['baseVersion'] = [
@@ -77,6 +66,9 @@ class WeaponsDatatable extends Datatable
                     ];
                 }
             }
+
+            $weaponData['min'] = $weapon['minQuantity'];
+            $weaponData['max'] = $weapon['maxQuantity'];
 
             $weaponData['actions'] = [
                 'edit' => $this->router->generate('weapons_edit', ['weaponId' => $weapon['id']])

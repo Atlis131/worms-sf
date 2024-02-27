@@ -32,6 +32,13 @@ class Weapon
     #[ORM\Column(type: 'boolean',options: ['default' => false])]
     private ?bool $isOpenMapWeapon = false;
 
+    #[ORM\Column(type: 'smallint', nullable: false, options: ['default' => 1])]
+    private ?int $min = 1;
+
+    // 10 => Infinity
+    #[ORM\Column(type: 'smallint', nullable: false, options: ['default' => 10])]
+    private ?int $max = 10;
+
     #[ORM\ManyToOne(targetEntity: Weapon::class)]
     #[ORM\JoinColumn(nullable: true)]
     private ?Weapon $baseVersion;
@@ -68,6 +75,7 @@ class Weapon
     public function setImageName(?string $imageName): Weapon
     {
         $this->imageName = $imageName;
+
         return $this;
     }
 
@@ -98,6 +106,7 @@ class Weapon
     public function setIsTool(?bool $isTool): Weapon
     {
         $this->isTool = $isTool;
+
         return $this;
     }
 
@@ -116,6 +125,7 @@ class Weapon
     public function setIsOpenMapWeapon(?bool $isOpenMapWeapon): Weapon
     {
         $this->isOpenMapWeapon = $isOpenMapWeapon;
+
         return $this;
     }
 
@@ -124,9 +134,33 @@ class Weapon
         return $this->baseVersion;
     }
 
-    public function setBaseVersion(?Weapon $baseVersion): void
+    public function setBaseVersion(?Weapon $baseVersion): Weapon
     {
         $this->baseVersion = $baseVersion;
+
+        return $this;
+    }
+
+    public function getMin(): ?int
+    {
+        return $this->min;
+    }
+
+    public function setMin(?int $min): Weapon
+    {
+        $this->min = $min;
+        return $this;
+    }
+
+    public function getMax(): ?int
+    {
+        return $this->max;
+    }
+
+    public function setMax(?int $max): Weapon
+    {
+        $this->max = $max;
+        return $this;
     }
 
 }

@@ -6,6 +6,10 @@
     </title>
 {% endblock %}
 
+{% block styles %}
+    {% include 'partials/_styles_datatable.html.twig' %}
+{% endblock %}
+
 {% block content %}
     <div class="container-fluid p-0">
         <div class="row">
@@ -38,6 +42,10 @@
 
 {% block javascripts_bottom %}
     {{ parent() }}
+
+    <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/js/dataTables.responsive.min.js') }}"></script>
+
     <script>
         $(document).ready(function () {
             $('#userLogList').DataTable({
