@@ -4,7 +4,7 @@ namespace App\Listener;
 
 use App\Entity\Weapon\Weapon;
 use App\Entity\Weapon\WeaponLog;
-use DateTimeImmutable;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
@@ -48,7 +48,7 @@ class WeaponListener
             $weaponLog
                 ->setType($key)
                 ->setUser($user)
-                ->setCreatedAt(new DateTimeImmutable('now'))
+                ->setCreatedAt(new DateTime('now'))
                 ->setNewValue(is_bool($value[1]) ? (int) $value[1] : $value[1])
                 ->setOldValue(is_bool($value[0]) ? (int) $value[0] : $value[0]);
 

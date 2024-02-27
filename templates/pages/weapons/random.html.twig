@@ -140,10 +140,10 @@
             html += "<img width='35px' src='" + weapon.image + "'>";
             html += "<span style='margin-left:5px; font-size:15px'>" + weapon.name + "</span><br>";
 
-            if (weapon.count > 0) {
-                html += " Count: (" + weapon.count + ")";
-            } else if (weapon.count == 0) {
+            if (weapon.count == 10) {
                 html += " Count: (" + '∞' + ")";
+            } else {
+                html += " Count: (" + weapon.count + ")";
             }
 
             if (weapon.delay > 0) {

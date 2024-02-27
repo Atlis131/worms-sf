@@ -68,6 +68,8 @@
                                 <th>{{ 'Id' }}</th>
                                 <th>{{ 'Name' }}</th>
                                 <th>{{ 'Base version' }}</th>
+                                <th>{{ 'Draw quantity min.' }}</th>
+                                <th>{{ 'Draw quantity max.' }}</th>
                                 <th>{{ 'Type' }}</th>
                                 <th>{{ 'Tool' }}</th>
                                 <th>{{ 'Open map' }}</th>
@@ -133,18 +135,35 @@
                         }
                     },
                     {
+                        "data": "min",
+                        'render': function (data) {
+                            if (data === 10) {
+                                return '&#8734;'
+                            } else {
+                                return data;
+                            }
+                        }
+                    },
+                    {
+                        "data": "max",
+                        'render': function (data) {
+                            if (data === 10) {
+                                return '&#8734;'
+                            } else {
+                                return data;
+                            }
+                        }
+                    },
+                    {
                         "data": "type",
                         'render': function (data) {
                             let html = "";
-                            html += '<div class="toggleSettings" data-weaponId="' + data.id + '">'
 
-                            if (data.type === 0) {
+                            if (data === 0) {
                                 html += '<span class="btn-primary btn" style="cursor: hand"> {{ 'Regular' }} </span>';
                             } else {
                                 html += '<span class="btn-secondary btn" style="cursor: hand"> {{ 'Crafted' }} </span>';
                             }
-
-                            html += "</div>";
 
                             return html;
                         }
@@ -153,15 +172,12 @@
                         "data": "isTool",
                         'render': function (data) {
                             let html = "";
-                            html += '<div class="toggleSettings" data-weaponId="' + data.id + '">'
 
-                            if (data.isTool) {
+                            if (data) {
                                 html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
                             } else {
                                 html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
                             }
-
-                            html += "</div>";
 
                             return html;
                         }
@@ -170,15 +186,12 @@
                         "data": "isOpenMapWeapon",
                         'render': function (data) {
                             let html = "";
-                            html += '<div class="toggleSettings" data-weaponId="' + data.id + '">'
 
-                            if (data.isOpenMapWeapon) {
+                            if (data) {
                                 html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
                             } else {
                                 html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
                             }
-
-                            html += "</div>";
 
                             return html;
                         }

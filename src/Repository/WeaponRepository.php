@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Weapon\Weapon;
-use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -145,6 +144,8 @@ class WeaponRepository extends EntityRepository
             ->addSelect('w.type as type')
             ->addSelect('w.isOpenMapWeapon as isOpenMapWeapon')
             ->addSelect('w.imageName as imageName')
+            ->addSelect('w.min as minQuantity')
+            ->addSelect('w.max as maxQuantity')
             ->addSelect('bv.id as baseVersionId')
             ->addSelect('bv.name as baseVersionName')
             ->addSelect('bv.imageName as baseVersionImageName')

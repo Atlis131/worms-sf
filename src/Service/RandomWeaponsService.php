@@ -95,11 +95,8 @@ class RandomWeaponsService
             ];
 
             if ($randomizeCount) {
-                if ($allCraftedWeapons[$index]->getIsOpenMapWeapon() || str_contains($allCraftedWeapons[$index]->getName(), 'Sentry')) {
-                    $craftedWeapon['count'] = rand(1, 2);
-                } else {
-                    $craftedWeapon['count'] = rand(2, 6);
-                }
+                $count = rand($allCraftedWeapons[$index]->getMin(), $allCraftedWeapons[$index]->getMax());
+                $craftedWeapon['count'] = $count;
             }
 
             if ($randomizeDelay) {
@@ -138,11 +135,8 @@ class RandomWeaponsService
             ];
 
             if ($randomizeCount) {
-                if ($allNormalWeapons[$index]->getIsOpenMapWeapon() || str_contains($allNormalWeapons[$index]->getName(), 'Sentry')) {
-                    $normalWeapon['count'] = rand(1, 2);
-                } else {
-                    $normalWeapon['count'] = rand(0, 9);
-                }
+                $count = rand($allNormalWeapons[$index]->getMin(), $allNormalWeapons[$index]->getMax());
+                $normalWeapon['count'] = $count;
             }
 
             if ($randomizeDelay) {
