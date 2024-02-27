@@ -17,7 +17,11 @@ class WeaponLog
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user;
+    private User $user;
+
+    #[ORM\ManyToOne(targetEntity: Weapon::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private Weapon $weapon;
 
     #[ORM\Column(type: 'datetime')]
     private ?DateTime $createdAt;
@@ -45,6 +49,17 @@ class WeaponLog
     {
         $this->user = $user;
 
+        return $this;
+    }
+
+    public function getWeapon(): Weapon
+    {
+        return $this->weapon;
+    }
+
+    public function setWeapon(Weapon $weapon): WeaponLog
+    {
+        $this->weapon = $weapon;
         return $this;
     }
 

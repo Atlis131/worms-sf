@@ -63,8 +63,11 @@ class WeaponLogRepository extends ServiceEntityRepository
             ->addSelect('wl.oldValue as oldValue')
             ->addSelect('wl.newValue as newValue')
             ->addSelect('u.email as username')
+            ->addSelect('w.name as weaponName')
+            ->addSelect('w.imageName as weaponImage')
             ->from(WeaponLog::class, 'wl')
-            ->join('wl.user', 'u');
+            ->join('wl.user', 'u')
+            ->join('wl.weapon', 'w');
 
         if (!is_null($search)) {
             $qb = $qb

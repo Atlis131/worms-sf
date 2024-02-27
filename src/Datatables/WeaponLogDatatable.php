@@ -3,9 +3,21 @@
 namespace App\Datatables;
 
 use App\Entity\Weapon\WeaponLog;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class WeaponLogDatatable extends Datatable
 {
+    private Container $container;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        Container              $container,
+    )
+    {
+        parent::__construct($em);
+        $this->container = $container;
+    }
 
     public function getDatatableData($request): array
     {
@@ -26,25 +38,39 @@ class WeaponLogDatatable extends Datatable
 
             $logData['id'] = $log['id'];
             $logData['username'] = $log['username'];
+
+            $logData['weapon'] = [
+                'name' => $log['weaponName'],
+                'image' => $this->container->getParameter('base_url') . '/assets/img/weapons/' . $log['weaponImage'] . '.webp'
+            ];
+
             $logData['createdAt'] = $formattedData;
             $logData['type'] = $log['type'];
-            $logData['newValue'] = $log['newValue'];
-            $logData['oldValue'] = $log['oldValue'];
+
+            $logData['newValue'] = [
+                'value' => $log['newValue'],
+                'type' => $log['type']
+            ];
+
+            $logData['oldValue'] = [
+                'value' => $log['oldValue'],
+                'type' => $log['type']
+            ];
 
             $logsArray[] = $logData;
         }
 
         $records = [
-            'total'    => $logsCount,
+            'total' => $logsCount,
             'filtered' => $filteredLogsCount,
-            'data'     => $logsArray
+            'data' => $logsArray
         ];
 
         return [
-            'draw'            => $request->get('draw'),
-            'recordsTotal'    => $records['total'],
+            'draw' => $request->get('draw'),
+            'recordsTotal' => $records['total'],
             'recordsFiltered' => $records['filtered'],
-            'data'            => $records['data'],
+            'data' => $records['data'],
         ];
     }
 }

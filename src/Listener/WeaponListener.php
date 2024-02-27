@@ -48,6 +48,7 @@ class WeaponListener
             $weaponLog
                 ->setType($key)
                 ->setUser($user)
+                ->setWeapon($weapon)
                 ->setCreatedAt(new DateTime('now'))
                 ->setNewValue(is_bool($value[1]) ? (int) $value[1] : $value[1])
                 ->setOldValue(is_bool($value[0]) ? (int) $value[0] : $value[0]);
