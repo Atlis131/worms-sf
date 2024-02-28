@@ -65,6 +65,7 @@ class WeaponLogRepository extends ServiceEntityRepository
             ->addSelect('u.email as username')
             ->addSelect('w.name as weaponName')
             ->addSelect('w.imageName as weaponImage')
+            ->addSelect('w.id as weaponId')
             ->from(WeaponLog::class, 'wl')
             ->join('wl.user', 'u')
             ->join('wl.weapon', 'w');

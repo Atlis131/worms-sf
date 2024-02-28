@@ -61,7 +61,7 @@
                     0, 'desc'
                 ],
                 ajax: {
-                    url: "{{ path('weapons_logs_data') }}",
+                    url: "{{ path('weapon_logs_data') }}",
                     type: 'POST'
                 },
                 columns: [
@@ -75,8 +75,9 @@
                         "data": "weapon",
                         'render': function (data) {
                             let html = "";
+                            html += "<a href='" + data.detailsUrl +"' target='_blank'>";
                             html += "<img alt='" + data.name + "' src='" + data.image + "' height='40px'>"
-                            html += "<span style='margin-left:5px'>" + data.name + "</span>"
+                            html += "<span style='margin-left:5px'>" + data.name + "</span></a>"
 
                             return html;
                         }

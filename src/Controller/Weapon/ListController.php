@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller\Weapons;
+namespace App\Controller\Weapon;
 
 use App\Datatables\WeaponsDatatable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ListController extends AbstractController
 {
@@ -20,13 +20,13 @@ class ListController extends AbstractController
         $this->weaponsDatatable = $weaponsDatatable;
     }
 
-    #[Route('/weapons/list', name: 'weapons_list')]
+    #[Route('/weapon/list', name: 'weapon_list')]
     public function list(): Response
     {
         return $this->render('pages/weapons/list.html.twig');
     }
 
-    #[Route('/weapons/list/data', name: 'weapons_list_data', methods: ["POST"])]
+    #[Route('/weapon/list/data', name: 'weapon_list_data', methods: ["POST"])]
     public function listData(Request $request): JsonResponse
     {
         $response = $this->weaponsDatatable->getDatatableData($request);

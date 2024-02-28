@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>{{ 'Weapon Details' }}</title>
+{% endblock %}
+
+{% block content %}
+        <div class="container-fluid p-0">
+            <div class="mb-3">
+                <h1 class="h3 d-inline align-middle">{{ weapon.name ~ ' details' }}</h1>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="btn-info btn" href="{{ path('weapon_edit', {'weaponId': weapon.id}) }}">{{ 'Edit' }}</a>
+                {% endif %}
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-xl-3">
+                    <div class="card mb-3">
+                        <div class="card-body text-center">
+                            <img src="{{ asset('assets/img/weapons/' ~ weapon.imageName ~ '.webp') }}" alt="Christina Mason" class="img-fluid rounded-circle mb-2" width="48" height="48" />
+                            <h5 class="card-title mb-0 text-info">{{ weapon.name }}</h5>
+                        </div>
+                        <hr class="my-0" />
+                        <div class="card-body">
+                            <h5 class="h6 card-title">{{ 'About' }}</h5>
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-1">{{ 'Type:' }}
+                                    <span class="text-info">
+                                        {% if weapon.type == 0 %}
+                                            {{ 'Regular' }}
+                                        {% else %}
+                                            {{ 'Crafted' }}
+                                        {% endif %}
+                                    </span>
+                                </li>
+                                <li class="mb-1">{{ 'Open map:' }}
+                                    <span class="text-info">
+                                        {% if weapon.isOpenMapWeapon == 0 %}
+                                            {{ 'No' }}
+                                        {% else %}
+                                            {{ 'Yes' }}
+                                        {% endif %}
+                                    </span>
+                                </li>
+                                <li class="mb-1">{{ 'Tool:' }}
+                                    <span class="text-info">
+                                        {% if weapon.isTool == 0 %}
+                                            {{ 'No' }}
+                                        {% else %}
+                                            {{ 'Yes' }}
+                                        {% endif %}
+                                    </span>
+                                </li>
+                                <li class="mb-1">{{ 'Min draw quantity:' }}
+                                    <span class="text-info">
+                                        {% if weapon.min == 10 %}
+                                            {{ '&#8734;' }}
+                                        {% else %}
+                                            {{ weapon.min }}
+                                        {% endif %}
+                                    </span>
+                                <li class="mb-1">{{ 'Max draw quantity:' }}
+                                    <span class="text-info">
+                                        {% if weapon.max == 10 %}
+                                            {{ '&#8734;' }}
+                                        {% else %}
+                                            {{ weapon.max }}
+                                        {% endif %}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {#<div class="col-md-8 col-xl-9"></div>#}
+            </div>
+        </div>
+{% endblock %}
+
+{% block javascripts_bottom %}
+    {{ parent() }}
+{% endblock %}
