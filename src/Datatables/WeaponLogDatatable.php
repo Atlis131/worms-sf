@@ -5,18 +5,22 @@ namespace App\Datatables;
 use App\Entity\Weapon\WeaponLog;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
+use Symfony\Component\Routing\RouterInterface;
 
 class WeaponLogDatatable extends Datatable
 {
     private Container $container;
+    private RouterInterface $router;
 
     public function __construct(
         EntityManagerInterface $em,
         Container              $container,
+        RouterInterface        $router
     )
     {
         parent::__construct($em);
         $this->container = $container;
+        $this->router = $router;
     }
 
     public function getDatatableData($request): array
@@ -41,7 +45,8 @@ class WeaponLogDatatable extends Datatable
 
             $logData['weapon'] = [
                 'name' => $log['weaponName'],
-                'image' => $this->container->getParameter('base_url') . '/assets/img/weapons/' . $log['weaponImage'] . '.webp'
+                'image' => $this->container->getParameter('base_url') . '/assets/img/weapons/' . $log['weaponImage'] . '.webp',
+                'detailsUrl' => $this->router->generate('weapon_details', ['weaponId' => $log['weaponId']])
             ];
 
             $logData['createdAt'] = $formattedData;

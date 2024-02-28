@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Weapons;
+namespace App\Controller\Weapon;
 
 use App\Entity\Weapon\Weapon;
 use App\Form\WeaponsType;
@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class EditController extends AbstractController
 {
@@ -21,7 +21,7 @@ class EditController extends AbstractController
         $this->em = $em;
     }
 
-    #[Route('/weapons/edit/{weaponId}', name: 'weapons_edit')]
+    #[Route('/weapon/edit/{weaponId}', name: 'weapon_edit')]
     public function edit(
         int     $weaponId,
         Request $request): Response
@@ -43,7 +43,7 @@ class EditController extends AbstractController
                     ->getFlashBag()
                     ->add('success', 'Successfully changed weapon');
 
-                return $this->redirectToRoute('weapons_list');
+                return $this->redirectToRoute('weapon_list');
             }
         }
 

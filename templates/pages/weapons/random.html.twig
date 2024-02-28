@@ -181,7 +181,7 @@
             let randomizeDelay = $('#randomizeDelay').is(":checked");
 
             let settings = {
-                'url': "{{ path('weapons_random_get') }}",
+                'url': "{{ path('weapon_random') }}",
                 'type': "POST",
                 'data': {
                     'countNormal': countNormal,

@@ -8,16 +8,16 @@
             <li class="sidebar-header">
                 {{ 'Tools' }}
             </li>
-            <li class="sidebar-item {{ 'weapons_random' in app.request.get('_route') ? 'active' : '' }}">
-                <a class="sidebar-link" href="{{ path('weapons_random') }}">
+            <li class="sidebar-item {{ 'weapon_draw' in app.request.get('_route') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ path('weapon_draw') }}">
                     <i class="align-middle" data-feather="sliders"></i>
                     <span class="align-middle">
                         {{ 'Weapons Drawing' }}
                     </span>
                 </a>
             </li>
-            <li class="sidebar-item {{ 'weapons_list' in app.request.get('_route') ? 'active' : '' }}">
-                <a class="sidebar-link" href="{{ path('weapons_list') }}">
+            <li class="sidebar-item {{ 'weapon_list' in app.request.get('_route') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ path('weapon_list') }}">
                     <i class="align-middle" data-feather="list"></i>
                     <span class="align-middle">
                         {{ 'Weapons / Tools list' }}
@@ -44,8 +44,8 @@
                         </span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ 'weapons_logs' in app.request.get('_route') ? 'active' : '' }}">
-                    <a class="sidebar-link" href="{{ path('weapons_logs') }}">
+                <li class="sidebar-item {{ 'weapon_logs' in app.request.get('_route') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ path('weapon_logs') }}">
                         <i class="align-middle" data-feather="clock"></i>
                         <span class="align-middle">
                             {{ 'Weapon Logs' }}

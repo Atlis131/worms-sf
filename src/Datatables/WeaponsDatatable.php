@@ -40,7 +40,8 @@ class WeaponsDatatable extends Datatable
 
             $weaponData['name'] = [
                 'name' => $weapon['name'],
-                'image' => $this->container->getParameter('base_url') . '/assets/img/weapons/' . $weapon['imageName'] . '.webp'
+                'image' => $this->container->getParameter('base_url') . '/assets/img/weapons/' . $weapon['imageName'] . '.webp',
+                'detailsUrl' => $this->router->generate('weapon_details', ['weaponId' => $weapon['id']])
             ];
 
             $weaponData['type'] = $weapon['type'];
@@ -71,7 +72,7 @@ class WeaponsDatatable extends Datatable
             $weaponData['max'] = $weapon['maxQuantity'];
 
             $weaponData['actions'] = [
-                'edit' => $this->router->generate('weapons_edit', ['weaponId' => $weapon['id']])
+                'edit' => $this->router->generate('weapon_edit', ['weaponId' => $weapon['id']])
             ];
 
             $weaponsArray[] = $weaponData;

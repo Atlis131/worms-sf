@@ -41,8 +41,8 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    - { path: ^/weapons/edit, roles: ROLE_ADMIN }`
-    - { path: ^/weapons/settings, roles: ROLE_ADMIN }`
+    - { path: ^/weapon/edit, roles: ROLE_ADMIN }`
+    - { path: ^/weapon/settings, roles: ROLE_ADMIN }`
     - { path: ^/user/edit, roles: ROLE_ADMIN }`
     - { path: ^/user/list, roles: ROLE_ADMIN }`
 
