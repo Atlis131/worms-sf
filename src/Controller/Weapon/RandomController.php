@@ -2,6 +2,7 @@
 
 namespace App\Controller\Weapon;
 
+use App\Service\DrawHistoryService;
 use App\Service\RandomWeaponsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,12 +13,15 @@ use Symfony\Component\Routing\Attribute\Route;
 class RandomController extends AbstractController
 {
     private RandomWeaponsService $randomWeaponsService;
+    private DrawHistoryService $drawHistoryService;
 
     public function __construct(
         RandomWeaponsService $randomWeaponsService,
+        DrawHistoryService $drawHistoryService
     )
     {
         $this->randomWeaponsService = $randomWeaponsService;
+        $this->drawHistoryService = $drawHistoryService;
     }
     
     #[Route('/weapon/draw', name: 'weapon_draw')]
@@ -30,6 +34,8 @@ class RandomController extends AbstractController
     public function getRandomWeapons(Request $request): JsonResponse
     {
         $weapons = $this->randomWeaponsService->getRandomWeapons($request);
+
+        $this->drawHistoryService->createNewDrawEntry($weapons);
 
         return new JsonResponse($weapons);
     }

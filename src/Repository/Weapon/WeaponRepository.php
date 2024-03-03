@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Weapon;
 
 use App\Entity\Weapon\Weapon;
 use Doctrine\ORM\EntityManagerInterface;
