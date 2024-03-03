@@ -5,7 +5,7 @@ namespace App\Controller\Security;
 use App\Entity\User\User;
 use App\Form\UserChangePasswordType;
 use App\Form\UserRegistrationFormType;
-use App\Repository\UserRepository;
+use App\Repository\User\UserRepository;
 use App\Service\EmailService;
 use App\Service\EmailVerifier;
 use App\Service\UserLogService;

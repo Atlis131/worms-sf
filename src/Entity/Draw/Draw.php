@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Entity\User;
+namespace App\Entity\Draw;
 
-use App\Repository\User\UserLogRepository;
+use App\Entity\User\User;
+use App\Repository\Draw\DrawRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: UserLogRepository::class)]
-class UserLog
+#[ORM\Entity(repositoryClass: DrawRepository::class)]
+class Draw
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "AUTO")]
@@ -15,17 +16,11 @@ class UserLog
     private ?int $id;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user;
 
     #[ORM\Column(type: 'datetime')]
     private ?DateTime $createdAt;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private ?string $type;
-
-    #[ORM\Column(type: 'text', length: 65535)]
-    private ?string $message;
 
     public function getId(): ?int
     {
@@ -56,27 +51,4 @@ class UserLog
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    public function getMessage(): ?string
-    {
-        return $this->message;
-    }
-
-    public function setMessage(string $message): self
-    {
-        $this->message = $message;
-
-        return $this;
-    }
 }

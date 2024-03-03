@@ -90,6 +90,7 @@ class RandomWeaponsService
             $index = rand(0, count($allCraftedWeapons) - 1);
 
             $craftedWeapon = [
+                'id' => $allCraftedWeapons[$index]->getId(),
                 'name' => $allCraftedWeapons[$index]->getName(),
                 'image' => $this->container->getParameter('base_url') . '/assets/img/weapons/' . $allCraftedWeapons[$index]->getImageName() . '.webp'
             ];
