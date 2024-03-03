@@ -3,7 +3,7 @@
 namespace App\Entity\Weapon;
 
 use App\Entity\User\User;
-use App\Repository\WeaponLogRepository;
+use App\Repository\Weapon\WeaponLogRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 

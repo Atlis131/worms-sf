@@ -107,7 +107,7 @@
                 paginate: true,
                 searching: true,
                 ajax: {
-                    url: "{{ path('weapons_list_data') }}",
+                    url: "{{ path('weapon_list_data') }}",
                     type: 'POST',
                     'data': function (d) {
                         return $.extend({}, d, {
@@ -125,8 +125,9 @@
                         "data": "name",
                         'render': function (data) {
                             let html = "";
+                            html += "<a href='" + data.detailsUrl +"' target='_blank'>";
                             html += "<img alt='" + data.name + "' src='" + data.image + "' height='40px'>"
-                            html += "<span style='margin-left:5px'>" + data.name + "</span>"
+                            html += "<span style='margin-left:5px'>" + data.name + "</span></a>"
 
                             return html;
                         }
@@ -212,7 +213,7 @@
                             let html = "";
 
                             if (data.edit) {
-                                html += '<a class="btn-info btn" style="cursor: hand" href=' + data.edit + '> {{ 'Edit' }} </span>';
+                                html += '<a class="btn-info btn" href=' + data.edit + '> {{ 'Edit' }} </a>';
                             }
 
                             return html;

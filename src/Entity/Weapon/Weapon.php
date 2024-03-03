@@ -2,7 +2,7 @@
 
 namespace App\Entity\Weapon;
 
-use App\Repository\WeaponRepository;
+use App\Repository\Weapon\WeaponRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WeaponRepository::class)]

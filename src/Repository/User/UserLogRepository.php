@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\User;
 
-use App\Entity\Weapon\WeaponLog;
+use App\Entity\User\UserLog;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method WeaponLog|null find($id, $lockMode = null, $lockVersion = null)
- * @method WeaponLog|null findOneBy(array $criteria, array $orderBy = null)
- * @method WeaponLog[]    findAll()
- * @method WeaponLog[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method UserLog|null find($id, $lockMode = null, $lockVersion = null)
+ * @method UserLog|null findOneBy(array $criteria, array $orderBy = null)
+ * @method UserLog[]    findAll()
+ * @method UserLog[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class WeaponLogRepository extends ServiceEntityRepository
+class UserLogRepository extends ServiceEntityRepository
 {
     private EntityManagerInterface $em;
 
@@ -24,7 +24,7 @@ class WeaponLogRepository extends ServiceEntityRepository
     {
         $this->em = $em;
 
-        parent::__construct($registry, WeaponLog::class);
+        parent::__construct($registry, UserLog::class);
     }
 
     public function getLogsCount($search): float|bool|int|string|null
@@ -32,12 +32,12 @@ class WeaponLogRepository extends ServiceEntityRepository
         $qb = $this->em->createQueryBuilder();
 
         $qb
-            ->select('count(wl.id)')
-            ->from(WeaponLog::class, 'wl');
+            ->select('count(ul.id)')
+            ->from(UserLog::class, 'ul');
 
         if (!is_null($search)) {
             $qb = $qb
-                ->andWhere('wl.type like :phrase')
+                ->andWhere('ul.message like :phrase')
                 ->setParameter('phrase', '%' . $search . '%');
         }
 
@@ -57,25 +57,21 @@ class WeaponLogRepository extends ServiceEntityRepository
         $qb = $this->em->createQueryBuilder();
 
         $qb
-            ->select('wl.id as id')
-            ->addSelect('wl.createdAt as createdAt')
-            ->addSelect('wl.type as type')
-            ->addSelect('wl.oldValue as oldValue')
-            ->addSelect('wl.newValue as newValue')
+            ->select('ul.id as id')
+            ->addSelect('ul.createdAt as createdAt')
+            ->addSelect('ul.type as type')
+            ->addSelect('ul.message as message')
             ->addSelect('u.email as username')
-            ->addSelect('w.name as weaponName')
-            ->addSelect('w.imageName as weaponImage')
-            ->from(WeaponLog::class, 'wl')
-            ->join('wl.user', 'u')
-            ->join('wl.weapon', 'w');
+            ->from(UserLog::class, 'ul')
+            ->join('ul.user', 'u');
 
         if (!is_null($search)) {
             $qb = $qb
-                ->andWhere('wl.type like :phrase')
+                ->andWhere('ul.message like :phrase')
                 ->setParameter('phrase', '%' . $search . '%');
         }
 
-        $orderColumn = $order['column'] == 'username' ? 'u.' . $order['column'] : 'wl.' . $order['column'];
+        $orderColumn = $order['column'] == 'username' ? 'u.' . $order['column'] : 'ul.' . $order['column'];
 
         $qb = $qb
             ->orderBy($orderColumn, strtoupper($order['dir']))
