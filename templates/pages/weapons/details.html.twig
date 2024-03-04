@@ -4,78 +4,118 @@
     <title>{{ 'Weapon Details' }}</title>
 {% endblock %}
 
+{% block styles %}
+    {% if is_granted('ROLE_ADMIN') %}
+        {% include 'partials/_styles_datatable.html.twig' %}
+    {% endif %}
+{% endblock %}
+
 {% block content %}
-        <div class="container-fluid p-0">
-            <div class="mb-3">
-                <h1 class="h3 d-inline align-middle">{{ weapon.name ~ ' details' }}</h1>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a class="btn-info btn" href="{{ path('weapon_edit', {'weaponId': weapon.id}) }}">{{ 'Edit' }}</a>
-                {% endif %}
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-xl-3">
-                    <div class="card mb-3">
-                        <div class="card-body text-center">
-                            <img src="{{ asset('assets/img/weapons/' ~ weapon.imageName ~ '.webp') }}" alt="Christina Mason" class="img-fluid rounded-circle mb-2" width="48" height="48" />
-                            <h5 class="card-title mb-0 text-info">{{ weapon.name }}</h5>
-                        </div>
-                        <hr class="my-0" />
-                        <div class="card-body">
-                            <h5 class="h6 card-title">{{ 'About' }}</h5>
-                            <ul class="list-unstyled mb-0">
-                                <li class="mb-1">{{ 'Type:' }}
-                                    <span class="text-info">
+    <div class="container-fluid p-0">
+        <div class="mb-3">
+            <h1 class="h3 d-inline align-middle">{{ weapon.name ~ ' details' }}</h1>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="btn-info btn" href="{{ path('weapon_edit', {'weaponId': weapon.id}) }}">{{ 'Edit' }}</a>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-xl-3">
+                <div class="card mb-3">
+                    <div class="card-body text-center">
+                        <img src="{{ asset('assets/img/weapons/' ~ weapon.imageName ~ '.webp') }}" alt="Christina Mason"
+                             class="img-fluid rounded-circle mb-2" width="48" height="48"/>
+                        <h5 class="card-title mb-0 text-info">{{ weapon.name }}</h5>
+                    </div>
+                    <hr class="my-0"/>
+                    <div class="card-body">
+                        <h5 class="h6 card-title">{{ 'About' }}</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-1">{{ 'Type:' }}
+                                <span class="text-info">
                                         {% if weapon.type == 0 %}
                                             {{ 'Regular' }}
                                         {% else %}
                                             {{ 'Crafted' }}
                                         {% endif %}
                                     </span>
-                                </li>
-                                <li class="mb-1">{{ 'Open map:' }}
-                                    <span class="text-info">
+                            </li>
+                            <li class="mb-1">{{ 'Open map:' }}
+                                <span class="text-info">
                                         {% if weapon.isOpenMapWeapon == 0 %}
                                             {{ 'No' }}
                                         {% else %}
                                             {{ 'Yes' }}
                                         {% endif %}
                                     </span>
-                                </li>
-                                <li class="mb-1">{{ 'Tool:' }}
-                                    <span class="text-info">
+                            </li>
+                            <li class="mb-1">{{ 'Tool:' }}
+                                <span class="text-info">
                                         {% if weapon.isTool == 0 %}
                                             {{ 'No' }}
                                         {% else %}
                                             {{ 'Yes' }}
                                         {% endif %}
                                     </span>
-                                </li>
-                                <li class="mb-1">{{ 'Min draw quantity:' }}
-                                    <span class="text-info">
+                            </li>
+                            <li class="mb-1">{{ 'Min draw quantity:' }}
+                                <span class="text-info">
                                         {% if weapon.min == 10 %}
                                             {{ '&#8734;' }}
                                         {% else %}
                                             {{ weapon.min }}
                                         {% endif %}
                                     </span>
-                                <li class="mb-1">{{ 'Max draw quantity:' }}
-                                    <span class="text-info">
+                            <li class="mb-1">{{ 'Max draw quantity:' }}
+                                <span class="text-info">
                                         {% if weapon.max == 10 %}
                                             {{ '&#8734;' }}
                                         {% else %}
                                             {{ weapon.max }}
                                         {% endif %}
                                     </span>
-                                </li>
-                            </ul>
-                        </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                {#<div class="col-md-8 col-xl-9"></div>#}
+            </div>
+            <div class="col-md-8 col-xl-9">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="container-fluid p-0">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h1 class="h3 mb-3">
+                                            {{ 'Weapon log list' }}
+                                        </h1>
+                                    </div>
+                                    <div class="card-body row">
+                                        <table id="weaponLogsList" class="display responsive nowrap" style="width:100%">
+                                            <thead>
+                                            <tr>
+                                                <th>{{ 'Id' }}</th>
+                                                <th>{{ 'User' }}</th>
+                                                <th>{{ 'Weapon' }}</th>
+                                                <th>{{ 'Created At' }}</th>
+                                                <th>{{ 'Type' }}</th>
+                                                <th>{{ 'Old Value' }}</th>
+                                                <th>{{ 'New Value' }}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
+    </div>
 {% endblock %}
 
 {% block javascripts_bottom %}
     {{ parent() }}
+    {% include 'pages/weapons/datatable/log.html.twig' with { 'weaponId': weapon.id } %}
 {% endblock %}

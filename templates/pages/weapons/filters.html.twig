@@ -1,0 +1,75 @@
+<script>
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        let cookie = unescape(parts.pop().split(';').shift());
+        let strippedCookie = cookie.replace(/[\[\]"]+/g, '');
+        const words = strippedCookie.split(',');
+        return Array.from(words);
+    }
+
+    function setDefaultOption(cookie, element) {
+        const defaultOption = document.createElement('option');
+        defaultOption.selected = true;
+        defaultOption.disabled = true;
+        defaultOption.hidden = true;
+        defaultOption.value = "";
+        defaultOption.innerText = getCookie(cookie);
+        document.getElementById(element).prepend(defaultOption);
+    }
+
+    function setAllCookies(cookie1, name1, element, cookie2) {
+        setCookie(cookie1, name1);
+        let c = document.getElementById(element);
+        let categoryName = c.options[c.selectedIndex].text;
+        setCookie(cookie2, categoryName);
+    }
+
+    function setCookie(name, value) {
+        document.cookie = name + '=' + value;
+    }
+
+    function removeCookie(name) {
+        document.cookie = name + '=';
+    }
+
+    $('#weaponType').on('change', function () {
+        setAllCookies('weaponType', $(this).val(), 'weaponType', 'weaponTypeName');
+    });
+
+    $('#tool').on('change', function () {
+        setAllCookies('tool', $(this).val(), 'tool', 'toolName');
+    });
+
+    $('#openMap').on('change', function () {
+        setAllCookies('openMap', $(this).val(), 'openMap', 'openMapName');
+    });
+
+    $('#clearFilters').on("click", function () {
+        $('#weaponType').val(null).trigger('change');
+        $('#tool').val(null).trigger('change');
+        $('#openMap').val(null).trigger('change');
+        removeCookie("weaponType");
+        removeCookie("tool");
+        removeCookie("openMap");
+        window.location.reload();
+    });
+
+    $('#search').on("click", function () {
+        table.draw();
+    });
+
+    $(document).ready(function () {
+        if (getCookie('weaponType') != 'null' && getCookie('weaponType') != '') {
+            setDefaultOption('weaponTypeName', 'weaponType');
+        }
+
+        if (getCookie('tool') != 'null' && getCookie('tool') != '') {
+            setDefaultOption('toolName', 'tool');
+        }
+
+        if (getCookie('openMap') != 'null' && getCookie('openMap') != '') {
+            setDefaultOption('openMapName', 'openMap');
+        }
+    });
+</script>

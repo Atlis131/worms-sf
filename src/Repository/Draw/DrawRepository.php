@@ -26,4 +26,59 @@ class DrawRepository extends ServiceEntityRepository
 
         parent::__construct($registry, Draw::class);
     }
+
+    public function getDrawsCount($search): float|bool|int|string|null
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb
+            ->select('count(d.id)')
+            ->from(Draw::class, 'd')
+            ->join('d.user', 'u');
+
+        if (!is_null($search)) {
+            $qb = $qb
+                ->andWhere('u.username like :phrase')
+                ->setParameter('phrase', '%' . $search . '%');
+        }
+
+        $qb = $qb
+            ->getQuery();
+
+        return $qb->getSingleScalarResult();
+    }
+
+    public function getDrawsList(
+        $firstRecord,
+        $recordsCount,
+        $order,
+        $search
+    )
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb
+            ->select('d.id')
+            ->addSelect('d.createdAt as createdAt')
+            ->addSelect('u.username as username')
+            ->from(Draw::class, 'd')
+            ->leftJoin('d.user','u');
+
+        if (!is_null($search)) {
+            $qb = $qb
+                ->andWhere('u.name like :phrase')
+                ->setParameter('phrase', '%' . $search . '%');
+        }
+
+        $orderColumn = $order['column'] == 'username' ? 'u.' . $order['column'] : 'd.' . $order['column'];
+
+        $qb = $qb
+            ->orderBy($orderColumn, strtoupper($order['dir']))
+            ->setFirstResult($firstRecord)
+            ->setMaxResults($recordsCount)
+            ->getQuery();
+
+        return $qb->getResult();
+
+    }
 }

@@ -2,7 +2,7 @@
 
 {% block title %}
     <title>
-        {{ 'User log list' }}
+        {{ 'Draw log list' }}
     </title>
 {% endblock %}
 
@@ -17,20 +17,17 @@
                 <div class="card">
                     <div class="card-header">
                         <h1 class="h3 mb-3">
-                            {{ 'Weapon log list' }}
+                            {{ 'Draw log list' }}
                         </h1>
                     </div>
                     <div class="card-body row">
-                        <table id="weaponLogsList" class="display responsive nowrap" style="width:100%">
+                        <table id="drawLogList" class="display responsive nowrap" style="width:100%">
                             <thead>
                             <tr>
                                 <th>{{ 'Id' }}</th>
                                 <th>{{ 'User' }}</th>
-                                <th>{{ 'Weapon' }}</th>
+                                <th>{{ 'Weapons' }}</th>
                                 <th>{{ 'Created At' }}</th>
-                                <th>{{ 'Type' }}</th>
-                                <th>{{ 'Old Value' }}</th>
-                                <th>{{ 'New Value' }}</th>
                             </tr>
                             </thead>
                             <tbody></tbody>
@@ -45,5 +42,5 @@
 {% block javascripts_bottom %}
     {{ parent() }}
 
-    {% include 'pages/weapons/datatable/log.html.twig' with { 'weaponId': '' } %}
+    {% include 'pages/draw/datatable/log.html.twig' with { 'weaponId': '' } %}
 {% endblock %}
