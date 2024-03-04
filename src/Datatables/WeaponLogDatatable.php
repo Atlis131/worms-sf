@@ -26,12 +26,13 @@ class WeaponLogDatatable extends Datatable
     public function getDatatableData($request): array
     {
         $this->processRequest($request);
+        $weaponId = $request->get('weaponId');
 
         $weaponLogs = $this->em->getRepository(WeaponLog::class);
 
-        $logsCount = $weaponLogs->getLogsCount($this->search);
-        $filteredLogsCount = $weaponLogs->getLogsCount($this->search);
-        $logs = $weaponLogs->getLogsList($this->firstRecord, $this->recordsCount, $this->orderColumn, $this->search);
+        $logsCount = $weaponLogs->getLogsCount($this->search, $weaponId);
+        $filteredLogsCount = $weaponLogs->getLogsCount($this->search, $weaponId);
+        $logs = $weaponLogs->getLogsList($this->firstRecord, $this->recordsCount, $this->orderColumn, $this->search, $weaponId);
 
         $logsArray = [];
 
