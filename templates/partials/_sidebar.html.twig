@@ -52,6 +52,14 @@
                         </span>
                     </a>
                 </li>
+                <li class="sidebar-item {{ 'draw_logs' in app.request.get('_route') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ path('draw_logs') }}">
+                        <i class="align-middle" data-feather="clock"></i>
+                        <span class="align-middle">
+                            {{ 'Draw Logs' }}
+                        </span>
+                    </a>
+                </li>
             {% endif %}
         </ul>
     </div>

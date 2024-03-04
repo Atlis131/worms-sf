@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>
+        {{ 'Draw log list' }}
+    </title>
+{% endblock %}
+
+{% block styles %}
+    {% include 'partials/_styles_datatable.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="h3 mb-3">
+                            {{ 'Draw log list' }}
+                        </h1>
+                    </div>
+                    <div class="card-body row">
+                        <table id="drawLogList" class="display responsive nowrap" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>{{ 'Id' }}</th>
+                                <th>{{ 'User' }}</th>
+                                <th>{{ 'Weapons' }}</th>
+                                <th>{{ 'Created At' }}</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts_bottom %}
+    {{ parent() }}
+
+    {% include 'pages/draw/datatable/log.html.twig' with { 'weaponId': '' } %}
+{% endblock %}
