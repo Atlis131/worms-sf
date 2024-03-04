@@ -34,7 +34,7 @@ class DrawRepository extends ServiceEntityRepository
         $qb
             ->select('count(d.id)')
             ->from(Draw::class, 'd')
-            ->join('d.user', 'u');
+            ->leftJoin('d.user', 'u');
 
         if (!is_null($search)) {
             $qb = $qb
