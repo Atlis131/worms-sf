@@ -27,7 +27,7 @@ class WeaponLogRepository extends ServiceEntityRepository
         parent::__construct($registry, WeaponLog::class);
     }
 
-    public function getLogsCount($search): float|bool|int|string|null
+    public function getLogsCount($search, $weaponId): float|bool|int|string|null
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -41,6 +41,13 @@ class WeaponLogRepository extends ServiceEntityRepository
                 ->setParameter('phrase', '%' . $search . '%');
         }
 
+        if ($weaponId != '') {
+            $qb = $qb
+                ->join('wl.weapon', 'w')
+                ->andWhere('w.id = :weaponId')
+                ->setParameter('weaponId', $weaponId);
+        }
+
         $qb = $qb
             ->getQuery();
 
@@ -51,7 +58,8 @@ class WeaponLogRepository extends ServiceEntityRepository
         $firstRecord,
         $recordsCount,
         $order,
-        $search
+        $search,
+        $weaponId
     )
     {
         $qb = $this->em->createQueryBuilder();
@@ -74,6 +82,12 @@ class WeaponLogRepository extends ServiceEntityRepository
             $qb = $qb
                 ->andWhere('wl.type like :phrase')
                 ->setParameter('phrase', '%' . $search . '%');
+        }
+
+        if ($weaponId != '') {
+            $qb = $qb
+                ->andWhere('w.id = :weaponId')
+                ->setParameter('weaponId', $weaponId);
         }
 
         $orderColumn = $order['column'] == 'username' ? 'u.' . $order['column'] : 'wl.' . $order['column'];
