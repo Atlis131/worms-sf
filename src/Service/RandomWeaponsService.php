@@ -96,7 +96,7 @@ class RandomWeaponsService
             ];
 
             if ($randomizeCount) {
-                $count = rand($allCraftedWeapons[$index]->getMin(), $allCraftedWeapons[$index]->getMax());
+                $count = rand($allCraftedWeapons[$index]->getMinDraw(), $allCraftedWeapons[$index]->getMaxDraw());
                 $craftedWeapon['count'] = $count;
             }
 
@@ -136,7 +136,7 @@ class RandomWeaponsService
             ];
 
             if ($randomizeCount) {
-                $count = rand($allNormalWeapons[$index]->getMin(), $allNormalWeapons[$index]->getMax());
+                $count = rand($allNormalWeapons[$index]->getMinDraw(), $allNormalWeapons[$index]->getMaxDraw());
                 $normalWeapon['count'] = $count;
             }
 
