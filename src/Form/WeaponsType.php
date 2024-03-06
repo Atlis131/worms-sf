@@ -29,7 +29,7 @@ class WeaponsType extends AbstractType
                 ]
             ])
             ->add('baseVersion', EntityType::class, array(
-                'label' => '* Base Version',
+                'label' => 'Base Version',
                 'class' => Weapon::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('q')
@@ -59,13 +59,33 @@ class WeaponsType extends AbstractType
                 ]
             ])
             ->add('maxDraw', NumberType::class, [
-                'label' => 'Maximum draw quantity',
+                'label' => '* Maximum draw quantity',
                 'required' => true,
                 'html5' => true,
                 'attr' => [
                     'class' => 'form-control mt-1 mb-2',
                     'min' => 1,
                     'max' => 10
+                ]
+            ])
+            ->add('minDelay', NumberType::class, [
+                'label' => '* Minimum delay',
+                'required' => true,
+                'html5' => true,
+                'attr' => [
+                    'class' => 'form-control mt-1 mb-2',
+                    'min' => 0,
+                    'max' => 9
+                ]
+            ])
+            ->add('maxDelay', NumberType::class, [
+                'label' => '* Maximum delay',
+                'required' => true,
+                'html5' => true,
+                'attr' => [
+                    'class' => 'form-control mt-1 mb-2',
+                    'min' => 0,
+                    'max' => 9
                 ]
             ])
             ->add('type', ChoiceType::class, [

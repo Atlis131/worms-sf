@@ -68,8 +68,11 @@ class WeaponsDatatable extends Datatable
                 }
             }
 
-            $weaponData['minDraw'] = $weapon['minQuantity'];
-            $weaponData['maxDraw'] = $weapon['maxQuantity'];
+            $weaponData['minDraw'] = $weapon['minDraw'];
+            $weaponData['maxDraw'] = $weapon['maxDraw'];
+
+            $weaponData['minDelay'] = $weapon['minDelay'];
+            $weaponData['maxDelay'] = $weapon['maxDelay'];
 
             $weaponData['actions'] = [
                 'edit' => $this->router->generate('weapon_edit', ['weaponId' => $weapon['id']])
