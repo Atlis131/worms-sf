@@ -33,11 +33,11 @@ class Weapon
     private ?bool $isOpenMapWeapon = false;
 
     #[ORM\Column(type: 'smallint', nullable: false, options: ['default' => 1])]
-    private ?int $min = 1;
+    private ?int $minDraw = 1;
 
     // 10 => Infinity
     #[ORM\Column(type: 'smallint', nullable: false, options: ['default' => 10])]
-    private ?int $max = 10;
+    private ?int $maxDraw = 10;
 
     #[ORM\ManyToOne(targetEntity: Weapon::class)]
     #[ORM\JoinColumn(nullable: true)]
@@ -141,25 +141,25 @@ class Weapon
         return $this;
     }
 
-    public function getMin(): ?int
+    public function getMinDraw(): ?int
     {
-        return $this->min;
+        return $this->minDraw;
     }
 
-    public function setMin(?int $min): Weapon
+    public function setMinDraw(?int $minDraw): Weapon
     {
-        $this->min = $min;
+        $this->minDraw = $minDraw;
         return $this;
     }
 
-    public function getMax(): ?int
+    public function getMaxDraw(): ?int
     {
-        return $this->max;
+        return $this->maxDraw;
     }
 
-    public function setMax(?int $max): Weapon
+    public function setMaxDraw(?int $maxDraw): Weapon
     {
-        $this->max = $max;
+        $this->maxDraw = $maxDraw;
         return $this;
     }
 

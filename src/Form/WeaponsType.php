@@ -48,7 +48,7 @@ class WeaponsType extends AbstractType
                     'class' => 'form-control mt-1 mb-2'
                 ]
             ])
-            ->add('min', NumberType::class, [
+            ->add('minDraw', NumberType::class, [
                 'label' => 'Minimum draw quantity',
                 'required' => true,
                 'html5' => true,
@@ -58,7 +58,7 @@ class WeaponsType extends AbstractType
                     'max' => 10
                 ]
             ])
-            ->add('max', NumberType::class, [
+            ->add('maxDraw', NumberType::class, [
                 'label' => 'Maximum draw quantity',
                 'required' => true,
                 'html5' => true,
