@@ -101,11 +101,8 @@ class RandomWeaponsService
             }
 
             if ($randomizeDelay) {
-                if ($allCraftedWeapons[$index]->getIsOpenMapWeapon() || str_contains($allCraftedWeapons[$index]->getName(), 'Sentry')) {
-                    $craftedWeapon['delay'] = rand(5, 9);
-                } else {
-                    $craftedWeapon['delay'] = rand(3, 6);
-                }
+                $delay = rand($allCraftedWeapons[$index]->getMinDelay(), $allCraftedWeapons[$index]->getMaxDelay());
+                $craftedWeapon['delay'] = $delay;
             }
 
             $craftedWeapons[] = $craftedWeapon;
@@ -141,11 +138,8 @@ class RandomWeaponsService
             }
 
             if ($randomizeDelay) {
-                if ($allNormalWeapons[$index]->getIsOpenMapWeapon() || str_contains($allNormalWeapons[$index]->getName(), 'Sentry')) {
-                    $normalWeapon['delay'] = rand(3, 9);
-                } else {
-                    $normalWeapon['delay'] = rand(0, 2);
-                }
+                $delay = rand($allNormalWeapons[$index]->getMinDelay(), $allNormalWeapons[$index]->getMaxDelay());
+                $normalWeapon['delay'] = $delay;
             }
 
             $normalWeapons[] = $normalWeapon;
