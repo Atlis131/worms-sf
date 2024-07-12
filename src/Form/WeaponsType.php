@@ -121,6 +121,17 @@ class WeaponsType extends AbstractType
                     'Yes' => 1
                 ],
             ])
+            ->add('isSuperWeapon', ChoiceType::class, [
+                'label' => '* Super weapon?',
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-control mt-1 mb-2'
+                ],
+                'choices' => [
+                    'No' => 0,
+                    'Yes' => 1
+                ],
+            ])
             ->add('save', SubmitType::class, [
                 'label' => 'Save',
                 'attr' => [

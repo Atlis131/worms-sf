@@ -35,7 +35,7 @@ class RandomController extends AbstractController
     {
         $weapons = $this->randomWeaponsService->getRandomWeapons($request);
 
-        $this->drawHistoryService->createNewDrawEntry($weapons);
+        $this->drawHistoryService->createNewDrawEntry($weapons, $request);
 
         return new JsonResponse($weapons);
     }

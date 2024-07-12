@@ -48,6 +48,15 @@
                                         {% endif %}
                                     </span>
                             </li>
+                            <li class="mb-1">{{ 'Super weapon:' }}
+                                <span class="text-info">
+                                        {% if weapon.isSuperWeapon == 0 %}
+                                            {{ 'No' }}
+                                        {% else %}
+                                            {{ 'Yes' }}
+                                        {% endif %}
+                                    </span>
+                            </li>
                             <li class="mb-1">{{ 'Tool:' }}
                                 <span class="text-info">
                                         {% if weapon.isTool == 0 %}

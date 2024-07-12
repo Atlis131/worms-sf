@@ -32,6 +32,9 @@ class Weapon
     #[ORM\Column(type: 'boolean',options: ['default' => false])]
     private ?bool $isOpenMapWeapon = false;
 
+    #[ORM\Column(type: 'boolean',options: ['default' => false])]
+    private ?bool $isSuperWeapon = false;
+
     #[ORM\Column(type: 'smallint', nullable: false, options: ['default' => 1])]
     private ?int $minDraw = 1;
 
@@ -132,6 +135,17 @@ class Weapon
     {
         $this->isOpenMapWeapon = $isOpenMapWeapon;
 
+        return $this;
+    }
+
+    public function getIsSuperWeapon(): ?bool
+    {
+        return $this->isSuperWeapon;
+    }
+
+    public function setIsSuperWeapon(?bool $isSuperWeapon): Weapon
+    {
+        $this->isSuperWeapon = $isSuperWeapon;
         return $this;
     }
 
