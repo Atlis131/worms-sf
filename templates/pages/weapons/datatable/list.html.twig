@@ -116,6 +116,20 @@
                         return html;
                     }
                 },
+                {
+                    "data": "isSuperWeapon",
+                    'render': function (data) {
+                        let html = "";
+
+                        if (data) {
+                            html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
+                        } else {
+                            html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
+                        }
+
+                        return html;
+                    }
+                },
                 {% if is_granted('ROLE_ADMIN') %}
                 {
                     "data": "actions",

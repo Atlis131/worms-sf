@@ -22,6 +22,12 @@ class DrawItem
     #[ORM\JoinColumn(nullable: false)]
     private Weapon $weapon;
 
+    #[ORM\Column(type: 'smallint', nullable: true)]
+    private ?int $count;
+
+    #[ORM\Column(type: 'smallint', nullable: true)]
+    private ?int $delay;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,6 +52,28 @@ class DrawItem
     public function setWeapon(Weapon $weapon): DrawItem
     {
         $this->weapon = $weapon;
+        return $this;
+    }
+
+    public function getCount(): ?int
+    {
+        return $this->count;
+    }
+
+    public function setCount(?int $count): DrawItem
+    {
+        $this->count = $count;
+        return $this;
+    }
+
+    public function getDelay(): ?int
+    {
+        return $this->delay;
+    }
+
+    public function setDelay(?int $delay): DrawItem
+    {
+        $this->delay = $delay;
         return $this;
     }
 

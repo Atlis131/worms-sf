@@ -47,6 +47,7 @@ class WeaponsDatatable extends Datatable
             $weaponData['type'] = $weapon['type'];
             $weaponData['isTool'] = $weapon['isTool'];
             $weaponData['isOpenMapWeapon'] = $weapon['isOpenMapWeapon'];
+            $weaponData['isSuperWeapon'] = $weapon['isSuperWeapon'];
 
             if (isset($weapon['baseVersionId'])) {
                 $weaponData['baseVersion'] = [

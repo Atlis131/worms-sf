@@ -61,6 +61,12 @@ class DrawRepository extends ServiceEntityRepository
             ->select('d.id')
             ->addSelect('d.createdAt as createdAt')
             ->addSelect('u.username as username')
+            ->addSelect('d.includeOpenMapWeapons as includeOpenMapWeapons')
+            ->addSelect('d.includeSentryGuns as includeSentryGuns')
+            ->addSelect('d.includeSuperWeapons as includeSuperWeapons')
+            ->addSelect('d.includeTools as includeTools')
+            ->addSelect('d.randomWeaponsCount as randomWeaponsCount')
+            ->addSelect('d.randomWeaponsDelay as randomWeaponsDelay')
             ->from(Draw::class, 'd')
             ->leftJoin('d.user','u');
 

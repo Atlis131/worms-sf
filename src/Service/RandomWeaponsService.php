@@ -31,6 +31,7 @@ class RandomWeaponsService
         $includeTools = $request->get('includeTools') == 'true';
         $includeOpenMapWeapons = $request->get('includeOpenMapWeapons') == 'true';
         $includeSentryGuns = $request->get('includeSentryGuns') == 'true';
+        $includeSuperWeapons = $request->get('includeSuperWeapons') == 'true';
 
         $randomizeCount = $request->get('randomizeCount') == 'true';
         $randomizeDelay = $request->get('randomizeDelay') == 'true';
@@ -39,6 +40,7 @@ class RandomWeaponsService
             $includeTools,
             $includeOpenMapWeapons,
             $includeSentryGuns,
+            $includeSuperWeapons,
             Weapon::WEAPON_TYPE_REGULAR
         );
 
@@ -48,6 +50,7 @@ class RandomWeaponsService
             $includeTools,
             $includeOpenMapWeapons,
             $includeSentryGuns,
+            $includeSuperWeapons,
             Weapon::WEAPON_TYPE_CRAFTED,
             $regularWeapons
         );
@@ -64,6 +67,7 @@ class RandomWeaponsService
         bool   $includeTools,
         bool   $includeOpenMapWeapons,
         bool   $includeSentryGuns,
+        bool   $includeSuperWeapons,
         string $type,
         array  $regularWeapons = null
     ): array
@@ -72,6 +76,7 @@ class RandomWeaponsService
             $includeTools,
             $includeOpenMapWeapons,
             $includeSentryGuns,
+            $includeSuperWeapons,
             $type,
             $regularWeapons
         );

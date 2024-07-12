@@ -25,7 +25,101 @@
                     "data": "username",
                 },
                 {
+                    "sortable": false,
                     "data": "weapons",
+                    'render': function (data) {
+                        let html = "";
+
+                        data.forEach((weapon) => {
+                            html += '<div>' + weapon.name + ' [C:' + weapon.count + '] [D:' + weapon.delay + ']</div>';
+                        });
+
+                        return html;
+                    }
+                },
+                {
+                    "data": "includeOpenMapWeapons",
+                    'render': function (data) {
+                        let html = "";
+
+                        if (data) {
+                            html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
+                        } else {
+                            html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
+                        }
+
+                        return html;
+                    }
+                },
+                {
+                    "data": "includeSentryGuns",
+                    'render': function (data) {
+                        let html = "";
+
+                        if (data) {
+                            html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
+                        } else {
+                            html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
+                        }
+
+                        return html;
+                    }
+                },
+                {
+                    "data": "includeTools",
+                    'render': function (data) {
+                        let html = "";
+
+                        if (data) {
+                            html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
+                        } else {
+                            html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
+                        }
+
+                        return html;
+                    }
+                },
+                {
+                    "data": "includeSuperWeapons",
+                    'render': function (data) {
+                        let html = "";
+
+                        if (data) {
+                            html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
+                        } else {
+                            html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
+                        }
+
+                        return html;
+                    }
+                },
+                {
+                    "data": "randomizeCount",
+                    'render': function (data) {
+                        let html = "";
+
+                        if (data) {
+                            html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
+                        } else {
+                            html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
+                        }
+
+                        return html;
+                    }
+                },
+                {
+                    "data": "randomizeDelay",
+                    'render': function (data) {
+                        let html = "";
+
+                        if (data) {
+                            html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
+                        } else {
+                            html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
+                        }
+
+                        return html;
+                    }
                 },
                 {
                     "data": "createdAt",
