@@ -43,6 +43,14 @@ class DrawDatatable extends Datatable
             $formattedData = $draw['createdAt']->format('Y-m-d H:i:s');
 
             $drawData['id'] = $draw['id'];
+
+            $drawData['includeOpenMapWeapons'] = $draw['includeOpenMapWeapons'];
+            $drawData['includeSentryGuns'] = $draw['includeSentryGuns'];
+            $drawData['includeTools'] = $draw['includeTools'];
+            $drawData['includeSuperWeapons'] = $draw['includeSuperWeapons'];
+            $drawData['randomizeCount'] = $draw['randomWeaponsCount'];
+            $drawData['randomizeDelay'] = $draw['randomWeaponsDelay'];
+
             $drawData['username'] = is_null($draw['username']) ? 'Anonymous' : $draw['username'];
 
             $drawData['weapons'] = $this->getDrawDataWeapons($draw['id']);
@@ -72,15 +80,14 @@ class DrawDatatable extends Datatable
             'draw' => $drawId
         ]);
 
-        $weapons = '';
+        $weapons = [];
 
         foreach ($drawWeapons as $drawWeapon) {
-            if ($drawWeapon->getWeapon()->getType() == 0) {
-                $weapons .= '<div>' . $drawWeapon->getWeapon()->getName() . '</div>';
-            } else {
-                $weapons .= '<div>' . $drawWeapon->getWeapon()->getName() . '</div>';
-            }
-
+           $weapons[] = [
+               'name' => $drawWeapon->getWeapon()->getName(),
+               'count' => is_null($drawWeapon->getCount()) ? '-' : $drawWeapon->getCount(),
+               'delay' => is_null($drawWeapon->getDelay()) ? '-' : $drawWeapon->getDelay()
+           ];
         }
 
         return $weapons;

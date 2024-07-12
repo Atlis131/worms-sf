@@ -25,6 +25,7 @@ class WeaponRepository extends EntityRepository
         $includeTools,
         $includeOpenMapWeapons,
         $includeSentryGuns,
+        $includeSuperWeapons,
         $type,
         $regularWeapons
     )
@@ -44,6 +45,14 @@ class WeaponRepository extends EntityRepository
         }
 
         if ($includeOpenMapWeapons) {
+            $qb = $qb
+                ->andWhere('w.isOpenMapWeapon in (0,1)');
+        } else {
+            $qb = $qb
+                ->andWhere('w.isOpenMapWeapon = 0');
+        }
+
+        if ($includeSuperWeapons) {
             $qb = $qb
                 ->andWhere('w.isOpenMapWeapon in (0,1)');
         } else {
@@ -143,9 +152,12 @@ class WeaponRepository extends EntityRepository
             ->addSelect('w.isTool as isTool')
             ->addSelect('w.type as type')
             ->addSelect('w.isOpenMapWeapon as isOpenMapWeapon')
+            ->addSelect('w.isSuperWeapon as isSuperWeapon')
             ->addSelect('w.imageName as imageName')
-            ->addSelect('w.min as minQuantity')
-            ->addSelect('w.max as maxQuantity')
+            ->addSelect('w.minDraw as minDraw')
+            ->addSelect('w.maxDraw as maxDraw')
+            ->addSelect('w.minDelay as minDelay')
+            ->addSelect('w.maxDelay as maxDelay')
             ->addSelect('bv.id as baseVersionId')
             ->addSelect('bv.name as baseVersionName')
             ->addSelect('bv.imageName as baseVersionImageName')

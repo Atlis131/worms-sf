@@ -49,7 +49,7 @@
                     }
                 },
                 {
-                    "data": "min",
+                    "data": "minDraw",
                     'render': function (data) {
                         if (data === 10) {
                             return '&#8734;'
@@ -59,7 +59,7 @@
                     }
                 },
                 {
-                    "data": "max",
+                    "data": "maxDraw",
                     'render': function (data) {
                         if (data === 10) {
                             return '&#8734;'
@@ -67,6 +67,12 @@
                             return data;
                         }
                     }
+                },
+                {
+                    "data": "minDelay",
+                },
+                {
+                    "data": "maxDelay",
                 },
                 {
                     "data": "type",
@@ -98,6 +104,20 @@
                 },
                 {
                     "data": "isOpenMapWeapon",
+                    'render': function (data) {
+                        let html = "";
+
+                        if (data) {
+                            html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
+                        } else {
+                            html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
+                        }
+
+                        return html;
+                    }
+                },
+                {
+                    "data": "isSuperWeapon",
                     'render': function (data) {
                         let html = "";
 

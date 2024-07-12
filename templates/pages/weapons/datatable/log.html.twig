@@ -29,9 +29,9 @@
                 },
                 {
                     "data": "weapon",
-                    'render': function (data) {
+                    "render": function (data) {
                         let html = "";
-                        html += "<a href='" + data.detailsUrl +"' target='_blank'>";
+                        html += "<a href='" + data.detailsUrl + "' target='_blank'>";
                         html += "<img alt='" + data.name + "' src='" + data.image + "' height='40px'>"
                         html += "<span style='margin-left:5px'>" + data.name + "</span></a>"
 
@@ -46,14 +46,14 @@
                 },
                 {
                     "data": "oldValue",
-                    'render': function (data) {
+                    "render": function (data) {
                         if (data.type == 'type') {
                             if (data.value == 0) {
                                 html = '<span class="btn-primary btn" style="cursor: hand"> {{ 'Regular' }} </span>';
                             } else {
                                 html = '<span class="btn-secondary btn" style="cursor: hand"> {{ 'Crafted' }} </span>';
                             }
-                        } else if (data.type == 'isTool' || data.type == 'isOpenMapWeapon') {
+                        } else if (data.type == 'isTool' || data.type == 'isOpenMapWeapon' || data.type == 'isSuperWeapon') {
                             if (data.value == 1) {
                                 html = '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
                             } else {
@@ -68,14 +68,14 @@
                 },
                 {
                     "data": "newValue",
-                    'render': function (data) {
+                    "render": function (data) {
                         if (data.type == 'type') {
                             if (data.value == 0) {
                                 html = '<span class="btn-primary btn" style="cursor: hand"> {{ 'Regular' }} </span>';
                             } else {
                                 html = '<span class="btn-secondary btn" style="cursor: hand"> {{ 'Crafted' }} </span>';
                             }
-                        } else if (data.type == 'isTool' || data.type == 'isOpenMapWeapon') {
+                        } else if (data.type == 'isTool' || data.type == 'isOpenMapWeapon' || data.type == 'isSuperWeapon') {
                             if (data.value == 1) {
                                 html = '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
                             } else {

@@ -21,7 +21,7 @@
                                     3
                                 </span>
                             </label>
-                            <input type="range" id="normalWeaponsCount" class="form-range" min="1" max="12"
+                            <input type="range" id="normalWeaponsCount" class="form-range" min="1" max="9"
                                    value="3">
                         </div>
                         <label for="normalWeaponsCount">
@@ -36,7 +36,7 @@
                                     3
                                 </span>
                             </label>
-                            <input type="range" id="craftedWeaponsCount" class="form-range" min="1" max="12"
+                            <input type="range" id="craftedWeaponsCount" class="form-range" min="1" max="9"
                                    value="3">
                         </div>
                         <label for="craftedWeaponsCount">
@@ -50,7 +50,7 @@
                         {{ 'Additions' }}
                     </p>
                     <div class="col-lg-12 row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="includeTools">
                                 <label class="form-check-label" for="includeTools">
@@ -58,15 +58,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="includeOpenMapWeapons" checked>
-                                <label for="includeOpenMapWeapons">
-                                    {{ "Open map weapons" }}
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="includeSentryGuns">
                                 <label for="includeSentryGuns">
@@ -76,12 +68,30 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-12 row">
+                    <div class="col-lg-6">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="includeSuperWeapons">
+                            <label for="includeSuperWeapons">
+                                {{ "Super weapons" }}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="includeOpenMapWeapons" checked>
+                            <label for="includeOpenMapWeapons">
+                                {{ "Open map weapons" }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 <div class="row mt-4">
                     <p>
                         {{ 'Options' }}
                     </p>
                     <div class="col-lg-12 row mb-2">
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="randomizeCount" checked>
                                 <label for="randomizeCount">
@@ -89,7 +99,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="randomizeDelay">
                                 <label for="randomizeDelay">
@@ -133,11 +143,10 @@
 {% block javascripts_bottom %}
     {{ parent() }}
     <script>
-
         function createWeaponEntry(weapon, parent) {
             let html = "";
             html += "<div class='col-lg-4 mb-3' style='text-align: left'>";
-            html += "<img width='35px' src='" + weapon.image + "'>";
+            html += "<img alt='weapon-image' width='35px' src='" + weapon.image + "'>";
             html += "<span style='margin-left:5px; font-size:15px'>" + weapon.name + "</span><br>";
 
             if (weapon.count == 10) {
@@ -177,6 +186,7 @@
             let includeTools = $('#includeTools').is(":checked");
             let includeOpenMapWeapons = $('#includeOpenMapWeapons').is(":checked");
             let includeSentryGuns = $('#includeSentryGuns').is(":checked");
+            let includeSuperWeapons = $('#includeSuperWeapons').is(":checked");
             let randomizeCount = $('#randomizeCount').is(":checked");
             let randomizeDelay = $('#randomizeDelay').is(":checked");
 
@@ -189,6 +199,7 @@
                     'includeTools': includeTools,
                     'includeOpenMapWeapons': includeOpenMapWeapons,
                     'includeSentryGuns': includeSentryGuns,
+                    'includeSuperWeapons': includeSuperWeapons,
                     'randomizeCount': randomizeCount,
                     'randomizeDelay': randomizeDelay
                 }

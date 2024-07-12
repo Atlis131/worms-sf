@@ -47,6 +47,7 @@ class WeaponsDatatable extends Datatable
             $weaponData['type'] = $weapon['type'];
             $weaponData['isTool'] = $weapon['isTool'];
             $weaponData['isOpenMapWeapon'] = $weapon['isOpenMapWeapon'];
+            $weaponData['isSuperWeapon'] = $weapon['isSuperWeapon'];
 
             if (isset($weapon['baseVersionId'])) {
                 $weaponData['baseVersion'] = [
@@ -68,8 +69,11 @@ class WeaponsDatatable extends Datatable
                 }
             }
 
-            $weaponData['min'] = $weapon['minQuantity'];
-            $weaponData['max'] = $weapon['maxQuantity'];
+            $weaponData['minDraw'] = $weapon['minDraw'];
+            $weaponData['maxDraw'] = $weapon['maxDraw'];
+
+            $weaponData['minDelay'] = $weapon['minDelay'];
+            $weaponData['maxDelay'] = $weapon['maxDelay'];
 
             $weaponData['actions'] = [
                 'edit' => $this->router->generate('weapon_edit', ['weaponId' => $weapon['id']])
