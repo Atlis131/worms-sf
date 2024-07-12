@@ -82,7 +82,7 @@ class WeaponRepository extends EntityRepository
 
             $qb
                 ->andWhere(
-                    $qb->expr()->notIn('w.id',  $sub->getDQL())
+                    $qb->expr()->notIn('w.id', $sub->getDQL())
                 )
                 ->setParameter('weapons', $weaponIds);
         }
@@ -127,6 +127,11 @@ class WeaponRepository extends EntityRepository
                 $qb
                     ->andWhere("w.type = :weaponType")
                     ->setParameter('weaponType', $filters['weaponType']);
+            }
+            if (isset($filters['superWeapon'])) {
+                $qb
+                    ->andWhere("w.isSuperWeapon = :superWeapon")
+                    ->setParameter('superWeapon', $filters['superWeapon']);
             }
         }
 
@@ -179,6 +184,11 @@ class WeaponRepository extends EntityRepository
                 $qb
                     ->andWhere("w.isOpenMapWeapon = :openMap")
                     ->setParameter('openMap', $filters['openMap']);
+            }
+            if (isset($filters['superWeapon'])) {
+                $qb
+                    ->andWhere("w.isSuperWeapon = :superWeapon")
+                    ->setParameter('superWeapon', $filters['superWeapon']);
             }
         }
 
