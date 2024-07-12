@@ -21,36 +21,7 @@
                         </h1>
                     </div>
                     <div class="card-body col-lg-12 row">
-                        <div class="col-lg-3">
-                            <label for="weaponType">{{ 'Weapon type' }}</label>
-                            <select id="weaponType" class="form-control">
-                                <option value="">{{ '-' }}</option>
-                                <option value="0">{{ 'Regular' }}</option>
-                                <option value="1">{{ 'Crafted' }}</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-3">
-                            <label for="tool">{{ 'Tool' }}</label>
-                            <select id="tool" class="form-control">
-                                <option value="">{{ '-' }}</option>
-                                <option value="0">{{ 'No' }}</option>
-                                <option value="1">{{ 'Yes' }}</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-3">
-                            <label for="openMap">{{ 'Open map weapon' }}</label>
-                            <select id="openMap" class="form-control">
-                                <option value="">{{ '-' }}</option>
-                                <option value="0">{{ 'No' }}</option>
-                                <option value="1">{{ 'Yes' }}</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-3">
-                            <button class="btn btn-warning mt-4" id="clearFilters"
-                                    style="float: right;">{{ 'Clear filters' }}</button>
-                            <button class="btn btn-success mt-4" id="search"
-                                    style="float: right; margin-right: 5px">{{ 'Search' }}</button>
-                        </div>
+                        {{ include('pages/weapons/partials/filters.html.twig') }}
                     </div>
                 </div>
             </div>
@@ -97,5 +68,5 @@
 {% block javascripts_bottom %}
     {{ parent() }}
     {{ include('pages/weapons/datatable/list.html.twig') }}
-    {{ include('pages/weapons/filters.html.twig') }}
+    {{ include('pages/weapons/partials/filters-scripts.html.twig') }}
 {% endblock %}

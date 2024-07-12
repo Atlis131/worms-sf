@@ -49,5 +49,9 @@ class Datatable
         if ($request->get('openMap') != '') {
             $this->filters['openMap'] = $request->get('openMap');
         }
+
+        if ($request->get('superWeapon') != '') {
+            $this->filters['superWeapon'] = $request->get('superWeapon');
+        }
     }
 }
