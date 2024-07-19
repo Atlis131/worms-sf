@@ -2,7 +2,7 @@
 
 {% block title %}
     <title>
-        {{ 'All weapons / tools list' }}
+        {{ 'Armoury' }}
     </title>
 {% endblock %}
 
@@ -15,11 +15,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h1 class="h3 mb-3">
-                            {{ 'Filters' }}
-                        </h1>
-                    </div>
                     <div class="card-body col-lg-12 row">
                         {{ include('pages/weapons/partials/filters.html.twig') }}
                     </div>
@@ -31,20 +26,15 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h1 class="h3 mb-3">
-                            {{ 'All weapons / tools list' }}
-                        </h1>
-                    </div>
                     <div class="card-body row">
                         <table id="weaponsList" class="display responsive nowrap" style="width:100%">
                             <thead>
                             <tr>
                                 <th>{{ 'Id' }}</th>
                                 <th>{{ 'Name' }}</th>
-                                <th>{{ 'Base version' }}</th>
-                                <th>{{ 'Draw quantity min.' }}</th>
-                                <th>{{ 'Draw quantity max.' }}</th>
+                                <th>{{ 'Base' }}</th>
+                                <th>{{ 'Draw min.' }}</th>
+                                <th>{{ 'Draw max.' }}</th>
                                 <th>{{ 'Delay min.' }}</th>
                                 <th>{{ 'Delay max.' }}</th>
                                 <th>{{ 'Type' }}</th>
