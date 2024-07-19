@@ -10,7 +10,7 @@
             </li>
             <li class="sidebar-item {{ 'weapon_draw' in app.request.get('_route') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ path('weapon_draw') }}">
-                    <i class="align-middle" data-feather="sliders"></i>
+                    <i class="align-middle" data-feather="refresh-ccw"></i>
                     <span class="align-middle">
                         {{ 'Weapons Drawing' }}
                     </span>
@@ -18,9 +18,9 @@
             </li>
             <li class="sidebar-item {{ 'weapon_list' in app.request.get('_route') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ path('weapon_list') }}">
-                    <i class="align-middle" data-feather="list"></i>
+                    <i class="align-middle" data-feather="shield"></i>
                     <span class="align-middle">
-                        {{ 'Weapons / Tools list' }}
+                        {{ 'Armoury' }}
                     </span>
                 </a>
             </li>
@@ -30,7 +30,7 @@
                 </li>
                 <li class="sidebar-item {{ 'user_list' in app.request.get('_route') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ path('user_list') }}">
-                        <i class="align-middle" data-feather="list"></i>
+                        <i class="align-middle" data-feather="users"></i>
                         <span class="align-middle">
                             {{ 'Users' }}
                         </span>
@@ -38,7 +38,7 @@
                 </li>
                 <li class="sidebar-item {{ 'user_logs' in app.request.get('_route') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ path('user_logs') }}">
-                        <i class="align-middle" data-feather="clock"></i>
+                        <i class="align-middle" data-feather="user"></i>
                         <span class="align-middle">
                             {{ 'User Logs' }}
                         </span>
@@ -46,7 +46,7 @@
                 </li>
                 <li class="sidebar-item {{ 'weapon_logs' in app.request.get('_route') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ path('weapon_logs') }}">
-                        <i class="align-middle" data-feather="clock"></i>
+                        <i class="align-middle" data-feather="shield"></i>
                         <span class="align-middle">
                             {{ 'Weapon Logs' }}
                         </span>
@@ -54,7 +54,7 @@
                 </li>
                 <li class="sidebar-item {{ 'draw_logs' in app.request.get('_route') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ path('draw_logs') }}">
-                        <i class="align-middle" data-feather="clock"></i>
+                        <i class="align-middle" data-feather="refresh-ccw"></i>
                         <span class="align-middle">
                             {{ 'Draw Logs' }}
                         </span>

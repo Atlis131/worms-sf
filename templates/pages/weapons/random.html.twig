@@ -8,9 +8,6 @@
 
 {% block content %}
     <div class="card row col-lg-4 offset-lg-4">
-        <div class="card-header text-center">
-            <h3>{{ 'Random Weapons Drawing' }}</h3>
-        </div>
         <div class="card-body row">
             <div>
                 <div class="row text-center">
@@ -25,7 +22,7 @@
                                    value="3">
                         </div>
                         <label for="normalWeaponsCount">
-                            {{ "Regular weapons / tools count" }}
+                            {{ "Regular" }}
                         </label>
                     </div>
 
@@ -40,36 +37,29 @@
                                    value="3">
                         </div>
                         <label for="craftedWeaponsCount">
-                            {{ "Crafted weapons / tools count" }}
+                            {{ "Crafted" }}
                         </label>
                     </div>
                 </div>
 
-                <div class="row mt-3">
-                    <p>
-                        {{ 'Additions' }}
-                    </p>
-                    <div class="col-lg-12 row">
-                        <div class="col-lg-6">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="includeTools">
-                                <label class="form-check-label" for="includeTools">
-                                    {{ "Tools" }}
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="includeSentryGuns">
-                                <label for="includeSentryGuns">
-                                    {{ "Sentry guns" }}
-                                </label>
-                            </div>
+                <div class="col-lg-12 row mt-3 text-center">
+                    <div class="col-lg-4">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="includeTools">
+                            <label class="form-check-label" for="includeTools">
+                                {{ "Tools" }}
+                            </label>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-12 row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="includeSentryGuns">
+                            <label for="includeSentryGuns">
+                                {{ "Sentry guns" }}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="includeSuperWeapons">
                             <label for="includeSuperWeapons">
@@ -77,7 +67,9 @@
                             </label>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                </div>
+                <div class="col-lg-12 row text-center mt-1">
+                    <div class="col-lg-4">
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="includeOpenMapWeapons" checked>
                             <label for="includeOpenMapWeapons">
@@ -85,31 +77,25 @@
                             </label>
                         </div>
                     </div>
-                </div>
-                <div class="row mt-4">
-                    <p>
-                        {{ 'Options' }}
-                    </p>
-                    <div class="col-lg-12 row mb-2">
-                        <div class="col-lg-6">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="randomizeCount" checked>
-                                <label for="randomizeCount">
-                                    {{ "Rand. weapons count" }}
-                                </label>
-                            </div>
+                    <div class="col-lg-4">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="randomizeCount" checked>
+                            <label for="randomizeCount">
+                                {{ "Rand. weapons count" }}
+                            </label>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="randomizeDelay">
-                                <label for="randomizeDelay">
-                                    {{ "Rand. weapons delay" }}
-                                </label>
-                            </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="randomizeDelay">
+                            <label for="randomizeDelay">
+                                {{ "Rand. weapons delay" }}
+                            </label>
                         </div>
                     </div>
                 </div>
-                <div class="mt-2 text-center">
+
+                <div class="mt-3 text-center">
                     <button type="button" id="rollButton" class="btn btn-success">
                         {{ 'Draw' }}
                     </button>
@@ -140,89 +126,89 @@
 
 {% endblock %}
 
-{% block javascripts_bottom %}
-    {{ parent() }}
-    <script>
-        function createWeaponEntry(weapon, parent) {
-            let html = "";
-            html += "<div class='col-lg-4 mb-3' style='text-align: left'>";
-            html += "<img alt='weapon-image' width='35px' src='" + weapon.image + "'>";
-            html += "<span style='margin-left:5px; font-size:15px'>" + weapon.name + "</span><br>";
+    {% block javascripts_bottom %}
+        {{ parent() }}
+        <script>
+            function createWeaponEntry(weapon, parent) {
+                let html = "";
+                html += "<div class='col-lg-4 mb-3' style='text-align: left'>";
+                html += "<img alt='weapon-image' width='35px' src='" + weapon.image + "'>";
+                html += "<span style='margin-left:5px; font-size:15px'>" + weapon.name + "</span><br>";
 
-            if (weapon.count == 10) {
-                html += " Count: (" + '∞' + ")";
-            } else {
-                html += " Count: (" + weapon.count + ")";
-            }
-
-            if (weapon.delay > 0) {
-                html += " Delay: [" + weapon.delay + "]";
-            } else if (weapon.delay == 0) {
-                html += " Delay: [" + 0 + "]";
-            }
-
-            html += "</div>";
-
-            parent.append(html);
-        }
-
-        const events = ['change']
-
-        $.each(events, function (k, v) {
-            $('#craftedWeaponsCount').on(v, function () {
-                $('#craftedWeaponsCountCurrent').text($('#craftedWeaponsCount').val());
-            });
-        })
-
-        $.each(events, function (k, v) {
-            $('#normalWeaponsCount').on(v, function () {
-                $('#normalWeaponsCountCurrent').text($('#normalWeaponsCount').val());
-            });
-        })
-
-        $('body').on('click', '#rollButton', function () {
-            let countNormal = $('#normalWeaponsCount').val();
-            let countCrafted = $('#craftedWeaponsCount').val();
-            let includeTools = $('#includeTools').is(":checked");
-            let includeOpenMapWeapons = $('#includeOpenMapWeapons').is(":checked");
-            let includeSentryGuns = $('#includeSentryGuns').is(":checked");
-            let includeSuperWeapons = $('#includeSuperWeapons').is(":checked");
-            let randomizeCount = $('#randomizeCount').is(":checked");
-            let randomizeDelay = $('#randomizeDelay').is(":checked");
-
-            let settings = {
-                'url': "{{ path('weapon_random') }}",
-                'type': "POST",
-                'data': {
-                    'countNormal': countNormal,
-                    'countCrafted': countCrafted,
-                    'includeTools': includeTools,
-                    'includeOpenMapWeapons': includeOpenMapWeapons,
-                    'includeSentryGuns': includeSentryGuns,
-                    'includeSuperWeapons': includeSuperWeapons,
-                    'randomizeCount': randomizeCount,
-                    'randomizeDelay': randomizeDelay
+                if (weapon.count == 10) {
+                    html += " Count: (" + '∞' + ")";
+                } else {
+                    html += " Count: (" + weapon.count + ")";
                 }
+
+                if (weapon.delay > 0) {
+                    html += " Delay: [" + weapon.delay + "]";
+                } else if (weapon.delay == 0) {
+                    html += " Delay: [" + 0 + "]";
+                }
+
+                html += "</div>";
+
+                parent.append(html);
             }
-            $.ajax(settings)
-                .done(function (response) {
-                    let normalWeaponsEl = $('#normalWeapons');
-                    let craftedWeaponsEl = $('#craftedWeapons');
 
-                    craftedWeaponsEl.empty();
-                    normalWeaponsEl.empty();
+            const events = ['change']
 
-                    let craftedWeapons = response.craftedWeapons;
-                    let normalWeapons = response.normalWeapons;
-
-                    $.each(craftedWeapons, function (i, l) {
-                        createWeaponEntry(l, craftedWeaponsEl);
-                    });
-
-                    $.each(normalWeapons, function (i, l) {
-                        createWeaponEntry(l, normalWeaponsEl);
-                    });
+            $.each(events, function (k, v) {
+                $('#craftedWeaponsCount').on(v, function () {
+                    $('#craftedWeaponsCountCurrent').text($('#craftedWeaponsCount').val());
                 });
-        });
-    </script>
-{% endblock %}
+            })
+
+            $.each(events, function (k, v) {
+                $('#normalWeaponsCount').on(v, function () {
+                    $('#normalWeaponsCountCurrent').text($('#normalWeaponsCount').val());
+                });
+            })
+
+            $('body').on('click', '#rollButton', function () {
+                let countNormal = $('#normalWeaponsCount').val();
+                let countCrafted = $('#craftedWeaponsCount').val();
+                let includeTools = $('#includeTools').is(":checked");
+                let includeOpenMapWeapons = $('#includeOpenMapWeapons').is(":checked");
+                let includeSentryGuns = $('#includeSentryGuns').is(":checked");
+                let includeSuperWeapons = $('#includeSuperWeapons').is(":checked");
+                let randomizeCount = $('#randomizeCount').is(":checked");
+                let randomizeDelay = $('#randomizeDelay').is(":checked");
+
+                let settings = {
+                    'url': "{{ path('weapon_random') }}",
+                    'type': "POST",
+                    'data': {
+                        'countNormal': countNormal,
+                        'countCrafted': countCrafted,
+                        'includeTools': includeTools,
+                        'includeOpenMapWeapons': includeOpenMapWeapons,
+                        'includeSentryGuns': includeSentryGuns,
+                        'includeSuperWeapons': includeSuperWeapons,
+                        'randomizeCount': randomizeCount,
+                        'randomizeDelay': randomizeDelay
+                    }
+                }
+                $.ajax(settings)
+                    .done(function (response) {
+                        let normalWeaponsEl = $('#normalWeapons');
+                        let craftedWeaponsEl = $('#craftedWeapons');
+
+                        craftedWeaponsEl.empty();
+                        normalWeaponsEl.empty();
+
+                        let craftedWeapons = response.craftedWeapons;
+                        let normalWeapons = response.normalWeapons;
+
+                        $.each(craftedWeapons, function (i, l) {
+                            createWeaponEntry(l, craftedWeaponsEl);
+                        });
+
+                        $.each(normalWeapons, function (i, l) {
+                            createWeaponEntry(l, normalWeaponsEl);
+                        });
+                    });
+            });
+        </script>
+    {% endblock %}
