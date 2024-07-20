@@ -45,13 +45,19 @@
         setAllCookies('openMap', $(this).val(), 'openMap', 'openMapName');
     });
 
+    $('#superWeapon').on('change', function () {
+        setAllCookies('superWeapon', $(this).val(), 'superWeapon', 'superWeaponName');
+    });
+
     $('#clearFilters').on("click", function () {
         $('#weaponType').val(null).trigger('change');
         $('#tool').val(null).trigger('change');
         $('#openMap').val(null).trigger('change');
+        $('#superWeapon').val(null).trigger('change');
         removeCookie("weaponType");
         removeCookie("tool");
         removeCookie("openMap");
+        removeCookie("superWeapon")
         window.location.reload();
     });
 
@@ -70,6 +76,10 @@
 
         if (getCookie('openMap') != 'null' && getCookie('openMap') != '') {
             setDefaultOption('openMapName', 'openMap');
+        }
+
+        if (getCookie('superWeapon') != 'null' && getCookie('superWeapon') != '') {
+            setDefaultOption('superWeaponName', 'superWeapon');
         }
     });
 </script>

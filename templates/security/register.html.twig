@@ -6,6 +6,11 @@
 
 {% block security_content %}
     <div class="mb-2 text-center">
+        <a class="btn btn-primary" href="{{ path('register') }}">
+            {{ 'Create new account' }}
+        </a>
+    </div>
+    <div class="mb-2 text-center">
         <a class="btn btn-primary" href="{{ path('login') }}">
             {{ 'Back to login' }}
         </a>

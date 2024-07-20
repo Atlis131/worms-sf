@@ -1,0 +1,44 @@
+<div class="col-lg-2">
+    <label for="weaponType">{{ 'Weapon type' }}</label>
+    <select id="weaponType" class="form-control">
+        <option value="">{{ '-' }}</option>
+        <option value="0">{{ 'Regular' }}</option>
+        <option value="1">{{ 'Crafted' }}</option>
+    </select>
+</div>
+<div class="col-lg-2">
+    <label for="tool">{{ 'Tool' }}</label>
+    <select id="tool" class="form-control">
+        <option value="">{{ '-' }}</option>
+        <option value="0">{{ 'No' }}</option>
+        <option value="1">{{ 'Yes' }}</option>
+    </select>
+</div>
+<div class="col-lg-2">
+    <label for="openMap">{{ 'Open map' }}</label>
+    <select id="openMap" class="form-control">
+        <option value="">{{ '-' }}</option>
+        <option value="0">{{ 'No' }}</option>
+        <option value="1">{{ 'Yes' }}</option>
+    </select>
+</div>
+<div class="col-lg-2">
+    <label for="superWeapon">{{ 'Super weapon' }}</label>
+    <select id="superWeapon" class="form-control">
+        <option value="">{{ '-' }}</option>
+        <option value="0">{{ 'No' }}</option>
+        <option value="1">{{ 'Yes' }}</option>
+    </select>
+</div>
+<div class="col-lg-4">
+    <button class="btn btn-warning mt-4" id="clearFilters"
+            style="float: right;">
+        <i class="align-middle me-1" data-feather="x"></i>
+        {{ 'Clear filters' }}
+    </button>
+    <button class="btn btn-success mt-4" id="search"
+            style="float: right; margin-right: 5px">
+        <i class="align-middle me-1" data-feather="search"></i>
+        {{ 'Search' }}
+    </button>
+</div>

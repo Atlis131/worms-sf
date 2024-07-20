@@ -1,5 +1,6 @@
 <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/js/dataTables.responsive.min.js') }}"></script>
+<script src="https://unpkg.com/feather-icons"></script>
 
 <script>
     $(document).ready(function () {
@@ -19,6 +20,7 @@
                         "weaponType": getCookie('weaponType')[0],
                         "tool": getCookie('tool')[0],
                         "openMap": getCookie('openMap')[0],
+                        "superWeapon": getCookie('superWeapon')[0],
                     });
                 },
             },
@@ -30,7 +32,7 @@
                     "data": "name",
                     'render': function (data) {
                         let html = "";
-                        html += "<a href='" + data.detailsUrl +"' target='_blank'>";
+                        html += "<a href='" + data.detailsUrl +"'>";
                         html += "<img alt='" + data.name + "' src='" + data.image + "' height='40px'>"
                         html += "<span style='margin-left:5px'>" + data.name + "</span></a>"
 
@@ -80,9 +82,9 @@
                         let html = "";
 
                         if (data === 0) {
-                            html += '<span class="btn-primary btn" style="cursor: hand"> {{ 'Regular' }} </span>';
+                            html += '<span class="btn-primary btn table-button"> {{ 'Regular' }} </span>';
                         } else {
-                            html += '<span class="btn-secondary btn" style="cursor: hand"> {{ 'Crafted' }} </span>';
+                            html += '<span class="btn-secondary btn table-button"> {{ 'Crafted' }} </span>';
                         }
 
                         return html;
@@ -94,9 +96,9 @@
                         let html = "";
 
                         if (data) {
-                            html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
+                            html += '<span class="btn-success btn table-button"> {{ 'Yes' }} </span>';
                         } else {
-                            html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
+                            html += '<span class="btn-danger btn table-button">{{ 'No' }} </span>';
                         }
 
                         return html;
@@ -108,9 +110,9 @@
                         let html = "";
 
                         if (data) {
-                            html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
+                            html += '<span class="btn-success btn table-button"> {{ 'Yes' }} </span>';
                         } else {
-                            html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
+                            html += '<span class="btn-danger btn table-button">{{ 'No' }} </span>';
                         }
 
                         return html;
@@ -122,9 +124,9 @@
                         let html = "";
 
                         if (data) {
-                            html += '<span class="btn-success btn" style="cursor: hand"> {{ 'Yes' }} </span>';
+                            html += '<span class="btn-success btn table-button"> {{ 'Yes' }} </span>';
                         } else {
-                            html += '<span class="btn-danger btn" style="cursor: hand">{{ 'No' }} </span>';
+                            html += '<span class="btn-danger btn table-button">{{ 'No' }} </span>';
                         }
 
                         return html;
@@ -138,8 +140,10 @@
                         let html = "";
 
                         if (data.edit) {
-                            html += '<a class="btn-info btn" href=' + data.edit + '> {{ 'Edit' }} </a>';
+                            html += '<a class="btn-info btn" href=' + data.edit + '> <i class="align-middle me-1" data-feather="edit"></i> {{ 'Edit' }} </a>';
                         }
+
+                        feather.replace();
 
                         return html;
                     }
