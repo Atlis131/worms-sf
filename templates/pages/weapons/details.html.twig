@@ -24,7 +24,7 @@
                         <h5 class="card-title mb-0 text-info">{{ weapon.name }}</h5>
                         {% if is_granted('ROLE_ADMIN') %}
                             <a class="btn-info btn" href="{{ path('weapon_edit', {'weaponId': weapon.id}) }}">
-                                <i class="align-middle me-1" data-feather="edit"></i>
+                                <i class="fa-solid fa-pen"></i>
                                 {{ 'Edit' }}
                             </a>
                         {% endif %}
