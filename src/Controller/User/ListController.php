@@ -2,30 +2,35 @@
 
 namespace App\Controller\User;
 
-use App\Entity\User\User;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Datatables\UserDatatable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class ListController extends AbstractController
 {
-    private EntityManagerInterface $em;
+    private UserDatatable $userDatatable;
 
     public function __construct(
-        EntityManagerInterface $em,
+        UserDatatable $userDatatable,
     )
     {
-        $this->em = $em;
+        $this->userDatatable = $userDatatable;
     }
 
     #[Route('/user/list', name: 'user_list')]
     public function index(): Response
     {
-        $users = $this->em->getRepository(User::class)->findAll();
+        return $this->render('pages/user/list.html.twig');
+    }
 
-        return $this->render('pages/user/list.html.twig', [
-            'users' => $users
-        ]);
+    #[Route('/user/list/data', name: 'user_list_data', methods: ['POST'])]
+    public function listData(Request $request): JsonResponse
+    {
+        $response = $this->userDatatable->getDatatableData($request);
+
+        return new JsonResponse($response, 200);
     }
 }

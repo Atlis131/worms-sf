@@ -1,0 +1,39 @@
+<script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/js/dataTables.responsive.min.js') }}"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#userLogList').DataTable({
+            responsive: true,
+            stateSave: true,
+            serverSide: true,
+            retrieve: true,
+            paginate: true,
+            searching: true,
+            order: [
+                0, 'desc'
+            ],
+            ajax: {
+                url: "{{ path('user_logs_data') }}",
+                type: 'POST'
+            },
+            columns: [
+                {
+                    "data": "id",
+                },
+                {
+                    "data": "username",
+                },
+                {
+                    "data": "createdAt",
+                },
+                {
+                    "data": "message",
+                },
+                {
+                    "data": "type",
+                },
+            ]
+        });
+    });
+</script>

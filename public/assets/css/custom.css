@@ -5,3 +5,12 @@
 .logout {
     color: #BB2D3B;
 }
+
+#impersonated-text {
+    display: block;
+    margin-right: 10px;
+}
+
+.btn-user {
+    margin-right: 5px;
+}
