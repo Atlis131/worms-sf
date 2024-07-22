@@ -1,0 +1,56 @@
+<script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/js/dataTables.responsive.min.js') }}"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#userList').DataTable({
+            responsive: true,
+            stateSave: true,
+            serverSide: true,
+            retrieve: true,
+            paginate: true,
+            searching: true,
+            order: [
+                0, 'desc'
+            ],
+            ajax: {
+                url: "{{ path('user_list_data') }}",
+                type: 'POST'
+            },
+            columns: [
+                {
+                    "data": "id",
+                },
+                {
+                    "data": "username",
+                },
+                {
+                    "data": "email",
+                },
+                {
+                    "data": "name",
+                },
+                {
+                    "data": "roles",
+                },
+                {
+                    "data": "actions",
+                    "sortable": false,
+                    'render': function (data) {
+                        let html = "";
+
+                        if (data.edit) {
+                            html += '<a class="btn-info btn btn-user" href=' + data.edit + '> <i class="fa-solid fa-pen"></i> {{ 'Edit' }} </a>';
+                        }
+
+                        if (data.impersonate) {
+                            html += '<a class="btn-info btn btn-user" href=' + data.impersonate + '> <i class="fa-solid fa-user"></i> {{ 'Impersonate' }} </a>';
+                        }
+
+                        return html;
+                    }
+                }
+            ]
+        });
+    });
+</script>

@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    <title>{{ 'Users list' }}</title>
+    <title>
+        {{ 'User log list' }}
+    </title>
 {% endblock %}
 
 {% block styles %}
@@ -14,7 +16,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body row">
-                        <table id="datatable" class="display responsive nowrap" style="width:100%">
+                        <table id="userList" class="display responsive nowrap" style="width:100%">
                             <thead>
                             <tr>
                                 <th>{{ 'Id' }}</th>
@@ -25,49 +27,17 @@
                                 <th>{{ 'Actions' }}</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            {% for user in users %}
-                                <tr>
-                                    <td>{{ user.id }}</td>
-                                    <td>{{ user.userIdentifier }}</td>
-                                    <td>{{ user.email }}</td>
-                                    <td>{{ user.name }}</td>
-                                    <td>
-                                        {% for role in user.roles %}
-                                            <p> {{ role }} </p>
-                                        {% endfor %}
-                                    </td>
-                                    <td>
-                                        <a href="{{ path('user_edit', {'userId': user.id}) }}" class="btn-info btn">
-                                            <i class="fa-solid fa-pen"></i>
-                                            {{ 'Edit' }}
-                                        </a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 {% endblock %}
 
 {% block javascripts_bottom %}
     {{ parent() }}
 
-    <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/js/dataTables.responsive.min.js') }}"></script>
-
-    <script>
-        $('#datatable').DataTable({
-            responsive: true,
-            stateSave: true,
-            order: [
-                0, 'desc'
-            ]
-        });
-    </script>
+    {% include 'pages/user/datatable/list.html.twig' with { 'weaponId': '' } %}
 {% endblock %}
