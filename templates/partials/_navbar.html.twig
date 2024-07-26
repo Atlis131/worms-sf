@@ -3,6 +3,10 @@
         <i class="hamburger align-self-center"></i>
     </a>
     <div class="navbar-collapse collapse">
+        {% if is_granted('IS_IMPERSONATOR') %}
+            <span id="impersonated-text">Impersonated as {{ app.user.usernameCanonical }}</span>
+            <a class="btn btn-primary" href="{{ impersonation_exit_path(path('homepage')) }}">Exit impersonation</a>
+        {% endif %}
         <ul class="navbar-nav navbar-align">
             {% if app.user is not null %}
                 <li class="nav-item dropdown">

@@ -17,6 +17,7 @@ security:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
+      switch_user: { role: ROLE_ADMIN, parameter: _switch_user }
     main:
       pattern: ^/
       user_checker: App\Controller\Security\UserChecker
@@ -30,7 +31,7 @@ security:
       remember_me:
         secret: '%kernel.secret%'
         lifetime: 2592000
-      switch_user: true
+      switch_user: { role: ROLE_ADMIN, parameter: _switch_user }
 
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#the-firewall
