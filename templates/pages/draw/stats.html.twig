@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <title>
+        {{ 'Draw stats list' }}
+    </title>
+{% endblock %}
+
+{% block styles %}
+    {% include 'partials/_styles_datatable.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body row">
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-1">{{ 'Draw counter:' }}
+                                <span class="text-info">
+                                    {{ stats['drawsCount'] }}
+                                </span>
+                            </li>
+                            <li class="mb-1">{{ 'Draw items counter:' }}
+                                <span class="text-info">
+                                    {{ stats['items']|length }}
+                                </span>
+                            </li>
+                            <li class="mb-1">{{ 'Average items per draw:' }}
+                                <span class="text-info">
+                                     {{ (stats['items']|length / stats['drawsCount'])|number_format(2) }}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body row">
+                        <table class="table" id="weaponStats">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Count</th>
+                                <th scope="col">Percent</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% set counter = 1 %}
+                            {% for item in stats['items'] %}
+                                <tr>
+                                    <td>{{ counter }}</td>
+                                    <td>
+                                        <img alt="{{ item['name'] }}" src="{{ item['image'] }}" height='40px'>
+                                        <a href="{{ item['detailsUrl'] }}" style='margin-left:5px'>
+                                            {{ item['name'] }}
+                                        </a>
+                                    </td>
+                                    <td>{{ item['count'] }}</td>
+                                    <td>{{ item['percentage'] ~ ' %' }}</td>
+                                </tr>
+                                {% set counter = counter + 1 %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts_bottom %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/js/dataTables.responsive.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#weaponStats').DataTable({});
+        });
+    </script>
+{% endblock %}
