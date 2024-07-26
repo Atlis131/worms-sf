@@ -24,12 +24,12 @@
                             </li>
                             <li class="mb-1">{{ 'Draw items counter:' }}
                                 <span class="text-info">
-                                    {{ stats['items']|length }}
+                                    {{ stats['drawItemsCount'] }}
                                 </span>
                             </li>
                             <li class="mb-1">{{ 'Average items per draw:' }}
                                 <span class="text-info">
-                                     {{ (stats['items']|length / stats['drawsCount'])|number_format(2) }}
+                                     {{ (stats['drawItemsCount'] / stats['drawsCount'])|number_format(2) }}
                                 </span>
                             </li>
                         </ul>
