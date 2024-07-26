@@ -31,6 +31,7 @@ class DrawStatsService
         $drawItems = $this->em->getRepository(DrawItem::class)->findAll();
 
         $drawItemsCount = [];
+        $drawItemsCounter = 0;
 
         foreach ($drawItems as $drawItem) {
             $weapon = $drawItem->getWeapon();
@@ -45,17 +46,20 @@ class DrawStatsService
                     'detailsUrl' => $this->router->generate('weapon_details', ['weaponId' =>$weapon->getId()])
                 ];
             }
+
+            $drawItemsCounter++;
         }
 
         arsort($drawItemsCount);
 
         foreach ($drawItemsCount as $drawItemName => $value) {
-            $drawItemsCount[$drawItemName]['percentage'] = number_format(($value['count'] / count($drawItems)) * 100, 2);
+            $drawItemsCount[$drawItemName]['percentage'] = number_format(($value['count'] / $drawItemsCounter) * 100, 2);
         }
 
         return [
             'items' => $drawItemsCount,
             'drawsCount' => $drawsCount,
+            'drawItemsCount' => $drawItemsCounter,
         ];
     }
 }
