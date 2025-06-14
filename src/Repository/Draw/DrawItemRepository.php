@@ -26,4 +26,16 @@ class DrawItemRepository extends ServiceEntityRepository
 
         parent::__construct($registry, DrawItem::class);
     }
+
+    public function getItemsForStats()
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb
+            ->select('i', 'w')
+            ->from(DrawItem::class, 'i')
+            ->join('i.weapon','w');
+
+        return $qb->getQuery()->getResult();
+    }
 }
