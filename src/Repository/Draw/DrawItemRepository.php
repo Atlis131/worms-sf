@@ -26,4 +26,22 @@ class DrawItemRepository extends ServiceEntityRepository
 
         parent::__construct($registry, DrawItem::class);
     }
+
+    public function getItemsWithWeapons(?int $drawId = null)
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb
+            ->select('i', 'w')
+            ->from(DrawItem::class, 'i')
+            ->join('i.weapon','w');
+
+        if ($drawId) {
+            $qb
+                ->andWhere('i.draw = :drawId')
+                ->setParameter('drawId', $drawId);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

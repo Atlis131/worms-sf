@@ -11,18 +11,11 @@ use Symfony\Component\Routing\RouterInterface;
 
 class DrawDatatable extends Datatable
 {
-    private Container $container;
-    private RouterInterface $router;
-
     public function __construct(
         EntityManagerInterface $em,
-        Container              $container,
-        RouterInterface        $router
     )
     {
         parent::__construct($em);
-        $this->container = $container;
-        $this->router = $router;
     }
 
     public function getDatatableData($request): array
@@ -74,11 +67,9 @@ class DrawDatatable extends Datatable
         ];
     }
 
-    private function getDrawDataWeapons(int $drawId)
+    private function getDrawDataWeapons(int $drawId): array
     {
-        $drawWeapons = $this->em->getRepository(DrawItem::class)->findBy([
-            'draw' => $drawId
-        ]);
+        $drawWeapons = $this->em->getRepository(DrawItem::class)->getItemsWithWeapons($drawId);
 
         $weapons = [];
 

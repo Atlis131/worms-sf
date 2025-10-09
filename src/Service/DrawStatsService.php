@@ -28,7 +28,7 @@ class DrawStatsService
     public function getDrawStatistics(): array
     {
         $drawsCount = $this->em->getRepository(Draw::class)->count();
-        $drawItems = $this->em->getRepository(DrawItem::class)->findAll();
+        $drawItems = $this->em->getRepository(DrawItem::class)->getItemsWithWeapons();
 
         $drawItemsCount = [];
         $drawItemsCounter = 0;
