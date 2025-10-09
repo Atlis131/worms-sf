@@ -28,13 +28,13 @@ class RandomWeaponsService
         $normalCount = $request->get('countNormal');
         $craftedCount = $request->get('countCrafted');
 
-        $includeTools = $request->get('includeTools') == 'true';
-        $includeOpenMapWeapons = $request->get('includeOpenMapWeapons') == 'true';
-        $includeSentryGuns = $request->get('includeSentryGuns') == 'true';
-        $includeSuperWeapons = $request->get('includeSuperWeapons') == 'true';
+        $includeTools = $request->get('includeTools') === 'true';
+        $includeOpenMapWeapons = $request->get('includeOpenMapWeapons') === 'true';
+        $includeSentryGuns = $request->get('includeSentryGuns') === 'true';
+        $includeSuperWeapons = $request->get('includeSuperWeapons') === 'true';
 
-        $randomizeCount = $request->get('randomizeCount') == 'true';
-        $randomizeDelay = $request->get('randomizeDelay') == 'true';
+        $randomizeCount = $request->get('randomizeCount') === 'true';
+        $randomizeDelay = $request->get('randomizeDelay') === 'true';
 
         $allRegularWeapons = $this->getWeaponNames(
             $includeTools,
