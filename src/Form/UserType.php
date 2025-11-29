@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Entity\User\User;
 
 class UserType extends AbstractType
 {
@@ -52,7 +53,7 @@ class UserType extends AbstractType
     ): void
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\User\User'
+            'data_class' => User::class
         ]);
     }
 }

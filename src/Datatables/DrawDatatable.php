@@ -4,10 +4,7 @@ namespace App\Datatables;
 
 use App\Entity\Draw\Draw;
 use App\Entity\Draw\DrawItem;
-use App\Entity\Weapon\WeaponLog;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
-use Symfony\Component\Routing\RouterInterface;
 
 class DrawDatatable extends Datatable
 {

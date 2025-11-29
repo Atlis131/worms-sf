@@ -9,8 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\HasLifecycleCallbacks]
 class Weapon
 {
-    const WEAPON_TYPE_REGULAR = 0;
-    const WEAPON_TYPE_CRAFTED = 1;
+    public const WEAPON_TYPE_REGULAR = 0;
+    public const WEAPON_TYPE_CRAFTED = 1;
 
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "AUTO")]
