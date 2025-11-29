@@ -198,7 +198,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('homepage');
         }
 
-        return $this->render('security/reset_password.html.twig',);
+        return $this->render('security/reset_password.html.twig');
     }
 
     #[Route('/set-password/{passwordHash}', name: 'set_password')]
@@ -218,56 +218,55 @@ class SecurityController extends AbstractController
             $this->addFlash('error', "Something went wrong! Couldn't find user based on provided passwordHash or passwordHash expired");
 
             return $this->redirectToRoute('homepage');
-        } else {
-            if ($user->getResetPasswordTokenTime() < new DateTime('now') || is_null($user->getResetPasswordToken())) {
-                $this->addFlash('error', "Something went wrong! Couldn't find user based on provided passwordHash or passwordHash expired");
-
-                $user
-                    ->setResetPasswordToken(null)
-                    ->setResetPasswordTokenTime(null);
-
-                $this->em->persist($user);
-                $this->em->flush();
-
-                $this->userLogService->addToLog($user, 'Requested password reset - invalid / expired token', 'Security');
-
-                return $this->redirectToRoute('login');
-            }
-
-            $form = $this->createForm(UserChangePasswordType::class, null, [
-                'resetPassword' => true
-            ]);
-
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $user
-                    ->setPassword($userPasswordHasherInterface->hashPassword(
-                        $user,
-                        $form->get('password')->getData()
-                    ))
-                    ->setResetPasswordToken(null)
-                    ->setResetPasswordTokenTime(null);
-
-                $this->em->persist($user);
-                $this->em->flush();
-
-                $this->addFlash('success', "Successfully changed password! You've been automatically logged in!");
-
-                $this->userLogService->addToLog($user, 'Successfully changed password via email', 'Security');
-
-                return $guardHandler->authenticateUser(
-                    $user,
-                    $formAuthenticator,
-                    $request
-                );
-            }
-
-            return $this->render('security/set_new_password.html.twig', [
-                'form' => $form->createView()
-            ]);
-
         }
+
+        if ($user->getResetPasswordTokenTime() < new DateTime('now') || is_null($user->getResetPasswordToken())) {
+            $this->addFlash('error', "Something went wrong! Couldn't find user based on provided passwordHash or passwordHash expired");
+
+            $user
+                ->setResetPasswordToken(null)
+                ->setResetPasswordTokenTime(null);
+
+            $this->em->persist($user);
+            $this->em->flush();
+
+            $this->userLogService->addToLog($user, 'Requested password reset - invalid / expired token', 'Security');
+
+            return $this->redirectToRoute('login');
+        }
+
+        $form = $this->createForm(UserChangePasswordType::class, null, [
+            'resetPassword' => true
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user
+                ->setPassword($userPasswordHasherInterface->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                ))
+                ->setResetPasswordToken(null)
+                ->setResetPasswordTokenTime(null);
+
+            $this->em->persist($user);
+            $this->em->flush();
+
+            $this->addFlash('success', "Successfully changed password! You've been automatically logged in!");
+
+            $this->userLogService->addToLog($user, 'Successfully changed password via email', 'Security');
+
+            return $guardHandler->authenticateUser(
+                $user,
+                $formAuthenticator,
+                $request
+            );
+        }
+
+        return $this->render('security/set_new_password.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     private function sendPasswordResetEmail(
@@ -287,7 +286,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/logout}', name: 'logout')]
-    public function logout()
+    public function logout(): void
     {
 
     }

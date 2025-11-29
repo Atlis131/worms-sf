@@ -3,10 +3,8 @@
 namespace App\Controller\Weapon;
 
 use App\Entity\Weapon\Weapon;
-use App\Form\WeaponsType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 

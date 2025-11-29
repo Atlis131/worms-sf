@@ -49,7 +49,7 @@ class EditController extends AbstractController
 
         return $this->render('pages/weapons/edit.html.twig', [
             'form' => $form->createView(),
-            'weaponType' => $weapon->getType()
+            'weaponType' => $weapon?->getType()
         ]);
     }
 }

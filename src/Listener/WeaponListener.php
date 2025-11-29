@@ -24,7 +24,7 @@ class WeaponListener
     {
         $entityManager = $args->getObjectManager();
         $entity = $args->getObject();
-        $user = $this->tokenStorage->getToken()->getUser();
+        $user = $this->tokenStorage->getToken()?->getUser();
         $changes = $entityManager->getUnitOfWork()->getEntityChangeSet($entity);
 
         foreach ($changes as $key => $value) {
